@@ -1,2 +1,11 @@
-const bodyElement = document.querySelector(`body`);
-bodyElement.textContent = `Hello, world!`;
+import ReactDOM from 'react-dom';
+import React from 'react';
+import App from './components/App';
+
+ReactDOM.render(
+    <App
+      day={`night`}
+      price={180}
+    />,
+    document.getElementById(`root`)
+);
