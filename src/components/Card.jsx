@@ -6,7 +6,8 @@ const WIDTH = 20;
 
 const Card = (props) => {
   const {items} = props
-  const {mark, rating} = items
+  const {mark, rating, hasBookmark} = items
+  const bookMark = hasBookmark ? 'place-card__bookmark-button--active' : ''
 
   return (
     <article className="cities__place-card place-card">
@@ -28,7 +29,7 @@ const Card = (props) => {
             <b className="place-card__price-value">&euro;{props.items.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;{props.items.day}</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button className={`place-card__bookmark-button button ${bookMark}`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

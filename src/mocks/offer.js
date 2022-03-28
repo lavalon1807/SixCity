@@ -52,7 +52,7 @@ const offer = [
     img: `img/room.jpg`,
     price: `80`,
     attribute: `night`,
-    hasBookmark: false,
+    hasBookmark: true,
     rating: 4,
     name: `Beautiful & luxurious apartment`,
     type: `Apartment`,
