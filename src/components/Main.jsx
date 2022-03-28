@@ -2,12 +2,9 @@ import React, { Fragment } from 'react';
 import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
-
-const cards = [1, 2, 3, 4, 5];
+import LoadCards from './LoadCards';
 
 const Main = (props) => {
-  const {offersCards} = props;
-  console.log(offersCards)
   return(
     <>
       <div style={{display: "none"}}>
@@ -78,7 +75,7 @@ const Main = (props) => {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
 
-                {cards.map((item, i) => <Card key={item + i} day = {props.day} price = {props.price} />)}
+                <LoadCards />
 
                 </div>
               </section>
@@ -91,11 +88,6 @@ const Main = (props) => {
       </div>
     </>
   )
-}
-
-Main.propTypes = {
-  day: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired
 }
 
 export default Main;

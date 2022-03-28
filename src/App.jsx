@@ -14,10 +14,10 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={AppRoute.ROOT} exact><Main day={`night`} price={180} /></Route>
+        <Route path={AppRoute.ROOT} exact><Main/></Route>
         <Route path='/login' exact><Login /></Route>
-        <Route path='/favorites'><Favorites /></Route>
-        <Route path='/property/:id'><Property /></Route>
+        <Route path='/favorites' exact><Favorites /></Route>
+        <Route path='/property/:id' exact><Property /></Route>
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>

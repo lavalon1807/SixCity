@@ -1,18 +1,29 @@
 import React from "react"
 
 const Card = (props) => {
+  const {items} = props
+  const {mark} = items
+
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
+
+      { mark && (
+        <div className="place-card__mark">
+            <span>Premium</span>
+        </div>
+      )}
+
+
         <a href="#">
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={props.items.img} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{props.price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{props.day}</span>
+            <b className="place-card__price-value">&euro;{props.items.price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;{props.items.day}</span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -28,9 +39,9 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <a href="#">{props.items.name}</a>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{props.items.type}</p>
       </div>
     </article>
   )
