@@ -1,8 +1,12 @@
 import React from "react"
+import {useState} from 'react'
+
+const WIDTH = 20;
+
 
 const Card = (props) => {
   const {items} = props
-  const {mark} = items
+  const {mark, rating} = items
 
   return (
     <article className="cities__place-card place-card">
@@ -13,7 +17,6 @@ const Card = (props) => {
             <span>Premium</span>
         </div>
       )}
-
 
         <a href="#">
           <img className="place-card__image" src={props.items.img} width="260" height="200" alt="Place image" />
@@ -34,7 +37,7 @@ const Card = (props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: "80%"}}></span>
+            <span style={{width: WIDTH * rating + '%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
