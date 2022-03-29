@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import Card from './Card'
 import offer from '../mocks/offer'
 import PropTypes from 'prop-types'
 
 
-const LoadCards = () => {
+const LoadCards = (props) => {
+  const {items} = props
+  const [active, setActive] = useState(null)
+  const handleMouseEnter = useCallback((item) => {
+    setActive(item)
+  }, [])
+  const handleMouseLeave = useCallback((item) => {
+    setActive(null)
+  }, [])
+
+  console.log(active)
   return(
     offer.map(item =>
       <Card
       key = {item.id}
-      items={item}/>
+      items={item}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave} />
     )
   )
 }

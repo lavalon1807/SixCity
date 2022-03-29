@@ -5,12 +5,16 @@ const WIDTH = 20;
 
 
 const Card = (props) => {
-  const {items} = props
+  const {items, onMouseEnter, onMouseLeave} = props
   const {mark, rating, hasBookmark} = items
   const bookMark = hasBookmark ? 'place-card__bookmark-button--active' : ''
 
+  const handleMouseEnter = () => {
+    onMouseEnter(items)
+  }
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={()=>onMouseLeave()}>
       <div className="cities__image-wrapper place-card__image-wrapper">
 
       { mark && (
