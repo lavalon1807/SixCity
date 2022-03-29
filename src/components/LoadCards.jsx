@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import Card from './Card'
 import offer from '../mocks/offer'
 import PropTypes from 'prop-types'
+import Property from './Property'
 
 
 const LoadCards = (props) => {
@@ -14,7 +15,7 @@ const LoadCards = (props) => {
     setActive(null)
   }, [])
 
-  console.log(active)
+
   return(
     offer.map(item =>
       <Card

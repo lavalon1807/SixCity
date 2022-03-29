@@ -17,7 +17,7 @@ const App = (props) => {
         <Route path={AppRoute.ROOT} exact><Main/></Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/favorites' exact><Favorites /></Route>
-        <Route path='/property/:id' exact><Property /></Route>
+        <Route path='/property' exact><Property /></Route>
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>
