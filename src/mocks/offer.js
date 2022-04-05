@@ -1,6 +1,6 @@
 const offer = [
   {
-    id: `1`,
+    id: 1,
     mark: `Premium`,
     href: `#`,
     img: `img/apartment-01.jpg`,
@@ -12,7 +12,7 @@ const offer = [
     type: `Apartment`,
   },
   {
-    id: `2`,
+    id: 2,
     href: `#`,
     img: `img/room.jpg`,
     price: `80`,
@@ -23,7 +23,7 @@ const offer = [
     type: `Private room`,
   },
   {
-    id: `3`,
+    id: 3,
     href: `#`,
     img: `img/apartment-02.jpg`,
     price: `132`,
@@ -34,7 +34,7 @@ const offer = [
     type: `Apartment`,
   },
   {
-    id: `4`,
+    id: 4,
     mark: `Premium`,
     href: `#`,
     img: `img/apartment-03.jpg`,
@@ -46,7 +46,7 @@ const offer = [
     type: `Private room`,
   },
   {
-    id: `5`,
+    id: 5,
     mark: `Premium`,
     href: `#`,
     img: `img/room.jpg`,

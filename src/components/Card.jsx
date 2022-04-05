@@ -52,7 +52,7 @@ const Card = (props) => {
             </div>
           </div>
           <h2 className="place-card__name">
-            <Link to="/property">{props.items.name}</Link>
+            <Link to={`/property/${props.items.id}`}>{props.items.name}</Link>
           </h2>
           <p className="place-card__type">{props.items.type}</p>
         </div>

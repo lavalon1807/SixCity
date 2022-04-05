@@ -3,6 +3,8 @@ import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
+import Map from './Map/Map';
+// import {Coords} from './mocks/Coords';
 
 const Main = (props) => {
   return(
@@ -80,7 +82,9 @@ const Main = (props) => {
                 </div>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map />
+                </section>
               </div>
             </div>
           </div>
