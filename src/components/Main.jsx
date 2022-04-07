@@ -1,12 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
+import Offer from '../mocks/offer'
+
 // import {Coords} from './mocks/Coords';
 
 const Main = (props) => {
+  const [active, setActive] = useState(null)
+  const handleMouseEnter = useCallback((item) => {
+    setActive(item)
+  }, [])
+  const handleMouseLeave = useCallback((item) => {
+    setActive(null)
+  }, [])
+
   return(
     <>
       <div style={{display: "none"}}>
@@ -77,13 +87,13 @@ const Main = (props) => {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
 
-                <LoadCards />
+                <LoadCards onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}/>
 
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map />
+                  <Map active={active} items={Offer}/>
                 </section>
               </div>
             </div>

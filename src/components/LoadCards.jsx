@@ -6,23 +6,15 @@ import Property from './Property'
 
 
 const LoadCards = (props) => {
-  const {items} = props
-  const [active, setActive] = useState(null)
-  const handleMouseEnter = useCallback((item) => {
-    setActive(item)
-  }, [])
-  const handleMouseLeave = useCallback((item) => {
-    setActive(null)
-  }, [])
-
+  const {onMouseEnter, onMouseLeave} = props
 
   return(
     offer.map(item =>
       <Card
       key = {item.id}
       items={item}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave} />
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave} />
     )
   )
 }
