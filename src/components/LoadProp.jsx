@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DataProp from './DataProp'
 import offer from '../mocks/offer'
 import {useParams} from 'react-router-dom'
 
 const LoadProp = (props) => {
-  const {id} = useParams()
+  const params = useParams()
+  const id = Number(params.id);
+  const item = offer.find((it) => it.id === id)
 
   return(
-    offer.map((item, index) =>
-      <DataProp
-      key = {item.id}
-      items={item} />
-    )
+    <DataProp key={item.id} items={item}/>
   )
 }
 
