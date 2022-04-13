@@ -7,7 +7,6 @@ import Property from './Property'
 
 const LoadCards = (props) => {
   const {onMouseEnter, onMouseLeave} = props
-
   return(
     offer.map(item =>
       <Card
