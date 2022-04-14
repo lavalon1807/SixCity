@@ -1,10 +1,9 @@
 import React, { useEffect, useRef} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-import Coords from '../../mocks/Coords'
 
 const Map = (props) => {
-  const {items, active} = props
+  const {items, active, coords} = props
 
   const mapRef = useRef();
 
@@ -19,7 +18,7 @@ const Map = (props) => {
     })
     .addTo(mapRef.current)
 
-    Coords.forEach((coord) => {
+    coords.forEach((coord) => {
       const customIcon = L.icon({
         iconUrl: './img/pin.svg',
         iconSize: [30, 30]
@@ -43,7 +42,7 @@ const Map = (props) => {
 
   useEffect(()=>{
     if(mapRef.current) {
-      Coords.forEach((coord) => {
+      coords.forEach((coord) => {
         const isActive = active ? coord.id === active.id : false
 
         const customIcon = L.icon({
@@ -66,7 +65,7 @@ const Map = (props) => {
       }
       })
     }
-  }, [mapRef.current, active, ])
+  }, [mapRef.current, active])
 
   return(
     <div id="map" style={{height: "100%"}} ref={mapRef}></div>

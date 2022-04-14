@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import Header from './Header';
 import DataProp from './DataProp'
 import Reviews from './Reviews'
@@ -6,12 +6,24 @@ import offer from '../mocks/offer'
 import Neiborhood from './Neiborhood'
 import { useParams } from 'react-router-dom'
 import Comp from './comp'
+import comment from '../mocks/Comment'
+import Map from './Map/Map';
+import coords from '../mocks/Coords'
 
 const Property = (props) => {
   const params = useParams()
   const id = Number(params.id);
   const item = offer.find((it) => it.id === id)
-  const items = offer.map((item) => item)
+  const [active, setActive] = useState(null)
+
+  const handleMouseEnter = useCallback((item) => {
+    setActive(item)
+  }, [])
+  const handleMouseLeave = useCallback((item) => {
+    setActive(null)
+  }, [])
+
+  const coord = coords.filter((item) => item.id !== id).slice(0, 3)
 
   return(
     <>
@@ -109,10 +121,13 @@ const Property = (props) => {
               </p>
             </div>
           </div>
-                <section className="property__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+          <section className="property__reviews reviews">
+            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comment.length}</span></h2>
             <ul className="reviews__list">
-              <Reviews />
+
+            {/*Загружаем отзывы*/}
+              <Reviews items={comment}/>
+
             </ul>
             <form className="reviews__form form" action="#" method="post">
               <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -163,13 +178,23 @@ const Property = (props) => {
           </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            <section className="property__map map" style={{margin: 'auto', maxWidth: '1144px'}}>
+
+            {/*Подключаем карту*/}
+              {<Map active={active} items={offer} coords={coord}/>}
+
+
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                <Comp />
+
+              {/*Тут выводим карточки соседи*/}
+                <Comp enterFromProperty={handleMouseEnter} leaveFromProperty={handleMouseLeave}/>
+
+
               </div>
             </section>
           </div>

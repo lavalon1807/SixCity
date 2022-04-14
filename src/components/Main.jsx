@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
 import Offer from '../mocks/offer'
-
-// import {Coords} from './mocks/Coords';
+import coords from '../mocks/Coords'
 
 const Main = (props) => {
   const [active, setActive] = useState(null)
@@ -93,7 +92,11 @@ const Main = (props) => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map active={active} items={Offer}/>
+
+
+                  <Map active={active} items={Offer} coords={coords}/>
+
+
                 </section>
               </div>
             </div>
