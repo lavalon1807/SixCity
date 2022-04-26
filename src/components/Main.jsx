@@ -107,4 +107,5 @@ const Main = (props) => {
   )
 }
 
-export default Main;
+export {Main};
+

@@ -3,6 +3,7 @@ import L from 'leaflet'
 import PropTypes from 'prop-types'
 
 const Map = (props) => {
+  let marker
   const {items, active, coords} = props
 
   const mapRef = useRef();
@@ -41,29 +42,27 @@ const Map = (props) => {
   }, [])
 
   useEffect(()=>{
-    if(mapRef.current) {
+    if(active) {
       coords.forEach((coord) => {
-        const isActive = active ? coord.id === active.id : false
+        if(active.id === coord.id) {
+          const customIcon = L.icon({
+            iconUrl: `img/pin-active.svg`,
+            iconSize: [30, 30]
+          })
 
-        const customIcon = L.icon({
-          iconUrl: isActive ? `img/pin-active.svg` : `img/pin.svg`,
-          iconSize: [30, 30]
-        })
-
-        L.marker({
-        lat: coord.lat,
-        lng: coord.lng
-      },
-      {
-        icon: customIcon
-      })
-      .addTo(mapRef.current)
-      .bindPopup(coord.title)
-
+          marker = L.marker({
+            lat: coord.lat,
+            lng: coord.lng
+          },
+          {
+            icon: customIcon
+          })
+          .addTo(mapRef.current)
+        }
+    })
       return () => {
-        mapRef.current.remove()
-      }
-      })
+            mapRef.current.removeLayer(marker)
+          }
     }
   }, [mapRef.current, active])
 
