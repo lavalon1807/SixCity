@@ -3,7 +3,7 @@ import React from 'react'
 const ChooseCity = (props) => {
   const {items, onClick, className, chooseClass} = props
 
-  const classChoose = chooseClass ? `tabs__item--active` : ''
+  const classChoose = chooseClass || className ? `tabs__item--active` : ''
 
   return(
     <>
