@@ -34,10 +34,6 @@ const Map = (props) => {
       })
       .addTo(mapRef.current)
       .bindPopup(coord.title)
-
-      return () => {
-        mapRef.current.remove()
-      }
     })
   }, [])
 

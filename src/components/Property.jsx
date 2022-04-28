@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import Header from './Header';
 import DataProp from './DataProp'
 import Reviews from './Reviews'
-import offer from '../mocks/offer'
+import {offer} from '../mocks/offer'
 import Neiborhood from './Neiborhood'
 import { useParams } from 'react-router-dom'
 import Comp from './comp'

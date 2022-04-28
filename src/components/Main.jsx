@@ -4,14 +4,17 @@ import Card from './Card';
 import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
-import Offer from '../mocks/offer'
+import {offer, city} from '../mocks/offer'
 import coords from '../mocks/Coords'
+import LoadCity from './LoadCity'
 
 const Main = (props) => {
   const [active, setActive] = useState(null)
+  const [citys, setCitys] = useState({city})
   const handleMouseEnter = useCallback((item) => {
     setActive(item)
   }, [])
+
   const handleMouseLeave = useCallback((item) => {
     setActive(null)
   }, [])
@@ -31,36 +34,13 @@ const Main = (props) => {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
+
+
+
+                <LoadCity items={city} />
+
+
+
               </ul>
             </section>
           </div>
@@ -94,7 +74,7 @@ const Main = (props) => {
                 <section className="cities__map map">
 
 
-                  <Map active={active} items={Offer} coords={coords}/>
+                  <Map active={active} items={offer} coords={coords}/>
 
 
                 </section>
