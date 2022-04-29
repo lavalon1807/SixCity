@@ -11,7 +11,8 @@ const offer = [
     name: `Beautiful & luxurious apartment at great location`,
     type: `Apartment`,
     bedrooms: 4,
-    adults: 4
+    adults: 4,
+    city: 'Paris',
   },
   {
     id: 2,
@@ -24,7 +25,8 @@ const offer = [
     name: `Wood and stone place`,
     type: `Private room`,
     bedrooms: 2,
-    adults: 3
+    adults: 3,
+    city: 'Brussels',
   },
   {
     id: 3,
@@ -37,7 +39,8 @@ const offer = [
     name: `Canal View Prinsengracht`,
     type: `Apartment`,
     bedrooms: 3,
-    adults: 5
+    adults: 5,
+    city: 'Amsterdam',
   },
   {
     id: 4,
@@ -51,7 +54,8 @@ const offer = [
     name: `Nice, cozy, warm big bed apartment`,
     type: `Private room`,
     bedrooms: 5,
-    adults: 10
+    adults: 10,
+    city: 'Hamburg',
   },
   {
     id: 5,
@@ -65,7 +69,8 @@ const offer = [
     name: `Beautiful & luxurious apartment`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Hamburg',
   },
   {
     id: 6,
@@ -79,7 +84,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-6`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Amsterdam',
   },
   {
     id: 7,
@@ -93,7 +99,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-7`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Dusseldorf',
   },
   {
     id: 8,
@@ -107,7 +114,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-8`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Paris'
   },
   {
     id: 9,
@@ -121,7 +129,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-9`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Cologne',
   },
   {
     id: 10,
@@ -135,7 +144,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-10`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Hamburg',
   },
   {
     id: 11,
@@ -149,7 +159,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-11`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Amsterdam',
   },
   {
     id: 12,
@@ -163,7 +174,8 @@ const offer = [
     name: `Beautiful & luxurious apartment-12`,
     type: `Apartment`,
     bedrooms: 1,
-    adults: 1
+    adults: 1,
+    city: 'Brussels',
   },
 ];
 

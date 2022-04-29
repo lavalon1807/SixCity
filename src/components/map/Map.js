@@ -1,10 +1,17 @@
-import React, { useEffect, useRef} from 'react'
+import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
 
 const Map = (props) => {
-  let marker
   const {items, active, coords} = props
+  const [state, setState] = useState()
+
+  let marker
+  const item = items.filter((it)=>{return it.city === 'Paris'})
+  let itemCoords = [];
+  let ggg = {}
+
+  ggg = coords.filter((it, index) => it[index] === item[index])
 
   const mapRef = useRef();
 

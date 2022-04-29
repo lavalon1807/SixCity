@@ -4,20 +4,14 @@ import {offer, city} from '../mocks/offer'
 
 
 const LoadCity = (props) => {
-  const initialState = 'Paris'
-  const [ref, setRef] = useState(initialState)
-  const {items, onClick} = props
-
-  const toggle = (e) => {
-    setRef(e.currentTarget.innerText)
-  }
+  const {items, onClick, refss} = props
 
   return(
-    items.map((item, index) => <ChooseCity
+    items.map((item) => <ChooseCity
       key={item}
       items={item}
-      className={ref === item}
-      onClick={toggle}
+      className={refss === item}
+      onClick={onClick}
       />
     )
   )

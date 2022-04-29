@@ -19,6 +19,12 @@ const Main = (props) => {
     setActive(null)
   }, [])
 
+  const initialState = 'Paris'
+  const [refss, setRefss] = useState(initialState)
+  const toggle = (e) => {
+    setRefss(e.currentTarget.innerText)
+  }
+
   return(
     <>
       <div style={{display: "none"}}>
@@ -37,7 +43,7 @@ const Main = (props) => {
 
 
 
-                <LoadCity items={city} />
+                <LoadCity items={city} onClick={toggle} refss={refss}/>
 
 
 
@@ -66,7 +72,11 @@ const Main = (props) => {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
 
-                <LoadCards onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}/>
+
+
+                <LoadCards onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} refss={refss}/>
+
+
 
                 </div>
               </section>

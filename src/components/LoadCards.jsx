@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
 import Card from './Card'
-import {offer} from '../mocks/offer'
+import {offer, city} from '../mocks/offer'
 import PropTypes from 'prop-types'
 import Property from './Property'
 
 const LoadCards = (props) => {
+  const {refss} = props
   const [step, setStep] = useState(offer)
 
   const {onMouseEnter, onMouseLeave} = props
+
+  let rrr = []
+  step.forEach((item, index) => {
+    const ttt = refss === item.city ? rrr.push(item) : step
+  })
+console.log(rrr)
   return(
-    step.map(item =>
-      <Card
-      key = {item.id}
-      items={item}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave} />
-    )
+    rrr.map(item =>
+        <Card
+        key = {item.id}
+        items={item}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave} />
+      )
   )
 }
 
