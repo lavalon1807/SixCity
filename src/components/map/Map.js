@@ -3,16 +3,11 @@ import L from 'leaflet'
 import PropTypes from 'prop-types'
 
 const Map = (props) => {
-  const {items, active, coords} = props
-  const [state, setState] = useState()
-
+  const {items, active, coords, currentcity, massChooseCoords} = props
+  console.log(massChooseCoords)
   let marker
-  const item = items.filter((it)=>{return it.city === 'Paris'})
-  let itemCoords = [];
-  let ggg = {}
-
-  ggg = coords.filter((it, index) => it[index] === item[index])
-
+  let pork = []
+  let pork2=[]
   const mapRef = useRef();
 
   useEffect(()=>{
@@ -25,24 +20,31 @@ const Map = (props) => {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     })
     .addTo(mapRef.current)
+  }, [])
 
-    coords.forEach((coord) => {
+  useEffect(() => {
+    massChooseCoords.forEach((coord) => {
       const customIcon = L.icon({
         iconUrl: './img/pin.svg',
         iconSize: [30, 30]
       })
 
-      L.marker({
+      pork = L.marker({
         lat: coord.lat,
         lng: coord.lng
       },
       {
         icon: customIcon
       })
-      .addTo(mapRef.current)
-      .bindPopup(coord.title)
+      pork2.push(pork)
+      pork.addTo(mapRef.current)
     })
-  }, [])
+    return () => {
+      for(let i = 0; i < pork2.length; i++) {
+        mapRef.current.removeLayer(pork2[i])
+      }
+          }
+  }, [massChooseCoords])
 
   useEffect(()=>{
     if(active) {

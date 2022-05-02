@@ -10,7 +10,6 @@ import LoadCity from './LoadCity'
 
 const Main = (props) => {
   const [active, setActive] = useState(null)
-  const [citys, setCitys] = useState({city})
   const handleMouseEnter = useCallback((item) => {
     setActive(item)
   }, [])
@@ -20,10 +19,25 @@ const Main = (props) => {
   }, [])
 
   const initialState = 'Paris'
-  const [refss, setRefss] = useState(initialState)
+  const [currentcity, setCurrentcity] = useState(initialState)
   const toggle = (e) => {
-    setRefss(e.currentTarget.innerText)
+    setCurrentcity(e.currentTarget.innerText)
   }
+
+  const [step, setStep] = useState(offer)
+  let massChooseCards = []
+  step.forEach((item) => {
+    currentcity === item.city ? massChooseCards.push(item) : step
+  })
+
+  const [state, setState] = useState(coords)
+  let massChooseCoords = []
+  state.forEach(item => {
+      massChooseCards.forEach(card => {
+        item.id === card.id ? massChooseCoords.push(item) : ''
+    })
+  })
+  const placeCount = massChooseCoords.length
 
   return(
     <>
@@ -43,7 +57,7 @@ const Main = (props) => {
 
 
 
-                <LoadCity items={city} onClick={toggle} refss={refss}/>
+                <LoadCity items={city} onClick={toggle} currentcity={currentcity}/>
 
 
 
@@ -54,7 +68,7 @@ const Main = (props) => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{placeCount} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -74,7 +88,12 @@ const Main = (props) => {
 
 
 
-                <LoadCards onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} refss={refss}/>
+                <LoadCards
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  currentcity={currentcity}
+                  massChooseCards={massChooseCards}
+                />
 
 
 
@@ -84,7 +103,14 @@ const Main = (props) => {
                 <section className="cities__map map">
 
 
-                  <Map active={active} items={offer} coords={coords}/>
+                  <Map
+                    active={active}
+                    items={offer}
+                    coords={coords}
+                    currentcity={currentcity}
+                    massChooseCards={massChooseCards}
+                    massChooseCoords={massChooseCoords}
+                  />
 
 
                 </section>

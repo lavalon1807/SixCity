@@ -4,13 +4,13 @@ import {offer, city} from '../mocks/offer'
 
 
 const LoadCity = (props) => {
-  const {items, onClick, refss} = props
+  const {items, onClick, currentcity} = props
 
   return(
     items.map((item) => <ChooseCity
       key={item}
       items={item}
-      className={refss === item}
+      className={currentcity === item}
       onClick={onClick}
       />
     )
