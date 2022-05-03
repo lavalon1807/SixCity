@@ -25,6 +25,26 @@ const Property = (props) => {
 
   const coord = coords.filter((item) => item.id !== id).slice(0, 3)
 
+  const initialState = 'Paris'
+  const [currentcity, setCurrentcity] = useState(initialState)
+  const toggle = (e) => {
+    setCurrentcity(e.currentTarget.innerText)
+  }
+
+  const [step, setStep] = useState(offer)
+  let massChooseCards = []
+  step.forEach((item) => {
+    currentcity === item.city ? massChooseCards.push(item) : step
+  })
+
+  const [state, setState] = useState(coords)
+  let massChooseCoords = []
+  state.forEach(item => {
+      massChooseCards.forEach(card => {
+        item.id === card.id ? massChooseCoords.push(item) : ''
+    })
+  })
+
   return(
     <>
       <div style={{display: "none"}}>
@@ -180,8 +200,8 @@ const Property = (props) => {
             </div>
             <section className="property__map map" style={{margin: 'auto', maxWidth: '1144px'}}>
 
-            {/*Подключаем карту*/}
-              {<Map active={active} items={offer} coords={coord}/>}
+
+              {<Map active={active} items={offer} coords={coord} massChooseCoords={massChooseCoords}/>}
 
 
             </section>

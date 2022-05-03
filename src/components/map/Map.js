@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
+import { useParams } from 'react-router-dom'
 
 const Map = (props) => {
+  const params = useParams()
+  const id = Number(params.id);
   const {items, active, coords, currentcity, massChooseCoords} = props
-  console.log(massChooseCoords)
   let marker
   let pork = []
   let pork2=[]
@@ -46,30 +48,33 @@ const Map = (props) => {
           }
   }, [massChooseCoords])
 
-  useEffect(()=>{
-    if(active) {
-      coords.forEach((coord) => {
-        if(active.id === coord.id) {
-          const customIcon = L.icon({
-            iconUrl: `img/pin-active.svg`,
-            iconSize: [30, 30]
-          })
 
-          marker = L.marker({
-            lat: coord.lat,
-            lng: coord.lng
-          },
-          {
-            icon: customIcon
-          })
-          .addTo(mapRef.current)
-        }
-    })
-      return () => {
-            mapRef.current.removeLayer(marker)
+  useEffect(()=>{
+      if(active && !id) {
+        coords.forEach((coord) => {
+          if(active.id === coord.id) {
+            const customIcon = L.icon({
+              iconUrl: `img/pin-active.svg`,
+              iconSize: [30, 30]
+            })
+
+            marker = L.marker({
+              lat: coord.lat,
+              lng: coord.lng
+            },
+            {
+              icon: customIcon
+            })
+            .addTo(mapRef.current)
           }
+      })
+        return () => {
+              mapRef.current.removeLayer(marker)
+            }
     }
   }, [mapRef.current, active])
+
+
 
   return(
     <div id="map" style={{height: "100%"}} ref={mapRef}></div>
