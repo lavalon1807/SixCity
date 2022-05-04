@@ -8,42 +8,15 @@ import { useParams } from 'react-router-dom'
 import Comp from './comp'
 import comment from '../mocks/Comment'
 import Map from './Map/Map';
-import coords from '../mocks/Coords'
+import {coords} from '../mocks/Coords'
 
 const Property = (props) => {
+  const {toggle, currentcity, massChooseCards, massChooseCoords} = props
   const params = useParams()
   const id = Number(params.id);
   const item = offer.find((it) => it.id === id)
-  const [active, setActive] = useState(null)
 
-  const handleMouseEnter = useCallback((item) => {
-    setActive(item)
-  }, [])
-  const handleMouseLeave = useCallback((item) => {
-    setActive(null)
-  }, [])
-
-  const coord = coords.filter((item) => item.id !== id).slice(0, 3)
-
-  const initialState = 'Paris'
-  const [currentcity, setCurrentcity] = useState(initialState)
-  const toggle = (e) => {
-    setCurrentcity(e.currentTarget.innerText)
-  }
-
-  const [step, setStep] = useState(offer)
-  let massChooseCards = []
-  step.forEach((item) => {
-    currentcity === item.city ? massChooseCards.push(item) : step
-  })
-
-  const [state, setState] = useState(coords)
-  let massChooseCoords = []
-  state.forEach(item => {
-      massChooseCards.forEach(card => {
-        item.id === card.id ? massChooseCoords.push(item) : ''
-    })
-  })
+  const miniCoords = massChooseCoords.filter((item) => item.id !== id).slice(0, 3)
 
   return(
     <>
@@ -201,7 +174,7 @@ const Property = (props) => {
             <section className="property__map map" style={{margin: 'auto', maxWidth: '1144px'}}>
 
 
-              {<Map active={active} items={offer} coords={coord} massChooseCoords={massChooseCoords}/>}
+              <Map items={offer} massChooseCoords={miniCoords}/>
 
 
             </section>
@@ -212,7 +185,7 @@ const Property = (props) => {
               <div className="near-places__list places__list">
 
               {/*Тут выводим карточки соседи*/}
-                <Comp enterFromProperty={handleMouseEnter} leaveFromProperty={handleMouseLeave}/>
+                <Comp />
 
 
               </div>

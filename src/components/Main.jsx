@@ -5,11 +5,15 @@ import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
 import {offer, city} from '../mocks/offer'
-import coords from '../mocks/Coords'
+import {Coords} from '../mocks/Coords'
 import LoadCity from './LoadCity'
 
 const Main = (props) => {
+  const {massChooseCards, massChooseCoords, ttt, yyy} = props // все берем из App
   const [active, setActive] = useState(null)
+  const [activeCity, setActiveCity] = useState()
+  const initialState = 'Paris'
+  const [currentcity, setCurrentcity] = useState(initialState)
   const handleMouseEnter = useCallback((item) => {
     setActive(item)
   }, [])
@@ -18,26 +22,12 @@ const Main = (props) => {
     setActive(null)
   }, [])
 
-  const initialState = 'Paris'
-  const [currentcity, setCurrentcity] = useState(initialState)
-  const toggle = (e) => {
+  const placeCount = massChooseCards.length
+
+  const toggle = useCallback((e) => {
     setCurrentcity(e.currentTarget.innerText)
-  }
-
-  const [step, setStep] = useState(offer)
-  let massChooseCards = []
-  step.forEach((item) => {
-    currentcity === item.city ? massChooseCards.push(item) : step
-  })
-
-  const [state, setState] = useState(coords)
-  let massChooseCoords = []
-  state.forEach(item => {
-      massChooseCards.forEach(card => {
-        item.id === card.id ? massChooseCoords.push(item) : ''
-    })
-  })
-  const placeCount = massChooseCoords.length
+    setActiveCity(currentcity)
+  }, [])
 
   return(
     <>
@@ -106,10 +96,13 @@ const Main = (props) => {
                   <Map
                     active={active}
                     items={offer}
-                    coords={coords}
+                    coords={Coords}
                     currentcity={currentcity}
                     massChooseCards={massChooseCards}
                     massChooseCoords={massChooseCoords}
+                    ttt={ttt}
+                    yyy={yyy}
+                    activeCity={activeCity}
                   />
 
 

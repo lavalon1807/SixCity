@@ -1,6 +1,15 @@
 import React from 'react'
 
-const Coords =[
+const mapCoords = [
+  [48.856663, 2.351556], // Paris
+  [50.930779, 6.938399], // Cologne
+  [50.846697, 4.352544], // Brussels
+  [52.373036, 4.892413], // Amsterdam
+  [53.550688, 9.992895], // Hamburg
+  [51.230569, 6.787428], //  Dusseldorf
+]
+
+const Coords = [
   {
     id: 1,
     lat: 52.3809553943508,
@@ -117,4 +126,4 @@ const Coords =[
   },
 ]
 
-export default Coords
+export {Coords, mapCoords}

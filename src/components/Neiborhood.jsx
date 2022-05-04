@@ -3,21 +3,13 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const Neiborhood = (props) => {
-  const {items, enter, leave} = props
+  const {items} = props
   const bookMark = props.items.hasBookmark ? 'place-card__bookmark-button--active' : ''
   const widthRating = props.items.rating * 20
 
-  const handleEnter = () => {
-    enter(items)
-  }
-
-  const handleLeave = () => {
-    enter()
-  }
-
 
   return(
-    <article className="near-places__card place-card" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+    <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={props.items.img} width="260" height="200" alt="Place image" />
