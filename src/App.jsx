@@ -14,35 +14,25 @@ const AppRoute = {
 const App = () => {
   const initialState = 'Paris'
   const [currentcity, setCurrentcity] = useState(initialState)
-  const [activeCity, setActiveCity] = useState(null)
+  const [activeCity, setActiveCity] = useState()
 
 
-  const toggle = useCallback((e) => {
+  const toggle = (e) => {
     setCurrentcity(e.currentTarget.innerText)
-    setActiveCity(currentcity)
-  }, [])
+    setActiveCity(e.currentTarget.innerText)
+  }
 
   let massChooseCards = []
   offer.forEach((item) => {
-    currentcity === item.city ? massChooseCards.push(item) : ''
+    currentcity === item.city ? massChooseCards.push(item) : null
   })
 
   let massChooseCoords = []
   Coords.forEach(item => {
       massChooseCards.forEach(card => {
-        item.id === card.id ? massChooseCoords.push(item) : ''
+        item.id === card.id ? massChooseCoords.push(item) : null
     })
   })
-
-  let ttt = []
-  for(let i = 0; i < city.length; i++) {
-    if (city[i] === currentcity) {
-      ttt.push(mapCoords[i])
-    }
-  }
-  const rrr = ttt[0]
-
-  const [yyy, setYyy] = useState(rrr)
 
   return(
     <BrowserRouter>
@@ -53,8 +43,6 @@ const App = () => {
             currentcity={currentcity}
             massChooseCards={massChooseCards}
             massChooseCoords={massChooseCoords}
-            ttt={ttt}
-            yyy={yyy}
             activeCity={activeCity}
           />
         </Route>

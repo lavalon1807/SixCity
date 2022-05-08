@@ -9,11 +9,9 @@ import {Coords} from '../mocks/Coords'
 import LoadCity from './LoadCity'
 
 const Main = (props) => {
-  const {massChooseCards, massChooseCoords, ttt, yyy} = props // все берем из App
+  const {massChooseCards, massChooseCoords, toggle, activeCity, currentcity} = props // все берем из App
   const [active, setActive] = useState(null)
-  const [activeCity, setActiveCity] = useState()
-  const initialState = 'Paris'
-  const [currentcity, setCurrentcity] = useState(initialState)
+
   const handleMouseEnter = useCallback((item) => {
     setActive(item)
   }, [])
@@ -23,11 +21,6 @@ const Main = (props) => {
   }, [])
 
   const placeCount = massChooseCards.length
-
-  const toggle = useCallback((e) => {
-    setCurrentcity(e.currentTarget.innerText)
-    setActiveCity(currentcity)
-  }, [])
 
   return(
     <>
@@ -100,8 +93,6 @@ const Main = (props) => {
                     currentcity={currentcity}
                     massChooseCards={massChooseCards}
                     massChooseCoords={massChooseCoords}
-                    ttt={ttt}
-                    yyy={yyy}
                     activeCity={activeCity}
                   />
 

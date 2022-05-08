@@ -1,77 +1,85 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-
-  const paris = [48.856663, 2.351556] // Paris
-  const cologne = [50.930779, 6.938399] // Cologne
-  const brussels = [50.846697, 4.352544] // Brussels
-  const amsterdam = [52.373036, 4.892413] // Amsterdam
-  const hamburg = [53.550688, 9.992895] // Hamburg
-  const dusseldorf = [51.230569, 6.787428] //  Dusseldorf
-
+import {mapCoords} from '../../mocks/Coords'
+import {city} from '../../mocks/offer'
+import {useParams} from 'react-router-dom'
 
 const Map = (props) => {
-  const {items, active, coords, currentcity, massChooseCoords, ttt, yyy, activeCity} = props
+  const {items, active, coords, currentcity, massChooseCoords, activeCity, massChooseCards} = props
   let marker
   let pork = []
   let pork2=[]
   const mapRef = useRef();
-  //ttt - массив координат полученный через пропс
-  const ggg = ttt[0]
-  const [tif, setTif] = useState([52.373036, 4.892413]);
+  const params = useParams()
+  const id = Number(params.id);
+
+// прописываем слой -карту
+
   useEffect(()=>{
-    mapRef.current =  L.map('map', {
-      center: tif,
-      zoom: 11
-    })
+
+   if(!id) {
+     mapRef.current =  L.map('map').setView([48.856663, 2.351556], 11)
+   } else {
+     for(let i = 0; i < city.length; i++) {
+       if(city[i] === massChooseCards[0].city) {
+          mapRef.current =  L.map('map').setView(mapCoords[i], 11)
+        }
+     }
+   }
+
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     })
     .addTo(mapRef.current)
   }, [])
 
-  useEffect(() => {
-    massChooseCoords.forEach((coord) => {
-      const customIcon = L.icon({
-        iconUrl: './img/pin.svg',
-        iconSize: [30, 30]
-      })
+// добавляем метки
+const ttt = massChooseCards.filter((item) => item.id !== id)
+const ggg = []
+ for(let i = 0; i < ttt.length; i++) {
+   ggg.push(massChooseCoords[i])
+ }
 
-      pork = L.marker({
-        lat: coord.lat,
-        lng: coord.lng
-      },
-      {
-        icon: customIcon
-      })
-      pork2.push(pork)
-      pork.addTo(mapRef.current)
-    })
+const jjj = (coord) => {
+  const customIcon = L.icon({
+    iconUrl: './img/pin.svg',
+    iconSize: [30, 30]
+  })
+
+  pork = L.marker({
+    lat: coord.lat,
+    lng: coord.lng
+  },
+  {
+    icon: customIcon
+  })
+  pork2.push(pork)
+  pork.addTo(mapRef.current)
+}
+
+  useEffect(() => {
+    if(!id) {
+      massChooseCoords.forEach(jjj) //используем внутри forEch callback функцию
+    } else {
+      ggg.slice(0, 3).forEach(jjj)  //используем внутри forEch callback функцию
+    }
+
     return () => {
       for(let i = 0; i < pork2.length; i++) {
         mapRef.current.removeLayer(pork2[i])
       }
-          }
+    }
   }, [massChooseCoords])
-if(activeCity) {
-  if(currentcity === 'Dusseldorf') {
-    mapRef.current.setView(dusseldorf)
-  } else if(currentcity === 'Paris') {
-    mapRef.current.setView(paris)
-  } else if(currentcity === 'Cologne') {
-    mapRef.current.setView(cologne)
-  } else if(currentcity === 'Brussels') {
-    mapRef.current.setView(brussels)
-  } else if(currentcity === 'Amsterdam') {
-    mapRef.current.setView(amsterdam)
-  } else if(currentcity === 'Hamburg') {
-    mapRef.current.setView(hamburg)
+
+
+  for(let i = 0; i < city.length; i++) {
+    if(activeCity === city[i]) {
+      mapRef.current.panTo(mapCoords[i])
+    }
   }
- }
 
-
-
-
+// добавляем динамику меткам при наведении
 
   useEffect(()=>{
       if(active) {

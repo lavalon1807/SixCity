@@ -4,7 +4,7 @@ const ChooseCity = (props) => {
   const {items, onClick, className, chooseClass} = props
 
 
-  const classChoose = chooseClass || className ? `tabs__item--active` : ''
+  const classChoose = className ? `tabs__item--active` : ''
 
   return(
     <>

@@ -11,7 +11,8 @@ import Map from './Map/Map';
 import {coords} from '../mocks/Coords'
 
 const Property = (props) => {
-  const {toggle, currentcity, massChooseCards, massChooseCoords} = props
+  const {toggle, massChooseCards, massChooseCoords, activeCity, currentcity} = props
+
   const params = useParams()
   const id = Number(params.id);
   const item = offer.find((it) => it.id === id)
@@ -174,7 +175,12 @@ const Property = (props) => {
             <section className="property__map map" style={{margin: 'auto', maxWidth: '1144px'}}>
 
 
-              <Map items={offer} massChooseCoords={miniCoords}/>
+              <Map
+                currentcity={currentcity}
+                massChooseCards={massChooseCards}
+                massChooseCoords={massChooseCoords}
+                activeCity={activeCity}
+              />
 
 
             </section>
@@ -185,7 +191,7 @@ const Property = (props) => {
               <div className="near-places__list places__list">
 
               {/*Тут выводим карточки соседи*/}
-                <Comp />
+                <Comp massChooseCards={massChooseCards}/>
 
 
               </div>

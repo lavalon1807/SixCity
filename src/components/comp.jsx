@@ -3,13 +3,13 @@ import Neiborhood from './Neiborhood'
 import { useParams } from 'react-router-dom'
 import {offer} from '../mocks/offer'
 const comp = (props) => {
-  const {enterFromProperty, leaveFromProperty} = props
+  const {enterFromProperty, leaveFromProperty, massChooseCards} = props
   const [efect, setEfect] = useState(offer)
   const params = useParams()
   const id = Number(params.id);
 
   useEffect(()=> {
-    setEfect(efect.filter((item) => item.id !== id))
+    setEfect(massChooseCards.filter((item) => item.id !== id))
   }, [])
 
   return(
