@@ -35,13 +35,13 @@ const Map = (props) => {
   }, [])
 
 // добавляем метки
-const ttt = massChooseCards.filter((item) => item.id !== id)
-const ggg = []
- for(let i = 0; i < ttt.length; i++) {
-   ggg.push(massChooseCoords[i])
+const filteredMass = massChooseCards.filter((item) => item.id !== id)
+const containerNeiborhoodCoords = []
+ for(let i = 0; i < filteredMass.length; i++) {
+   containerNeiborhoodCoords.push(massChooseCoords[i])
  }
 
-const jjj = (coord) => {
+const generMarker = (coord) => {
   const customIcon = L.icon({
     iconUrl: './img/pin.svg',
     iconSize: [30, 30]
@@ -60,9 +60,9 @@ const jjj = (coord) => {
 
   useEffect(() => {
     if(!id) {
-      massChooseCoords.forEach(jjj) //используем внутри forEch callback функцию
+      massChooseCoords.forEach(generMarker) //используем внутри forEch callback функцию
     } else {
-      ggg.slice(0, 3).forEach(jjj)  //используем внутри forEch callback функцию
+      ggg.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
     }
 
     return () => {

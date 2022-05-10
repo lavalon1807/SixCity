@@ -7,10 +7,36 @@ import Map from './Map/Map';
 import {offer, city} from '../mocks/offer'
 import {Coords} from '../mocks/Coords'
 import LoadCity from './LoadCity'
+import SortingCards from './SortingCards'
+
+const ttt = [
+'Popular',
+'Price: low to high',
+'Price: high to low',
+'Top rated first',
+]
 
 const Main = (props) => {
   const {massChooseCards, massChooseCoords, toggle, activeCity, currentcity} = props // все берем из App
   const [active, setActive] = useState(null)
+  const [isToggleOn, setIsToggleOn] = useState(false)
+  const initialState = 'Popular'
+  const [ret, setRet] = useState(initialState)
+
+  const clickOnSort = isToggleOn ? 'places__options--opened' : ''
+
+  const handleClick = (e) => {
+    setIsToggleOn(!isToggleOn)
+  }
+  const onclick = (e) => {
+    setRet(e.currentTarget.innerText)
+  }
+
+  document.onclick = (e) => {
+    if (e.target.className !== 'places__sorting-type') {
+      setIsToggleOn(false)
+    }
+  }
 
   const handleMouseEnter = useCallback((item) => {
     setActive(item)
@@ -54,17 +80,18 @@ const Main = (props) => {
                 <b className="places__found">{placeCount} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
+                  <span className="places__sorting-type" tabIndex="0" onClick={handleClick}>
                     Popular
                     <svg className="places__sorting-arrow" width="7" height="4">
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
                   </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                    <li className="places__option" tabIndex="0">Price: low to high</li>
-                    <li className="places__option" tabIndex="0">Price: high to low</li>
-                    <li className="places__option" tabIndex="0">Top rated first</li>
+                  <ul className={`places__options places__options--custom ${clickOnSort}`}>
+
+
+                    <SortingCards yyy={ret} onclick={onclick}/>
+
+
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">

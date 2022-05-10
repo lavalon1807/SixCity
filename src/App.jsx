@@ -17,10 +17,10 @@ const App = () => {
   const [activeCity, setActiveCity] = useState()
 
 
-  const toggle = (e) => {
+  const toggle = useCallback((e) => {
     setCurrentcity(e.currentTarget.innerText)
     setActiveCity(e.currentTarget.innerText)
-  }
+  }, [])
 
   let massChooseCards = []
   offer.forEach((item) => {
