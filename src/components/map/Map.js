@@ -35,10 +35,12 @@ const Map = (props) => {
   }, [])
 
 // добавляем метки
-const filteredMass = massChooseCards.filter((item) => item.id !== id)
+const filteredMassCards = massChooseCards.filter((item) => item.id !== id)
+const filteredMassCoords = massChooseCoords.filter((item) => item.id !== id)
+
 const containerNeiborhoodCoords = []
- for(let i = 0; i < filteredMass.length; i++) {
-   containerNeiborhoodCoords.push(massChooseCoords[i])
+ for(let i = 0; i < filteredMassCards.length; i++) {
+    containerNeiborhoodCoords.push(filteredMassCoords[i])
  }
 
 const generMarker = (coord) => {
@@ -62,7 +64,7 @@ const generMarker = (coord) => {
     if(!id) {
       massChooseCoords.forEach(generMarker) //используем внутри forEch callback функцию
     } else {
-      ggg.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
+      containerNeiborhoodCoords.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
     }
 
     return () => {
