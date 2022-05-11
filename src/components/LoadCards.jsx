@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import Property from './Property'
 
 const LoadCards = (props) => {
-  const {onMouseEnter, onMouseLeave, currentcity, massChooseCards} = props
+  const {onMouseEnter, onMouseLeave, currentcity, tuu, massChooseCards} = props
+
 
   return(
     massChooseCards.map(item =>

@@ -28,8 +28,26 @@ const Main = (props) => {
   const handleClick = (e) => {
     setIsToggleOn(!isToggleOn)
   }
+
   const onclick = (e) => {
     setRet(e.currentTarget.innerText)
+    if(e.currentTarget.innerText === 'Top rated first') {
+      massChooseCards.sort((a, b) => {
+        return a.rating - b.rating
+      })
+    } else if(e.currentTarget.innerText === 'Price: low to high') {
+      massChooseCards.sort((a, b) => {
+        return a.price - b.price
+      })
+    } else if(e.currentTarget.innerText === 'Price: high to low') {
+      massChooseCards.sort((a, b) => {
+        return b.price - a.price
+      })
+    } else if (e.currentTarget.innerText === 'Popular') {
+      massChooseCards.sort((a, b) => {
+        return a.id - b.id
+      })
+    }
   }
 
   document.onclick = (e) => {
