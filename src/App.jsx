@@ -7,11 +7,14 @@ import Property from './components/Property';
 import Error from './components/Error'
 import {offer, city} from './mocks/offer'
 import {Coords, mapCoords} from './mocks/Coords'
+import {connect, Provider} from 'react-redux'
 
 const AppRoute = {
   ROOT: `/`
 };
-const App = () => {
+
+const App = (props) => {
+
   const initialState = 'Paris'
   const [currentcity, setCurrentcity] = useState(initialState)
   const [activeCity, setActiveCity] = useState()
@@ -33,9 +36,8 @@ const App = () => {
         item.id === card.id ? massChooseCoords.push(item) : null
     })
   })
-
-  return(
-    <BrowserRouter>
+return(
+ <BrowserRouter>
       <Switch>
         <Route path={AppRoute.ROOT} exact>
           <Main
@@ -59,9 +61,6 @@ const App = () => {
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>
-  )
+)
 }
-
-
-export default App
-
+export default (App)

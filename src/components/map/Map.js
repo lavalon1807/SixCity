@@ -58,6 +58,7 @@ const generMarker = (coord) => {
   })
   pork2.push(pork)
   pork.addTo(mapRef.current)
+  pork.bindPopup(coord.title)
 }
 
   useEffect(() => {

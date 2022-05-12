@@ -31,6 +31,7 @@ const Main = (props) => {
 
   const onclick = (e) => {
     setRet(e.currentTarget.innerText)
+
     if(e.currentTarget.innerText === 'Top rated first') {
       massChooseCards.sort((a, b) => {
         return a.rating - b.rating
