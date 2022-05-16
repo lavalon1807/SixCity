@@ -19,7 +19,6 @@ const App = (props) => {
   const [currentcity, setCurrentcity] = useState(initialState)
   const [activeCity, setActiveCity] = useState()
 
-
   const toggle = useCallback((e) => {
     setCurrentcity(e.currentTarget.innerText)
     setActiveCity(e.currentTarget.innerText)
@@ -63,4 +62,4 @@ return(
     </BrowserRouter>
 )
 }
-export default (App)
+export default App

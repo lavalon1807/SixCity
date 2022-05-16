@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import ChooseCity from './ChooseCity'
 import {offer, city} from '../mocks/offer'
+import {connect} from 'react-redux'
 
+const ADD_POST = 'ADD_POST'
 
 const LoadCity = (props) => {
   const {items, onClick, currentcity} = props
