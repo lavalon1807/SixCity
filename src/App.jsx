@@ -8,25 +8,27 @@ import Error from './components/Error'
 import {offer, city} from './mocks/offer'
 import {Coords, mapCoords} from './mocks/Coords'
 import {connect, Provider} from 'react-redux'
+import {store} from './index'
+import {ActionType} from './components/action'
 
 const AppRoute = {
   ROOT: `/`
 };
 
 const App = (props) => {
+  const {currentCity} = props
 
-  const initialState = 'Paris'
-  const [currentcity, setCurrentcity] = useState(initialState)
   const [activeCity, setActiveCity] = useState()
 
-  const toggle = useCallback((e) => {
-    setCurrentcity(e.currentTarget.innerText)
+  const click = (e) => {
+    const cityRich = e.currentTarget.innerText
+    store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
     setActiveCity(e.currentTarget.innerText)
-  }, [])
+  }
 
   let massChooseCards = []
   offer.forEach((item) => {
-    currentcity === item.city ? massChooseCards.push(item) : null
+    currentCity === item.city ? massChooseCards.push(item) : null
   })
 
   let massChooseCoords = []
@@ -40,8 +42,8 @@ return(
       <Switch>
         <Route path={AppRoute.ROOT} exact>
           <Main
-            toggle={toggle}
-            currentcity={currentcity}
+            toggle={click}
+            currentcity={currentCity}
             massChooseCards={massChooseCards}
             massChooseCoords={massChooseCoords}
             activeCity={activeCity}
@@ -51,8 +53,8 @@ return(
         <Route path='/favorites' exact><Favorites /></Route>
         <Route path='/property/:id' exact>
           <Property
-            toggle={toggle}
-            currentcity={currentcity}
+            toggle={click}
+            currentcity={currentCity}
             massChooseCards={massChooseCards}
             massChooseCoords={massChooseCoords}
           />
@@ -62,4 +64,10 @@ return(
     </BrowserRouter>
 )
 }
-export default App
+
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity
+})
+
+
+export default connect(mapStateToProps)(App)
