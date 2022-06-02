@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux'
 import Card from './Card'
 import {offer, city} from '../mocks/offer'
 import PropTypes from 'prop-types'
 import Property from './Property'
 
 const LoadCards = (props) => {
-  const {onMouseEnter, onMouseLeave, currentcity, tuu, massChooseCards} = props
-
+  const {onMouseEnter, onMouseLeave, currentCity, massChooseCards} = props
 
   return(
     massChooseCards.map(item =>
@@ -14,7 +14,7 @@ const LoadCards = (props) => {
         key = {item.id}
         items={item}
         onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave} />
+        onMouseLeave={onMouseLeave}/>
       )
   )
 }
@@ -31,4 +31,8 @@ LoadCards.propTypes = {
   )
 }
 
-export default LoadCards;
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity
+})
+
+export default connect(mapStateToProps)(LoadCards);

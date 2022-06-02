@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-import {mapCoords} from '../../mocks/Coords'
+import {mapCoords, Coords} from '../../mocks/Coords'
 import {city} from '../../mocks/offer'
 import {useParams} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 const Map = (props) => {
-  const {items, active, coords, currentcity, massChooseCoords, activeCity, massChooseCards} = props
+  const {items, active, massChooseCoords, activeCity, massChooseCards} = props
   let marker
   let pork = []
   let pork2=[]
@@ -86,7 +87,7 @@ const generMarker = (coord) => {
 
   useEffect(()=>{
       if(active) {
-        coords.forEach((coord) => {
+        Coords.forEach((coord) => {
           if(active.id === coord.id) {
             const customIcon = L.icon({
               iconUrl: `img/pin-active.svg`,
@@ -123,6 +124,5 @@ Map.propTypes = {
     title: PropTypes.string.isRequired
   })
 }
-
 
 export default Map

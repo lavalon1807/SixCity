@@ -176,7 +176,6 @@ const Property = (props) => {
 
 
               <Map
-                currentcity={currentcity}
                 massChooseCards={massChooseCards}
                 massChooseCoords={massChooseCoords}
                 activeCity={activeCity}

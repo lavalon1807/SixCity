@@ -5,23 +5,15 @@ import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
 import {offer, city} from '../mocks/offer'
-import {Coords} from '../mocks/Coords'
 import LoadCity from './LoadCity'
 import SortingCards from './SortingCards'
-
-const ttt = [
-'Popular',
-'Price: low to high',
-'Price: high to low',
-'Top rated first',
-]
 
 const Main = (props) => {
   const {massChooseCards, massChooseCoords, toggle, activeCity, currentcity} = props // все берем из App
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
   const initialState = 'Popular'
-  const [ret, setRet] = useState(initialState)
+  const [addSort, setAddSort] = useState(initialState)
 
   const clickOnSort = isToggleOn ? 'places__options--opened' : ''
 
@@ -30,21 +22,25 @@ const Main = (props) => {
   }
 
   const onclick = (e) => {
-    setRet(e.currentTarget.innerText)
+    setAddSort(e.currentTarget.innerText)
 
     if(e.currentTarget.innerText === 'Top rated first') {
+      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.rating - b.rating
       })
     } else if(e.currentTarget.innerText === 'Price: low to high') {
+      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.price - b.price
       })
     } else if(e.currentTarget.innerText === 'Price: high to low') {
+      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return b.price - a.price
       })
     } else if (e.currentTarget.innerText === 'Popular') {
+      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.id - b.id
       })
@@ -100,7 +96,7 @@ const Main = (props) => {
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0" onClick={handleClick}>
-                    {ret}
+                    {addSort}
                     <svg className="places__sorting-arrow" width="7" height="4">
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
@@ -108,7 +104,7 @@ const Main = (props) => {
                   <ul className={`places__options places__options--custom ${clickOnSort}`}>
 
 
-                    <SortingCards yyy={ret} onclick={onclick}/>
+                    <SortingCards addSort={addSort} onclick={onclick}/>
 
 
                   </ul>
@@ -118,10 +114,10 @@ const Main = (props) => {
 
 
                 <LoadCards
+                  massChooseCards={massChooseCards}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   currentcity={currentcity}
-                  massChooseCards={massChooseCards}
                 />
 
 
@@ -134,9 +130,6 @@ const Main = (props) => {
 
                   <Map
                     active={active}
-                    items={offer}
-                    coords={Coords}
-                    currentcity={currentcity}
                     massChooseCards={massChooseCards}
                     massChooseCoords={massChooseCoords}
                     activeCity={activeCity}

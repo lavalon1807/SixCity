@@ -1,10 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 const ADD_POST = 'ADD_POST'
 const ChooseCity = (props) => {
-  const {items, onClick, chooseClass, className} = props
+  const {items, onClick, chooseClass, className, currentCity} = props
 
-  const classChoose = className ? `tabs__item--active` : ''
+  const classChoose = currentCity === items ? `tabs__item--active` : ''
 
   return(
     <>
@@ -17,4 +18,8 @@ const ChooseCity = (props) => {
   )
 }
 
-export default ChooseCity
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity
+})
+
+export default connect(mapStateToProps)(ChooseCity)

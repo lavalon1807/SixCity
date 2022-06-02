@@ -1,13 +1,13 @@
 import React from 'react'
 
 const sort = (props) => {
-  const {items, yyy, onclick} = props
+  const {items, rating, onclick} = props
 
-  const traa = yyy === items ? 'places__option--active' : ''
+  const active = rating === items ? 'places__option--active' : ''
 
   return(
   <>
-    <li className={`places__option ${traa}`}  tabIndex="0" onClick={onclick}>{items}</li>
+    <li className={`places__option ${active}`}  tabIndex="0" onClick={onclick}>{items}</li>
    </>
   )
 }

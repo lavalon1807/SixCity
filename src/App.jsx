@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useCallback } from 'react';
+import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import {Main} from './components/Main';
 import Login from './components/Sign-in';
@@ -9,7 +9,8 @@ import {offer, city} from './mocks/offer'
 import {Coords, mapCoords} from './mocks/Coords'
 import {connect, Provider} from 'react-redux'
 import {store} from './index'
-import {ActionType} from './components/action'
+import {ActionType} from './components/store/action'
+import {fetchOfferList} from './components/store/apiCreate'
 
 const AppRoute = {
   ROOT: `/`
@@ -19,12 +20,6 @@ const App = (props) => {
   const {currentCity} = props
 
   const [activeCity, setActiveCity] = useState()
-
-  const click = (e) => {
-    const cityRich = e.currentTarget.innerText
-    store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
-    setActiveCity(e.currentTarget.innerText)
-  }
 
   let massChooseCards = []
   offer.forEach((item) => {
@@ -37,6 +32,16 @@ const App = (props) => {
         item.id === card.id ? massChooseCoords.push(item) : null
     })
   })
+
+  const click = (e) => {
+    const cityRich = e.currentTarget.innerText
+    store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
+    setActiveCity(e.currentTarget.innerText)
+  }
+
+ // сохраняем все данные в стор
+  // store.dispatch(fetchOfferList())
+
 return(
  <BrowserRouter>
       <Switch>
