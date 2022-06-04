@@ -22,6 +22,7 @@ const App = (props) => {
   const [activeCity, setActiveCity] = useState()
 
   let massChooseCards = []
+
   offer.forEach((item) => {
     currentCity === item.city ? massChooseCards.push(item) : null
   })

@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useState } from 'react';
 import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
-import LoadCards from './LoadCards';
+import {LoadCards} from './LoadCards';
 import Map from './Map/Map';
 import {offer, city} from '../mocks/offer'
 import LoadCity from './LoadCity'
@@ -25,22 +25,18 @@ const Main = (props) => {
     setAddSort(e.currentTarget.innerText)
 
     if(e.currentTarget.innerText === 'Top rated first') {
-      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.rating - b.rating
       })
     } else if(e.currentTarget.innerText === 'Price: low to high') {
-      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.price - b.price
       })
     } else if(e.currentTarget.innerText === 'Price: high to low') {
-      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return b.price - a.price
       })
     } else if (e.currentTarget.innerText === 'Popular') {
-      console.log(massChooseCards)
       massChooseCards.sort((a, b) => {
         return a.id - b.id
       })

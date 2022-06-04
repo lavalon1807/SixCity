@@ -35,4 +35,5 @@ const mapStateToProps = (state) => ({
   currentCity: state.currentCity
 })
 
+export {LoadCards}
 export default connect(mapStateToProps)(LoadCards);
