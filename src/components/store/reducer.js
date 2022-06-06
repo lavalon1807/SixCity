@@ -4,8 +4,9 @@ import {AuthorizationStatus} from '../const'
 
 const initialState = {
   currentCity: 'Paris',
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
   data: {},
+  isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 }
 
 const Reducer = (state = initialState, action) => {
@@ -14,10 +15,18 @@ const Reducer = (state = initialState, action) => {
       return {...state, currentCity: action.payload}
 
     case ActionType.LOAD_DATA:
-      return {...state, data: action.payload}
+      return {
+        ...state,
+        isDataLoaded: true,
+        data: action.payload,
+
+      }
 
     case ActionType.REQUIRED_AUTHORIZATION:
-      return {...state, authorization: action.payload}
+      return {
+        ...state,
+        authorizationStatus: action.payload
+      }
 
     default: return state
   }

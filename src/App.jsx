@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {Main} from './components/Main';
+import Main from './components/Main';
 import Login from './components/Sign-in';
 import Favorites from './components/Favorites';
 import Property from './components/Property';
@@ -17,12 +17,11 @@ const AppRoute = {
 };
 
 const App = (props) => {
-  const {currentCity} = props
+  const {currentCity, loadData, isDataLoaded, data} = props
 
   const [activeCity, setActiveCity] = useState()
 
   let massChooseCards = []
-
   offer.forEach((item) => {
     currentCity === item.city ? massChooseCards.push(item) : null
   })
@@ -40,8 +39,15 @@ const App = (props) => {
     setActiveCity(e.currentTarget.innerText)
   }
 
- // сохраняем все данные в стор
-  // store.dispatch(fetchOfferList())
+  useEffect(() => {
+    if(!isDataLoaded) {
+      loadData();
+    }
+  },[isDataLoaded])
+
+  if(!isDataLoaded) {
+    console.log('loaded...')
+  }
 
 return(
  <BrowserRouter>
@@ -72,8 +78,17 @@ return(
 }
 
 const mapStateToProps = (state) => ({
-  currentCity: state.currentCity
+  currentCity: state.currentCity,
+  isDataLoaded: state.isDataLoaded,
+  data: state.data,
+  loadData: state.loadData,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData() {
+    dispatch(fetchOfferList())
+  }
 })
 
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

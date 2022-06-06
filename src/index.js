@@ -11,14 +11,13 @@ import {fetchOfferList} from './components/store/apiCreate'
 import {requireAuthorization} from './components/store/actionCreate'
 import {createAPI} from './components/api'
 
-const api = createAPI()
+const api = createAPI(()=>dispatch(actionCreate.requireAuthorization(AuthorizationStatus.NO_AUTH)))
 
 export const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk.withExtraArgument(api))
 ))
 
-// store.subscribe(()=>console.info(store.getState()))
-
+store.subscribe(()=>console.info(store.getState()))
 
 ReactDOM.render(
   <Provider store={store}>
