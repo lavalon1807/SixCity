@@ -17,10 +17,12 @@ const Main = (props) => {
     toggle,
     activeCity,
     currentcity,
+    city,
     data,
     isDataLoaded,
     loadData
   } = props // все берем из App
+
 
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
@@ -169,6 +171,7 @@ const Main = (props) => {
 const mapStateToProps = (state) => ({
   currentCity: state.currentCity,
   isDataLoaded: state.isDataLoaded,
+  city: state.city,
   data: state.data,
   loadData: state.loadData,
 })

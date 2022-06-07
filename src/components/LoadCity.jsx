@@ -4,10 +4,10 @@ import {connect} from 'react-redux'
 
 
 const LoadCity = (props) => {
-  const {onClick, data, isDataLoaded} = props
+  const {onClick, city, isDataLoaded} = props
 
   return(
-    data.map((item) => <ChooseCity
+    city.map((item) => <ChooseCity
       key={item}
       items={item}
       onClick={onClick}
@@ -17,6 +17,7 @@ const LoadCity = (props) => {
 }
 
 const mapStateToProps = (state) => ({
+  city: state.city,
   data: state.data,
   isDataLoaded: state.isDataLoaded,
 })

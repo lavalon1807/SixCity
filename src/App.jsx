@@ -11,20 +11,35 @@ import {connect, Provider} from 'react-redux'
 import {store} from './index'
 import {ActionType} from './components/store/action'
 import {fetchOfferList} from './components/store/apiCreate'
+import PropTypes from 'prop-types'
+import {LoadData} from './components/LoadData'
 
 const AppRoute = {
   ROOT: `/`
 };
 
 const App = (props) => {
-  const {currentCity, loadData, isDataLoaded, data} = props
-
+  const {currentCity, data, isDataLoaded, loadData} = props
   const [activeCity, setActiveCity] = useState()
 
+  useEffect(() => {
+    if(!isDataLoaded) {
+      loadData()
+    }
+  },[isDataLoaded])
+
+  if(!isDataLoaded) {
+    return (
+      <LoadData />
+    )
+  }
+
   let massChooseCards = []
-  offer.forEach((item) => {
-    currentCity === item.city ? massChooseCards.push(item) : null
+  data.forEach((item) => {
+    currentCity === item.city.name ? massChooseCards.push(item) : null
   })
+
+  console.log(massChooseCards)
 
   let massChooseCoords = []
   Coords.forEach(item => {
@@ -67,10 +82,14 @@ return(
 )
 }
 
+App.propTypes = {
+  currentCity: PropTypes.string.isRequired,
+}
+
 const mapStateToProps = (state) => ({
   currentCity: state.currentCity,
-  isDataLoaded: state.isDataLoaded,
   data: state.data,
+  isDataLoaded: state.isDataLoaded,
   loadData: state.loadData,
 })
 

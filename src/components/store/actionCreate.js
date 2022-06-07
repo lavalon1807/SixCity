@@ -1,8 +1,9 @@
 import {ActionType} from './action'
 
-export const loadOffer = (data) => ({
+export const loadOffer = (city, data) => ({
   type: ActionType.LOAD_DATA,
-  payload: data,
+  payloadCity: city,
+  payloadData: data
 })
 
 export const requireAuthorization = (tipe) => ({
