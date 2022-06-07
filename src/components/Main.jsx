@@ -8,6 +8,7 @@ import LoadCity from './LoadCity'
 import SortingCards from './SortingCards'
 import {connect} from 'react-redux'
 import {fetchOfferList} from './store/apiCreate'
+import { LoadData } from './LoadData'
 
 const Main = (props) => {
   const {
@@ -67,6 +68,18 @@ const Main = (props) => {
   const handleMouseLeave = useCallback((item) => {
     setActive(null)
   }, [])
+
+  useEffect(() => {
+    if(!isDataLoaded) {
+      loadData()
+    }
+  },[isDataLoaded])
+
+  if(!isDataLoaded) {
+    return (
+      <LoadData />
+    )
+  }
 
   const placeCount = massChooseCards.length
 
@@ -154,9 +167,18 @@ const Main = (props) => {
 }
 
 const mapStateToProps = (state) => ({
+  currentCity: state.currentCity,
+  isDataLoaded: state.isDataLoaded,
   data: state.data,
+  loadData: state.loadData,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData() {
+    dispatch(fetchOfferList())
+  }
 })
 
 
-export default connect(mapStateToProps)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
 

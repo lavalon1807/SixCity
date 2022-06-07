@@ -39,16 +39,6 @@ const App = (props) => {
     setActiveCity(e.currentTarget.innerText)
   }
 
-  useEffect(() => {
-    if(!isDataLoaded) {
-      loadData();
-    }
-  },[isDataLoaded])
-
-  if(!isDataLoaded) {
-    console.log('loaded...')
-  }
-
 return(
  <BrowserRouter>
       <Switch>

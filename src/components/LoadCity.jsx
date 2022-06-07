@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import ChooseCity from './ChooseCity'
-import {offer, city} from '../mocks/offer'
 import {connect} from 'react-redux'
 
 
 const LoadCity = (props) => {
   const {onClick, data, isDataLoaded} = props
-  console.log(data)
 
   return(
-    city.map((item) => <ChooseCity
+    data.map((item) => <ChooseCity
       key={item}
       items={item}
       onClick={onClick}
