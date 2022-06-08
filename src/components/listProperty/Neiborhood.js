@@ -43,14 +43,14 @@ const Neiborhood = (props) => {
   )
 }
 
-Neiborhood.propTypes = {
-  items: PropTypes.shape({
-    price: PropTypes.number.isRequired,
-    attribute: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-  })
-}
+// Neiborhood.propTypes = {
+//   items: PropTypes.shape({
+//     price: PropTypes.number.isRequired,
+//     attribute: PropTypes.string.isRequired,
+//     name: PropTypes.string.isRequired,
+//     type: PropTypes.string.isRequired,
+//     img: PropTypes.string.isRequired,
+//   })
+// }
 
 export default Neiborhood

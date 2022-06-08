@@ -1,21 +1,21 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import Header from './Header';
-import DataProp from './DataProp'
-import Reviews from './Reviews'
-import {offer} from '../mocks/offer'
-import Neiborhood from './Neiborhood'
 import { useParams } from 'react-router-dom'
-import Comp from './comp'
-import comment from '../mocks/Comment'
-import Map from './Map/Map';
-import {coords} from '../mocks/Coords'
+import Header from '../Header';
+import DataProp from './DataProp'
+import Reviews from './ReviewsLoader'
+import {offer} from '../../mocks/offer'
+import NeiborhoodLoad from './NeiborhoodLoad'
+import comment from '../../mocks/Comment'
+import Map from '../Map/Map';
+import {coords} from '../../mocks/Coords'
+import {PicturePlace} from './picturePlaces/PicturePlace'
 
 const Property = (props) => {
   const {toggle, massChooseCards, massChooseCoords, activeCity, currentcity} = props
-
   const params = useParams()
   const id = Number(params.id);
-  const item = offer.find((it) => it.id === id)
+
+  const item = massChooseCards.find((it) => it.id === id)
 
   const miniCoords = massChooseCoords.filter((item) => item.id !== id).slice(0, 3)
 
@@ -33,7 +33,8 @@ const Property = (props) => {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                <div className="property__image-wrapper">
+                <PicturePlace item={item}/>
+                {/*<div className="property__image-wrapper">
                   <img className="property__image" src="img/room.jpg" alt="Photo studio" />
                 </div>
                 <div className="property__image-wrapper">
@@ -50,7 +51,7 @@ const Property = (props) => {
                 </div>
                 <div className="property__image-wrapper">
                   <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-                </div>
+                </div>*/}
               </div>
             </div>
             <div className="property__container container">
@@ -190,7 +191,7 @@ const Property = (props) => {
               <div className="near-places__list places__list">
 
               {/*Тут выводим карточки соседи*/}
-                <Comp massChooseCards={massChooseCards}/>
+                <NeiborhoodLoad massChooseCards={massChooseCards}/>
 
 
               </div>
@@ -204,3 +205,4 @@ const Property = (props) => {
 
 
 export default Property;
+

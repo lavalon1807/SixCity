@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import Neiborhood from './Neiborhood'
 import { useParams } from 'react-router-dom'
-import {offer} from '../mocks/offer'
+import {offer} from '../../mocks/offer'
 
-const comp = (props) => {
+const NeiborhoodLoad = (props) => {
   const {enterFromProperty, leaveFromProperty, massChooseCards} = props
   const [efect, setEfect] = useState(offer)
   const params = useParams()
@@ -24,4 +24,4 @@ const comp = (props) => {
   )
 }
 
-export default comp
+export default NeiborhoodLoad

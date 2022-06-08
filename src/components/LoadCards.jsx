@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from './Card'
-import {offer, city} from '../mocks/offer'
 import PropTypes from 'prop-types'
 
 const LoadCards = (props) => {

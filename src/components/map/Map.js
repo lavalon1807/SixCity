@@ -7,7 +7,9 @@ import {useParams} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const Map = (props) => {
-  const {items, active, massChooseCoords, activeCity, massChooseCards} = props
+  const {active, massChooseCoords, activeCity, massChooseCards, currentcity} = props
+  const {location} = massChooseCards[0].city // берем координаты выбранного города
+
   let marker
   let pork = []
   let pork2=[]
@@ -20,13 +22,15 @@ const Map = (props) => {
   useEffect(()=>{
 
    if(!id) {
-     mapRef.current =  L.map('map').setView([48.856663, 2.351556], 11)
-   } else {
-     for(let i = 0; i < city.length; i++) {
-       if(city[i] === massChooseCards[0].city) {
-          mapRef.current =  L.map('map').setView(mapCoords[i], 11)
-        }
-     }
+     mapRef.current =  L.map('map').setView([
+       location.latitude,
+       location.longitude
+     ], location.zoom)
+   }  else {
+     mapRef.current =  L.map('map').setView([
+       location.latitude,
+       location.longitude
+     ], location.zoom)
    }
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -36,79 +40,79 @@ const Map = (props) => {
   }, [])
 
 // добавляем метки
-const filteredMassCards = massChooseCards.filter((item) => item.id !== id)
-const filteredMassCoords = massChooseCoords.filter((item) => item.id !== id)
+// const filteredMassCards = massChooseCards.filter((item) => item.id !== id)
+// const filteredMassCoords = massChooseCoords.filter((item) => item.id !== id)
 
-const containerNeiborhoodCoords = []
- for(let i = 0; i < filteredMassCards.length; i++) {
-    containerNeiborhoodCoords.push(filteredMassCoords[i])
- }
+// const containerNeiborhoodCoords = []
+//  for(let i = 0; i < filteredMassCards.length; i++) {
+//     containerNeiborhoodCoords.push(filteredMassCoords[i])
+//  }
 
-const generMarker = (coord) => {
-  const customIcon = L.icon({
-    iconUrl: './img/pin.svg',
-    iconSize: [30, 30]
-  })
+// const generMarker = (coord) => {
+//   const customIcon = L.icon({
+//     iconUrl: './img/pin.svg',
+//     iconSize: [30, 30]
+//   })
 
-  pork = L.marker({
-    lat: coord.lat,
-    lng: coord.lng
-  },
-  {
-    icon: customIcon
-  })
-  pork2.push(pork)
-  pork.addTo(mapRef.current)
-  pork.bindPopup(coord.title)
-}
+//   pork = L.marker({
+//     lat: coord.location.latitude,
+//     lng: coord.location.longitude
+//   },
+//   {
+//     icon: customIcon
+//   })
+//   pork2.push(pork)
+//   pork.addTo(mapRef.current)
+//   pork.bindPopup(coord.title)
+// }
 
-  useEffect(() => {
-    if(!id) {
-      massChooseCoords.forEach(generMarker) //используем внутри forEch callback функцию
-    } else {
-      containerNeiborhoodCoords.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
-    }
+  // useEffect(() => {
+  //   if(!id) {
+  //     massChooseCards.forEach(generMarker) //используем внутри forEch callback функцию
+  //   } else {
+  //     containerNeiborhoodCoords.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
+  //   }
 
-    return () => {
-      for(let i = 0; i < pork2.length; i++) {
-        mapRef.current.removeLayer(pork2[i])
-      }
-    }
-  }, [massChooseCoords])
+  //   return () => {
+  //     for(let i = 0; i < pork2.length; i++) {
+  //       mapRef.current.removeLayer(pork2[i])
+  //     }
+  //   }
+  // }, [massChooseCards])
 
 
-  for(let i = 0; i < city.length; i++) {
-    if(activeCity === city[i]) {
-      mapRef.current.panTo(mapCoords[i])
-    }
-  }
+  // for(let i = 0; i < city.length; i++) {
+  //   if(activeCity === city[i]) {
+  //     mapRef.current.panTo(mapCoords[i])
+  //   }
+  // }
 
 // добавляем динамику меткам при наведении
 
-  useEffect(()=>{
-      if(active) {
-        Coords.forEach((coord) => {
-          if(active.id === coord.id) {
-            const customIcon = L.icon({
-              iconUrl: `img/pin-active.svg`,
-              iconSize: [30, 30]
-            })
+  // useEffect(()=>{
+  //     if(active) {
+  //       massChooseCards.forEach((coord) => {
+  //         if(active.id === coord.id) {
+  //           const customIcon = L.icon({
+  //             iconUrl: `img/pin-active.svg`,
+  //             iconSize: [30, 30]
+  //           })
 
-            marker = L.marker({
-              lat: coord.lat,
-              lng: coord.lng
-            },
-            {
-              icon: customIcon
-            })
-            .addTo(mapRef.current)
-          }
-      })
-        return () => {
-              mapRef.current.removeLayer(marker)
-            }
-    }
-  }, [mapRef.current, active])
+  //           marker = L.marker({
+  //             lat: coord.location.latitude,
+  //             lng: coord.location.longitude
+  //           },
+  //           {
+  //             icon: customIcon
+  //           })
+  //           .addTo(mapRef.current)
+  //         }
+  //     })
+  //       return () => {
+  //             mapRef.current.removeLayer(marker)
+  //           }
+  //   }
+  // }, [mapRef.current, active])
 
 
 

@@ -71,18 +71,6 @@ const Main = (props) => {
     setActive(null)
   }, [])
 
-  useEffect(() => {
-    if(!isDataLoaded) {
-      loadData()
-    }
-  },[isDataLoaded])
-
-  if(!isDataLoaded) {
-    return (
-      <LoadData />
-    )
-  }
-
   const placeCount = massChooseCards.length
 
   return(
@@ -155,6 +143,7 @@ const Main = (props) => {
                     massChooseCards={massChooseCards}
                     massChooseCoords={massChooseCoords}
                     activeCity={activeCity}
+                    currentcity={currentcity}
                   />
 
 

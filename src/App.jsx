@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Login from './components/Sign-in';
 import Favorites from './components/Favorites';
-import Property from './components/Property';
+import Property from './components/listProperty/Property';
 import Error from './components/Error'
 import {offer, city} from './mocks/offer'
 import {Coords, mapCoords} from './mocks/Coords'
@@ -38,8 +38,6 @@ const App = (props) => {
   data.forEach((item) => {
     currentCity === item.city.name ? massChooseCards.push(item) : null
   })
-
-  console.log(massChooseCards)
 
   let massChooseCoords = []
   Coords.forEach(item => {
