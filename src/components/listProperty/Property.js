@@ -4,7 +4,7 @@ import Header from '../Header';
 import DataProp from './DataProp'
 import Reviews from './ReviewsLoader'
 import {offer} from '../../mocks/offer'
-import NeiborhoodLoad from './NeiborhoodLoad'
+import NeiborhoodLoad from './neiborhood/NeiborhoodLoad'
 import comment from '../../mocks/Comment'
 import Map from '../Map/Map';
 import {coords} from '../../mocks/Coords'
@@ -33,31 +33,19 @@ const Property = (props) => {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
+
+
                 <PicturePlace item={item}/>
-                {/*<div className="property__image-wrapper">
-                  <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-                </div>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-                </div>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-                </div>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-                </div>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-                </div>
-                <div className="property__image-wrapper">
-                  <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-                </div>*/}
+
+
               </div>
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
 
+
                 <DataProp key={item.id} items={item} />
+
 
                 <div className="property__inside">
             <h2 className="property__inside-title">What&apos;s inside</h2>
@@ -187,7 +175,7 @@ const Property = (props) => {
           </section>
           <div className="container">
             <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <h2 className="near-places__title" style={{marginTop: '50px'}}>Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
 
               {/*Тут выводим карточки соседи*/}
