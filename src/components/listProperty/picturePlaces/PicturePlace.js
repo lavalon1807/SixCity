@@ -5,8 +5,8 @@ const PicturePlace = (props) => {
   const {images} = item
 
   return(
-    images.slice(0, 6).map((image, index)=>
-      <div key={index} className="property__image-wrapper">
+    images.slice(0, 6).map((image)=>
+      <div key={image.toString()} className="property__image-wrapper">
         <img className="property__image"   src={image} alt="Photo studio" />
       </div>
     )
