@@ -7,9 +7,8 @@ import {offer} from '../../mocks/offer'
 import NeiborhoodLoad from './neiborhood/NeiborhoodLoad'
 import comment from '../../mocks/Comment'
 import Map from '../Map/Map';
-import {coords} from '../../mocks/Coords'
 import {PicturePlace} from './picturePlaces/PicturePlace'
-import {ComfortGoods} from './comfortGoods'
+import {ComfortGoods} from './ComfortGoods'
 
 const Property = (props) => {
   const {toggle, massChooseCards, massChooseCoords, activeCity, currentcity} = props
@@ -19,6 +18,8 @@ const Property = (props) => {
   const item = massChooseCards.find((it) => it.id === id)
 
   const miniCoords = massChooseCoords.filter((item) => item.id !== id).slice(0, 3)
+  const chiefHost = !item.host.is_pro ? 'visually-hidden' : ''
+  const chiefHostMain = item.host.is_pro ? 'property__avatar-wrapper--pro' : ''
 
   return(
     <>
@@ -61,22 +62,19 @@ const Property = (props) => {
           <div className="property__host">
             <h2 className="property__host-title">Meet the host</h2>
             <div className="property__host-user user">
-              <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+              <div className={`property__avatar-wrapper user__avatar-wrapper ${chiefHostMain}`}>
+                <img className="property__avatar user__avatar" src={item.host.avatar_url} width="74" height="74" alt="Host avatar" />
               </div>
               <span className="property__user-name">
-                Angelina
+                {item.host.name}
               </span>
-              <span className="property__user-status">
+              <span className={`property__user-status ${chiefHost}`}>
                 Pro
               </span>
             </div>
             <div className="property__description">
               <p className="property__text">
-                A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-              </p>
-              <p className="property__text">
-                An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                {item.description}
               </p>
             </div>
           </div>

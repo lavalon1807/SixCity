@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-import {mapCoords, Coords} from '../../mocks/Coords'
-import {city} from '../../mocks/offer'
+// import {mapCoords, Coords} from '../../mocks/Coords'
 import {useParams} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const Map = (props) => {
-  const {active, massChooseCoords, activeCity, massChooseCards, currentcity} = props
+  const {active, massChooseCoords, activeCity, massChooseCards, currentcity, city} = props
   const {location} = massChooseCards[0].city // берем координаты выбранного города
 
   let marker
@@ -83,7 +82,10 @@ const generMarker = (coord) => {
 
   for(let i = 0; i < city.length; i++) {
     if(activeCity === city[i]) {
-      mapRef.current.panTo(mapCoords[i])
+      mapRef.current.panTo([
+       location.latitude,
+       location.longitude
+     ], location.zoom)
     }
   }
 
@@ -114,8 +116,6 @@ const generMarker = (coord) => {
     }
   }, [mapRef.current, active])
 
-
-
   return(
     <div id="map" style={{height: "100%"}} ref={mapRef}></div>
   )
@@ -129,4 +129,8 @@ Map.propTypes = {
   })
 }
 
-export default Map
+const mapStateToProps = (state) => ({
+  city: state.city
+})
+
+export default connect(mapStateToProps)(Map)

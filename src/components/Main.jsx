@@ -17,7 +17,6 @@ const Main = (props) => {
     toggle,
     activeCity,
     currentcity,
-    city,
     data,
     isDataLoaded,
     loadData
@@ -160,7 +159,6 @@ const Main = (props) => {
 const mapStateToProps = (state) => ({
   currentCity: state.currentCity,
   isDataLoaded: state.isDataLoaded,
-  city: state.city,
   data: state.data,
   loadData: state.loadData,
 })

@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from '../const'
-import {loadOffer} from './actionCreate'
+import {loadOffer, requireAuthorization} from './actionCreate'
 
 const cityReduce = (data) => {
   const initial = 'Paris'
@@ -20,11 +20,11 @@ export const fetchOfferList = () => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(()=>dispatch(actionCreate.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(()=>dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(()=>{})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-    .then(()=> dispatch(actionCreate.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(()=> dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
 )
