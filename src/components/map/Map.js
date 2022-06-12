@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-// import {mapCoords, Coords} from '../../mocks/Coords'
 import {useParams} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const Map = (props) => {
-  const {active, massChooseCoords, activeCity, massChooseCards, currentcity, city} = props
+  const {active, activeCity, massChooseCards, currentcity, city} = props
   const {location} = massChooseCards[0].city // берем координаты выбранного города
 
   let marker
@@ -40,12 +39,6 @@ const Map = (props) => {
 
 // добавляем метки
 const filteredMassCards = massChooseCards.filter((item) => item.id !== id)
-const filteredMassCoords = massChooseCoords.filter((item) => item.id !== id)
-
-const containerNeiborhoodCoords = []
-for(let i = 0; i < filteredMassCards.length; i++) {
-  containerNeiborhoodCoords.push(filteredMassCoords[i])
-}
 
 const generMarker = (coord) => {
   const customIcon = L.icon({

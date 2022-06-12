@@ -5,8 +5,7 @@ import Login from './components/Sign-in';
 import Favorites from './components/Favorites';
 import Property from './components/listProperty/Property';
 import Error from './components/Error'
-import {offer, city} from './mocks/offer'
-import {Coords, mapCoords} from './mocks/Coords'
+import {city} from './mocks/offer'
 import {connect, Provider} from 'react-redux'
 import {store} from './index'
 import {ActionType} from './components/store/action'
@@ -39,13 +38,6 @@ const App = (props) => {
     currentCity === item.city.name ? massChooseCards.push(item) : null
   })
 
-  let massChooseCoords = []
-  Coords.forEach(item => {
-      massChooseCards.forEach(card => {
-        item.id === card.id ? massChooseCoords.push(item) : null
-    })
-  })
-
   const click = (e) => {
     const cityRich = e.currentTarget.innerText
     store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
@@ -60,7 +52,6 @@ return(
             toggle={click}
             currentcity={currentCity}
             massChooseCards={massChooseCards}
-            massChooseCoords={massChooseCoords}
             activeCity={activeCity}
           />
         </Route>
@@ -71,7 +62,6 @@ return(
             toggle={click}
             currentcity={currentCity}
             massChooseCards={massChooseCards}
-            massChooseCoords={massChooseCoords}
           />
         </Route>
         <Route><Error /></Route>

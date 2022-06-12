@@ -11,13 +11,11 @@ import {PicturePlace} from './picturePlaces/PicturePlace'
 import {ComfortGoods} from './ComfortGoods'
 
 const Property = (props) => {
-  const {toggle, massChooseCards, massChooseCoords, activeCity, currentcity} = props
+  const {toggle, massChooseCards, activeCity, currentcity} = props
   const params = useParams()
   const id = Number(params.id);
 
   const item = massChooseCards.find((it) => it.id === id)
-
-  const miniCoords = massChooseCoords.filter((item) => item.id !== id).slice(0, 3)
   const chiefHost = !item.host.is_pro ? 'visually-hidden' : ''
   const chiefHostMain = item.host.is_pro ? 'property__avatar-wrapper--pro' : ''
 
@@ -37,7 +35,7 @@ const Property = (props) => {
               <div className="property__gallery">
 
 
-                <PicturePlace item={item}/>
+                <PicturePlace key={item.id} item={item}/>
 
 
               </div>
@@ -140,7 +138,6 @@ const Property = (props) => {
 
               <Map
                 massChooseCards={massChooseCards}
-                massChooseCoords={massChooseCoords}
                 activeCity={activeCity}
               />
 

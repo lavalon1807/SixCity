@@ -13,7 +13,6 @@ import { LoadData } from './LoadData'
 const Main = (props) => {
   const {
     massChooseCards,
-    massChooseCoords,
     toggle,
     activeCity,
     currentcity,
@@ -140,7 +139,6 @@ const Main = (props) => {
                   <Map
                     active={active}
                     massChooseCards={massChooseCards}
-                    massChooseCoords={massChooseCoords}
                     activeCity={activeCity}
                     currentcity={currentcity}
                   />

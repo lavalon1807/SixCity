@@ -19,7 +19,7 @@ export const store = createStore(reducer, composeWithDevTools(
 
 store.subscribe(()=>console.info(store.getState()))
 
-// store.dispatch(checkAuth())
+store.dispatch(checkAuth())
 
 ReactDOM.render(
   <Provider store={store}>
