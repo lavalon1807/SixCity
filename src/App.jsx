@@ -12,13 +12,14 @@ import {ActionType} from './components/store/action'
 import {fetchOfferList} from './components/store/apiCreate'
 import PropTypes from 'prop-types'
 import {LoadData} from './components/LoadData'
+import PrivateRoute from './components/private-route'
 
 const AppRoute = {
   ROOT: `/`
 };
 
 const App = (props) => {
-  const {currentCity, data, isDataLoaded, loadData} = props
+  const {currentCity, data, isDataLoaded, loadData, authorizationStatus} = props
   const [activeCity, setActiveCity] = useState()
 
   useEffect(() => {
@@ -56,7 +57,7 @@ return(
           />
         </Route>
         <Route path='/login' exact><Login /></Route>
-        <Route path='/favorites' exact><Favorites /></Route>
+        {/*<Route path='/favorites' exact><Favorites /></Route>*/}
         <Route path='/property/:id' exact>
           <Property
             toggle={click}
@@ -64,6 +65,8 @@ return(
             massChooseCards={massChooseCards}
           />
         </Route>
+        <PrivateRoute path='/favorites' exact component={Favorites}></PrivateRoute>
+        <Route path ='/error' exact><Error /></Route>
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>
@@ -79,6 +82,7 @@ const mapStateToProps = (state) => ({
   data: state.data,
   isDataLoaded: state.isDataLoaded,
   loadData: state.loadData,
+  authorizationStatus: state.authorizationStatus
 })
 
 const mapDispatchToProps = (dispatch) => ({

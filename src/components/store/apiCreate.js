@@ -1,6 +1,8 @@
 import {AuthorizationStatus} from '../const'
 import {loadOffer, requireAuthorization} from './actionCreate'
 
+//с помощью этой функции мы тащим с сервера определенные данные
+
 const cityReduce = (data) => {
   const initial = 'Paris'
   const cities = data.reduce((appacity, currentValue) => {
@@ -20,7 +22,7 @@ export const fetchOfferList = () => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(()=>dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(()=>dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
     .catch(()=>{})
 );
 

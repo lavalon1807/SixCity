@@ -62,10 +62,10 @@ const Signn = ({onSubmit}) => {
                 <button
                   className="login__submit form__submit button"
                   type="submit"
-                  onClick={()=>history.push('/')}
                 >
                   Sign in
                 </button>
+                <button type="button" onClick={()=>history.push('/favorites')}>12313123</button>
               </form>
             </section>
             <section className="locations locations--login locations--current">
