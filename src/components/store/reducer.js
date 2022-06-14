@@ -7,6 +7,7 @@ const initialState = {
   city: {},
   data: {},
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  login: null,
   isDataLoaded: false,
 }
 
@@ -26,7 +27,8 @@ const Reducer = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload
+        authorizationStatus: action.payload,
+        login: action.payloadLogin,
       }
 
     default: return state

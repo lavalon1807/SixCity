@@ -1,15 +1,21 @@
 import React from 'react'
-import Card from './Card'
 import { Link } from 'react-router-dom'
+import {connect} from 'react-redux'
+import Card from './Card'
 
-const Header = () => {
+
+const Header = (props) => {
+  const {authorizationStatus, loginRef, login} = props
+  const register = authorizationStatus === 'AUTH'
+
   return(
-    <React.Fragment>
+    <>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to="/" onClick={() => {window.location.href="/"}}>
+              <Link
+                className="header__logo-link header__logo-link--active" to="/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -19,7 +25,11 @@ const Header = () => {
                   <Link className="header__nav-link header__nav-link--profile" to="/Login">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Sign in</span>
+                    <span className="header__user-name user__name">
+                      {register ?
+                        (login) : ('Sign in')
+                      }
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -27,8 +37,13 @@ const Header = () => {
           </div>
         </div>
       </header>
-    </React.Fragment>
+    </>
   )
 }
 
-export default Header
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  login: state.login,
+})
+
+export default connect(mapStateToProps)(Header)

@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 
 const ADD_POST = 'ADD_POST'
 const ChooseCity = (props) => {
@@ -21,5 +22,10 @@ const ChooseCity = (props) => {
 const mapStateToProps = (state) => ({
   currentCity: state.currentCity
 })
+
+ChooseCity.propTypes = {
+  items: PropTypes.string.isRequired,
+  currentCity: PropTypes.string.isRequired,
+}
 
 export default connect(mapStateToProps)(ChooseCity)

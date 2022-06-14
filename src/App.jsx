@@ -57,7 +57,6 @@ return(
           />
         </Route>
         <Route path='/login' exact><Login /></Route>
-        {/*<Route path='/favorites' exact><Favorites /></Route>*/}
         <Route path='/property/:id' exact>
           <Property
             toggle={click}

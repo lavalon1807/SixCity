@@ -6,7 +6,8 @@ export const loadOffer = (city, data) => ({
   payloadData: data
 })
 
-export const requireAuthorization = (status) => ({
+export const requireAuthorization = (status, login) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
+  payloadLogin: login,
 })

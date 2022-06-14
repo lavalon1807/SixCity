@@ -18,19 +18,10 @@ const Map = (props) => {
 // прописываем слой -карту
 
   useEffect(()=>{
-
-   if(!id) {
      mapRef.current =  L.map('map').setView([
        location.latitude,
        location.longitude
      ], location.zoom)
-   }  else {
-     mapRef.current =  L.map('map').setView([
-       location.latitude,
-       location.longitude
-     ], location.zoom)
-   }
-
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     })
@@ -72,15 +63,16 @@ const generMarker = (coord) => {
     }
   }, [massChooseCards])
 
-
-  for(let i = 0; i < city.length; i++) {
-    if(activeCity === city[i]) {
+  useEffect(()=>{
+    if(activeCity) {
       mapRef.current.panTo([
        location.latitude,
        location.longitude
      ], location.zoom)
     }
-  }
+  },[activeCity])
+
+
 
 // добавляем динамику меткам при наведении
 

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -6,14 +6,14 @@ import Header from './Header'
 import {login} from './store/apiCreate'
 
 const Signn = ({onSubmit}) => {
+  const [data, setData] = useState()
   const loginRef = useRef()
   const passwordRef = useRef()
-
   const history = useHistory()
+
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value,
@@ -27,7 +27,7 @@ const Signn = ({onSubmit}) => {
       </div>
 
       <div className="page page--gray page--login">
-        <Header />
+        <Header loginRef={data}/>
 
         <main className="page__main page__main--login">
           <div className="page__login-container container">
@@ -36,7 +36,6 @@ const Signn = ({onSubmit}) => {
               <form
                 className="login__form form" action="#"
                 method="post"
-                action=""
                 onSubmit={handleSubmit}
               >
                 <div className="login__input-wrapper form__input-wrapper">
