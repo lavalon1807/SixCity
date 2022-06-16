@@ -1,12 +1,35 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 import Card from './Card'
+import {logout} from './store/apiCreate'
 
+const style = {
+  color: 'black',
+  marginTop: '17px',
+  marginLeft: '25%',
+}
 
 const Header = (props) => {
-  const {authorizationStatus, loginRef, login} = props
+  const {authorizationStatus, loginRef, login, clearSubmit} = props
+  const history = useHistory()
   const register = authorizationStatus === 'AUTH'
+
+  const handleClear = () => {
+    clearSubmit({
+      login: null,
+      password: null
+    })
+  }
+
+  let address
+
+  if (register) {
+    address = '/favorites'
+  } else {
+    address = '/login'
+  }
 
   return(
     <>
@@ -22,7 +45,7 @@ const Header = (props) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/Login">
+                  <Link className="header__nav-link header__nav-link--profile" to={address}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">
@@ -31,6 +54,9 @@ const Header = (props) => {
                       }
                     </span>
                   </Link>
+                  {register && (
+                    <button type="button" onClick={handleClear} style={style}>LOGOUT</button>
+                  )}
                 </li>
               </ul>
             </nav>
@@ -41,9 +67,19 @@ const Header = (props) => {
   )
 }
 
+Header.propTypes = {
+  clearSubmit: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
   login: state.login,
 })
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = (dispatch) => ({
+  clearSubmit() {
+    dispatch(logout())
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

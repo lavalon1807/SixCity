@@ -11,13 +11,13 @@ const Signn = ({onSubmit}) => {
   const passwordRef = useRef()
   const history = useHistory()
 
-
   const handleSubmit = (evt) => {
     evt.preventDefault()
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value,
     })
+    history.push('/')
   }
 
   return(
@@ -45,7 +45,7 @@ const Signn = ({onSubmit}) => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    required=""
+                    required
                     ref={loginRef}/>
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
@@ -55,7 +55,7 @@ const Signn = ({onSubmit}) => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    required=""
+                    required
                     ref={passwordRef}/>
                 </div>
                 <button
@@ -64,7 +64,6 @@ const Signn = ({onSubmit}) => {
                 >
                   Sign in
                 </button>
-                <button type="button" onClick={()=>history.push('/favorites')}>12313123</button>
               </form>
             </section>
             <section className="locations locations--login locations--current">

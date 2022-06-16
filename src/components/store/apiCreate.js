@@ -30,3 +30,8 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(`/login`, {email, password})
     .then(()=> dispatch(requireAuthorization(AuthorizationStatus.AUTH, email)))
 )
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(`/login`)
+    .then(()=> dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+)
