@@ -6,23 +6,23 @@ import {WIDTH} from '../../const'
 const Neiborhood = (props) => {
   const {items} = props
   const {
-    is_premium,
-    is_favorite,
+    isPremium,
+    isFavorite,
     rating,
-    preview_image,
+    previewImage,
     price,
     title,
     type,
   } = items
 
-  const bookMark = is_premium ? 'place-card__bookmark-button--active' : ''
+  const bookMark = isPremium ? 'place-card__bookmark-button--active' : ''
   const widthRating = rating * WIDTH
 
   return(
     <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={preview_image} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">
@@ -56,10 +56,10 @@ const Neiborhood = (props) => {
 Neiborhood.propTypes = {
   items: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    is_premium: PropTypes.bool.isRequired,
-    is_favorite: PropTypes.bool.isRequired,
+    isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,
-    preview_image: PropTypes.string.isRequired,
+    previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
   })

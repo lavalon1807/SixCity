@@ -72,8 +72,6 @@ const generMarker = (coord) => {
     }
   },[activeCity])
 
-
-
 // добавляем динамику меткам при наведении
 
   useEffect(()=>{

@@ -1,25 +1,26 @@
-import React from 'react'
-import {WIDTH} from '../const'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {WIDTH} from '../const';
 
 const DataProp = (props) => {
-  const {items} = props
+  const {items} = props;
   const {
-    is_premium,
+    isPremium,
     title,
-    is_favorite,
+    isFavorite,
     rating, type,
     bedrooms,
-    max_adults,
-    price
-  } = items
+    maxAdults,
+    price,
+  } = items;
 
-  const bookMark = is_favorite ? 'property__bookmark-button--active' : ''
-  const widthRating = rating * WIDTH
+  const bookMark = isFavorite ? `property__bookmark-button--active` : ``;
+  const widthRating = rating * WIDTH;
 
-  return(
+  return (
     <>
 
-      {is_premium && (
+      {isPremium && (
         <div className="property__mark">
           <span>Premium</span>
         </div>
@@ -29,7 +30,7 @@ const DataProp = (props) => {
         <h1 className="property__name">
           {title}
         </h1>
-        <button className={`property__bookmark-button button ${bookMark}`}  type="button">
+        <button className={`property__bookmark-button button ${bookMark}`} type="button">
           <svg className="property__bookmark-icon" width="31" height="33">
             <use xlinkHref="#icon-bookmark"></use>
           </svg>
@@ -51,7 +52,7 @@ const DataProp = (props) => {
           {bedrooms} Bedrooms
         </li>
         <li className="property__feature property__feature--adults">
-          Max {max_adults} adults
+          Max {maxAdults} adults
         </li>
       </ul>
       <div className="property__price">
@@ -60,7 +61,20 @@ const DataProp = (props) => {
       </div>
 
     </>
-  )
-}
+  );
+};
 
-export default DataProp
+DataProp.propTypes = {
+  items: PropTypes.shape({
+    isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+    maxAdults: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+  })
+};
+
+export default DataProp;

@@ -5,17 +5,17 @@ import { WIDTH } from './const'
 const Card = (props) => {
   const {items, onMouseEnter, onMouseLeave} = props
   const {
-    is_premium,
-    is_favorite,
+    isPremium,
+    isFavorite,
     rating,
-    preview_image,
+    previewImage,
     price,
     id,
     title,
     type,
   } = items
 
-  const favorite = is_favorite ? 'place-card__bookmark-button--active' : ''
+  const favorite = isFavorite ? 'place-card__bookmark-button--active' : ''
 
   const handleMouseEnter = () => {
     onMouseEnter(items)
@@ -29,14 +29,14 @@ const Card = (props) => {
     <article className="cities__place-card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="cities__image-wrapper place-card__image-wrapper">
 
-      { is_premium && (
+      { isPremium && (
         <div className="place-card__mark">
             <span>Premium</span>
         </div>
       )}
 
         <a href="#">
-          <img className="place-card__image" src={preview_image} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">

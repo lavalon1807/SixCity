@@ -1,33 +1,33 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import { useParams } from 'react-router-dom'
+import React from 'react';
+import {useParams} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../Header';
-import DataProp from './DataProp'
-import Reviews from './ReviewsLoader'
-import {offer} from '../../mocks/offer'
-import NeiborhoodLoad from './neiborhood/NeiborhoodLoad'
-import comment from '../../mocks/Comment'
+import DataProp from './DataProp';
+import Reviews from './ReviewsLoader';
+import NeiborhoodLoad from './neiborhood/NeiborhoodLoad';
+import comment from '../../mocks/Comment';
 import Map from '../Map/Map';
-import {PicturePlace} from './picturePlaces/PicturePlace'
-import {ComfortGoods} from './ComfortGoods'
+import {PicturePlace} from './picturePlaces/PicturePlace';
+import {ComfortGoods} from './ComfortGoods';
 
 const Property = (props) => {
-  const {toggle, massChooseCards, activeCity, currentcity} = props
-  const params = useParams()
+  const {massChooseCards, activeCity} = props;
+  const params = useParams();
   const id = Number(params.id);
 
-  const item = massChooseCards.find((it) => it.id === id)
-  const chiefHost = !item.host.is_pro ? 'visually-hidden' : ''
-  const chiefHostMain = item.host.is_pro ? 'property__avatar-wrapper--pro' : ''
+  const item = massChooseCards.find((it) => it.id === id);
+  const chiefHost = !item.host.isPro ? `visually-hidden` : ``;
+  const chiefHostMain = item.host.isPro ? `property__avatar-wrapper--pro` : ``;
 
-  return(
+  return (
     <>
-      <div style={{display: "none"}}>
+      <div style={{display: `none`}}>
         <svg xmlns="http://www.w3.org/2000/svg"><symbol id="icon-arrow-select" viewBox="0 0 7 4"><path fillRule="evenodd" clipRule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path></symbol><symbol id="icon-bookmark" viewBox="0 0 17 18"><path d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"></path></symbol><symbol id="icon-star" viewBox="0 0 13 12"><path fillRule="evenodd" clipRule="evenodd" d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"></path></symbol></svg>
       </div>
 
       <div className="page">
 
-      <Header />
+        <Header />
 
         <main className="page__main page__main--property">
           <section className="property">
@@ -47,93 +47,93 @@ const Property = (props) => {
                 <DataProp items={item} />
 
 
-          <div className="property__inside">
-            <h2 className="property__inside-title">What&apos;s inside</h2>
-            <ul className="property__inside-list">
+                <div className="property__inside">
+                  <h2 className="property__inside-title">What&apos;s inside</h2>
+                  <ul className="property__inside-list">
 
 
-              <ComfortGoods item={item}/>
+                    <ComfortGoods item={item}/>
 
 
-            </ul>
-          </div>
-          <div className="property__host">
-            <h2 className="property__host-title">Meet the host</h2>
-            <div className="property__host-user user">
-              <div className={`property__avatar-wrapper user__avatar-wrapper ${chiefHostMain}`}>
-                <img className="property__avatar user__avatar" src={item.host.avatar_url} width="74" height="74" alt="Host avatar" />
+                  </ul>
+                </div>
+                <div className="property__host">
+                  <h2 className="property__host-title">Meet the host</h2>
+                  <div className="property__host-user user">
+                    <div className={`property__avatar-wrapper user__avatar-wrapper ${chiefHostMain}`}>
+                      <img className="property__avatar user__avatar" src={item.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    </div>
+                    <span className="property__user-name">
+                      {item.host.name}
+                    </span>
+                    <span className={`property__user-status ${chiefHost}`}>
+                      Pro
+                    </span>
+                  </div>
+                  <div className="property__description">
+                    <p className="property__text">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comment.length}</span></h2>
+                  <ul className="reviews__list">
+
+                    {/* Загружаем отзывы */}
+                    <Reviews items={comment} />
+
+                  </ul>
+                  <form className="reviews__form form" action="#" method="post">
+                    <label className="reviews__label form__label" htmlFor="review">Your review</label>
+                    <div className="reviews__rating-form form__rating">
+                      <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
+                      <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
+                      <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
+                      <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
+                      <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+
+                      <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
+                      <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
+                        <svg className="form__star-image" width="37" height="33">
+                          <use xlinkHref="#icon-star"></use>
+                        </svg>
+                      </label>
+                    </div>
+                    <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+                    <div className="reviews__button-wrapper">
+                      <p className="reviews__help">
+                        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+                      </p>
+                      <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+                    </div>
+                  </form>
+                </section>
               </div>
-              <span className="property__user-name">
-                {item.host.name}
-              </span>
-              <span className={`property__user-status ${chiefHost}`}>
-                Pro
-              </span>
             </div>
-            <div className="property__description">
-              <p className="property__text">
-                {item.description}
-              </p>
-            </div>
-          </div>
-          <section className="property__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comment.length}</span></h2>
-            <ul className="reviews__list">
-
-            {/*Загружаем отзывы*/}
-              <Reviews items={comment}/>
-
-            </ul>
-            <form className="reviews__form form" action="#" method="post">
-              <label className="reviews__label form__label" htmlFor="review">Your review</label>
-              <div className="reviews__rating-form form__rating">
-                <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-
-                <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-
-                <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-
-                <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-
-                <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-              </div>
-              <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-              <div className="reviews__button-wrapper">
-                <p className="reviews__help">
-                  To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                </p>
-                <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-              </div>
-            </form>
-          </section>
-              </div>
-            </div>
-            <section className="property__map map" style={{margin: 'auto', maxWidth: '1144px'}}>
+            <section className="property__map map" style={{margin: `auto`, maxWidth: `1144px`}}>
 
 
               <Map
@@ -146,11 +146,11 @@ const Property = (props) => {
           </section>
           <div className="container">
             <section className="near-places places">
-              <h2 className="near-places__title" style={{marginTop: '50px'}}>Other places in the neighbourhood</h2>
+              <h2 className="near-places__title" style={{marginTop: `50px`}}>Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
 
-              {/*Тут выводим карточки соседи*/}
-                <NeiborhoodLoad massChooseCards={massChooseCards}/>
+                {/* Тут выводим карточки соседи */}
+                <NeiborhoodLoad massChooseCards={massChooseCards} />
 
 
               </div>
@@ -159,8 +159,13 @@ const Property = (props) => {
         </main>
       </div>
     </>
-  )
-}
+  );
+};
+
+Property.propTypes = {
+  massChooseCards: PropTypes.array.isRequired,
+  activeCity: PropTypes.oneOfType([PropTypes.string]),
+};
 
 
 export default Property;
