@@ -9,6 +9,10 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   login: null,
   isDataLoaded: false,
+  isCommentLoaded: false,
+  massage: '',
+  loadComments: '',
+  loadUser: {},
 }
 
 const Reducer = (state = initialState, action) => {
@@ -29,6 +33,20 @@ const Reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
         login: action.payloadLogin,
+      }
+
+    case ActionType.SEND_COMMENTS:
+      return {
+        ...state,
+        massage: action.payload,
+      }
+
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        loadComments: action.payload,
+        loadUser: action.user,
+        isCommentLoaded: true,
       }
 
     default: return state

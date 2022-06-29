@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from '../const'
-import {requireAuthorization} from './actionCreate'
+import {requireAuthorization, sendMassage, loadComments} from './actionCreate'
 import {LoadData} from './LoadData'
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
@@ -22,4 +22,17 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const logout = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(()=> dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+)
+
+export const takeComments = (id) => (dispatch, _getState, api) => (
+  api.get(`comments/${id}`)
+    .then((data)=>dispatch(loadComments(data.data[0], data.data[0].user)))
+)
+
+export const sendComments = ({id, review}) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`, {review})
+    .then(() => dispatch(sendMassage(review)))
+    .catch((error) => {
+      console.log(error)
+    })
 )

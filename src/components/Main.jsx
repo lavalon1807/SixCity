@@ -18,9 +18,7 @@ const Main = (props) => {
     currentcity,
     data,
     isDataLoaded,
-    loadData
   } = props // все берем из App
-
 
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
@@ -158,15 +156,7 @@ const mapStateToProps = (state) => ({
   currentCity: state.currentCity,
   isDataLoaded: state.isDataLoaded,
   data: state.data,
-  loadData: state.loadData,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  loadData() {
-    dispatch(fetchOfferList())
-  }
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+export default Main
 

@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Login from './components/Sign-in';
 import Favorites from './components/Favorites';
-import Property from './components/listProperty/Property';
+import {Property} from './components/listProperty/Property';
 import Error from './components/Error'
 import {city} from './mocks/offer'
 import {connect, Provider} from 'react-redux'
@@ -26,7 +26,7 @@ const App = (props) => {
     if(!isDataLoaded) {
       loadData()
     }
-  },[isDataLoaded])
+  },[])
 
   if(!isDataLoaded) {
     return (

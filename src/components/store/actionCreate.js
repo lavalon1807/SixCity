@@ -11,3 +11,14 @@ export const requireAuthorization = (status, login) => ({
   payload: status,
   payloadLogin: login,
 })
+
+export const sendMassage = (massage) => ({
+  type: ActionType.SEND_COMMENTS,
+  payload: massage,
+})
+
+export const loadComments = (comments, user) => ({
+  type: ActionType.LOAD_COMMENTS,
+  payload: comments,
+  user: user,
+})

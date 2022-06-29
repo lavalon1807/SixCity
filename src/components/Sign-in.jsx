@@ -6,7 +6,6 @@ import Header from './Header'
 import {login} from './store/apiCreate'
 
 const Signn = ({onSubmit}) => {
-  const [data, setData] = useState()
   const loginRef = useRef()
   const passwordRef = useRef()
   const history = useHistory()
@@ -27,7 +26,7 @@ const Signn = ({onSubmit}) => {
       </div>
 
       <div className="page page--gray page--login">
-        <Header loginRef={data}/>
+        <Header />
 
         <main className="page__main page__main--login">
           <div className="page__login-container container">
