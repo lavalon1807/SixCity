@@ -17,8 +17,8 @@ export const sendMassage = (massage) => ({
   payload: massage,
 })
 
-export const loadComments = (comments, user) => ({
+export const loadComments = (comments, id) => ({
   type: ActionType.LOAD_COMMENTS,
   payload: comments,
-  user: user,
+  meta: id,
 })

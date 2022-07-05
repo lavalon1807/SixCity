@@ -9,10 +9,9 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   login: null,
   isDataLoaded: false,
-  isCommentLoaded: false,
   massage: '',
-  loadComments: '',
-  loadUser: {},
+  loadComments: {},
+  isLoaded: false,
 }
 
 const Reducer = (state = initialState, action) => {
@@ -44,9 +43,10 @@ const Reducer = (state = initialState, action) => {
     case ActionType.LOAD_COMMENTS:
       return {
         ...state,
-        loadComments: action.payload,
-        loadUser: action.user,
-        isCommentLoaded: true,
+        loadComments: {
+          ...state.commentsMap,
+          [action.meta]: action.payload,
+        },
       }
 
     default: return state

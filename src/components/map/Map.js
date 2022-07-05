@@ -64,12 +64,10 @@ const generMarker = (coord) => {
   }, [massChooseCards])
 
   useEffect(()=>{
-    if(activeCity) {
-      mapRef.current.panTo([
-       location.latitude,
-       location.longitude
-     ], location.zoom)
-    }
+    mapRef.current.panTo([
+     location.latitude,
+     location.longitude
+   ], location.zoom)
   },[activeCity])
 
 // добавляем динамику меткам при наведении

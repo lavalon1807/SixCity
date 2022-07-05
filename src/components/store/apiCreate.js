@@ -24,10 +24,26 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(()=> dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 )
 
-export const takeComments = (id) => (dispatch, _getState, api) => (
-  api.get(`comments/${id}`)
-    .then((data)=>dispatch(loadComments(data.data[0], data.data[0].user)))
-)
+const getCommentsMap = (state) => {
+  return state.loadComments;
+}
+
+export const takeComments = (id) => (dispatch, getState, api) => {
+  const state = getState();
+  const loadCommentss = getCommentsMap(state);
+  const comment = loadCommentss[id];
+
+  if (comment) {
+    return Promise.resolve();
+  }
+
+  return api.get(`/comments/${id}`)
+    .then((data)=>{
+      dispatch(loadComments(data.data, id))
+    })
+}
+
+
 
 export const sendComments = ({id, review}) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`, {review})

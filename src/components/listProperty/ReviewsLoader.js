@@ -2,16 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Review from './Review'
 
-const Reviews = (props) => {
-  const {items, comments, userPerson} = props
+const ReviewsLoader = (props) => {
+  const {id, commentsMap} = props
+  const comments = commentsMap[id] || [];
 
   return(
-    items.map(item => <Review key={item.id} items={item} comments={comments} userPerson={userPerson}/>)
+    comments.map(item => <Review key={item.id} items={item} />)
   )
 }
 const mapStateToProps = (state) => ({
-  comments: state.loadComments,
-  userPerson: state.loadUser,
+  commentsMap: state.loadComments,
 })
 
-export default connect(mapStateToProps)(Reviews)
+
+export {ReviewsLoader}
+export default connect(mapStateToProps)(ReviewsLoader)

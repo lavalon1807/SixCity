@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Review = (props) => {
-  const {comments, userPerson} = props;
-  const {comment, date, rating} = comments;
-  const {avatar_url, name} = userPerson;
+  const {items} = props;
+  const {comment, date, rating, user} = items;
+  const {avatar_url, name} = user;
   const widthRating = rating * 20;
-
 
   return (
     <li className="reviews__item">

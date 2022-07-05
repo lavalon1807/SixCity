@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Login from './components/Sign-in';
 import Favorites from './components/Favorites';
-import {Property} from './components/listProperty/Property';
+import Property from './components/listProperty/Property';
 import Error from './components/Error'
 import {city} from './mocks/offer'
 import {connect, Provider} from 'react-redux'
@@ -59,8 +59,6 @@ return(
         <Route path='/login' exact><Login /></Route>
         <Route path='/property/:id' exact>
           <Property
-            toggle={click}
-            currentcity={currentCity}
             massChooseCards={massChooseCards}
           />
         </Route>
@@ -89,6 +87,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchOfferList())
   }
 })
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

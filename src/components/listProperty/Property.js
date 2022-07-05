@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback} from 'react';
 import {useParams} from 'react-router-dom';
-import {useDispatch, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Header';
 import DataProp from './DataProp';
@@ -12,25 +12,20 @@ import {PicturePlace} from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
 import {Comments} from './Comments';
 import {takeComments} from '../store/apiCreate';
-import {LoadData} from '../LoadData'
+import {LoadData} from '../LoadData';
+import {NoAuth} from './picturePlaces/noAuthComments'
 
-const Property = (props) => {
-  const {massChooseCards, activeCity, isCommentLoaded} = props;
+const Property = ({massChooseCards, authorization, submitComment}) => {
   const params = useParams();
   const id = Number(params.id);
-  const dispatch = useDispatch();
 
   useEffect(()=>{
-    if(!isCommentLoaded) {
-      dispatch(takeComments(id))
-    }
-  }, [isCommentLoaded])
+    submitComment(id)
+  }, [id])
 
   useEffect(()=>{
-    if(!isCommentLoaded) {
-      <LoadData />
-    }
-  },[isCommentLoaded])
+    <LoadData />
+  },[])
 
   const item = massChooseCards.find((it) => it.id === id);
   const chiefHost = !item.host.isPro ? `visually-hidden` : ``;
@@ -98,12 +93,16 @@ const Property = (props) => {
                   <ul className="reviews__list">
 
                     {/* Загружаем отзывы */}
-                    <Reviews items={comment} />
+                    <Reviews items={comment} id={id}/>
 
                   </ul>
 
-
-                  <Comments />
+                  {authorization === 'AUTH' ? (
+                      <Comments />
+                    ) : (
+                      <NoAuth />
+                    )
+                  }
 
 
                 </section>
@@ -114,7 +113,6 @@ const Property = (props) => {
 
               <Map
                 massChooseCards={massChooseCards}
-                activeCity={activeCity}
               />
 
 
@@ -140,12 +138,18 @@ const Property = (props) => {
 
 Property.propTypes = {
   massChooseCards: PropTypes.array.isRequired,
-  activeCity: PropTypes.oneOfType([PropTypes.string]),
 };
 
 const mapStateToProps = (state) => ({
-  isCommentLoaded: state, isCommentLoaded,
+  isLoaded: state.isLoaded,
+  authorization: state.authorizationStatus,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  submitComment(id) {
+    dispatch(takeComments(id))
+  }
 })
 
 export {Property}
-export default connect(mapStateToProps)(Property)
+export default connect(mapStateToProps, mapDispatchToProps)(Property)
