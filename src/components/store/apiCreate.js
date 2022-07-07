@@ -24,18 +24,10 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(()=> dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 )
 
-const getCommentsMap = (state) => {
-  return state.loadComments;
-}
 
 export const takeComments = (id) => (dispatch, getState, api) => {
   const state = getState();
-  const loadCommentss = getCommentsMap(state);
-  const comment = loadCommentss[id];
-
-  if (comment) {
-    return Promise.resolve();
-  }
+  const comment = state.loadComments[id];
 
   return api.get(`/comments/${id}`)
     .then((data)=>{
@@ -43,12 +35,7 @@ export const takeComments = (id) => (dispatch, getState, api) => {
     })
 }
 
-
-
-export const sendComments = ({id, review}) => (dispatch, _getState, api) => (
-  api.get(`/comments/${id}`, {review})
-    .then(() => dispatch(sendMassage(review)))
-    .catch((error) => {
-      console.log(error)
-    })
+export const sendComments = ({id, comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {comment, rating})
+    .then((data) => dispatch(loadComments(data.data, id)))
 )

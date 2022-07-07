@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Header';
 import DataProp from './DataProp';
-import Reviews from './ReviewsLoader';
+import ReviewLoader from './ReviewsLoader';
 import NeiborhoodLoad from './neiborhood/NeiborhoodLoad';
 import comment from '../../mocks/Comment';
 import Map from '../Map/Map';
 import {PicturePlace} from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
-import {Comments} from './Comments';
+import Comments from './Comments';
 import {takeComments} from '../store/apiCreate';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments'
@@ -93,7 +93,7 @@ const Property = ({massChooseCards, authorization, submitComment}) => {
                   <ul className="reviews__list">
 
                     {/* Загружаем отзывы */}
-                    <Reviews items={comment} id={id}/>
+                    <ReviewLoader items={comment} id={id}/>
 
                   </ul>
 

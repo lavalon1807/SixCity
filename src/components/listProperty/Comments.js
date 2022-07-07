@@ -1,26 +1,33 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {RatingComments} from './RatingComments'
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import {sendComments} from '../store/apiCreate'
 import {sendMassage} from '../store/actionCreate'
 
 
-const Comments = (props) => {
-  const {currentCity, loadComments} = props;
+const Comments = ({comment, commentSubmit}) => {
   const commentRef = useRef()
+  const [rating, setRating] = useState()
   const params = useParams();
   const id = Number(params.id);
-  const dispatch = useDispatch()
 
+  const comments = comment[id] || [];
+
+  const onChangeRating = (it) => {
+    setRating(it)
+  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    dispatch(sendComments({
-      id: id,
-      review: commentRef.current.value,
-    }))
+    if(commentRef.current.value !== '') {
+      commentSubmit({
+        id: id,
+        comment: commentRef.current.value,
+        rating: rating,
+      })
+      commentRef.current.value = ''
+    }
   };
 
   return (
@@ -33,7 +40,7 @@ const Comments = (props) => {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
 
-        <RatingComments loadComments={loadComments} />
+        <RatingComments onChangeRating={onChangeRating}/>
 
       </div>
       <textarea
@@ -52,7 +59,6 @@ const Comments = (props) => {
           className="reviews__submit form__submit button"
           type="submit"
           disabled=""
-          onClick={handleSubmit}
         >Submit</button>
       </div>
     </form>
@@ -60,8 +66,14 @@ const Comments = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  comment: state.loadComments
+  comment: state.loadComments,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  commentSubmit(dataComment) {
+    dispatch(sendComments(dataComment))
+  }
 })
 
 export {Comments}
-export default connect(mapStateToProps)(Comments)
+export default connect(mapStateToProps, mapDispatchToProps)(Comments)

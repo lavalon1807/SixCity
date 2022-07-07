@@ -9,7 +9,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   login: null,
   isDataLoaded: false,
-  massage: '',
+  massage: {},
   loadComments: {},
   isLoaded: false,
 }
@@ -32,12 +32,6 @@ const Reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
         login: action.payloadLogin,
-      }
-
-    case ActionType.SEND_COMMENTS:
-      return {
-        ...state,
-        massage: action.payload,
       }
 
     case ActionType.LOAD_COMMENTS:

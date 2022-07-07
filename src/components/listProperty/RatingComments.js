@@ -33,19 +33,13 @@ const number = [
     num: '1',
   },
 ];
-const RatingComments = (props) => {
-  const {comments, loadComments} = props;
+const RatingComments = ({onChangeRating}) => {
 
   return (
     number.map((it) =>
-      <LoadRatingComment it={it} key={it.id} />
+      <LoadRatingComment it={it} key={it.id} onChangeRating={onChangeRating}/>
     )
   )
 }
 
-const mapStateToProps = (state) => ({
-  comments: state.loadComments
-})
-
 export {RatingComments}
-export default connect(mapStateToProps)(RatingComments)

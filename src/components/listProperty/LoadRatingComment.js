@@ -1,7 +1,9 @@
 import React from 'react';
 
-const LoadRatingComment = (props) => {
-  const {it} = props
+const LoadRatingComment = ({it, onChangeRating}) => {
+  const onChangeRatingComment = () => {
+    onChangeRating(it.num)
+  }
   return (
     <>
       <input
@@ -9,7 +11,9 @@ const LoadRatingComment = (props) => {
         name="rating"
         value={it.num}
         id={it.star}
-        type="radio" />
+        type="radio"
+        onChange={onChangeRatingComment}
+        />
       <label htmlFor={it.star} className="reviews__rating-label form__rating-label" title={it.state}>
         <svg className="form__star-image" width="37" height="33">
           <use xlinkHref="#icon-star"></use>
