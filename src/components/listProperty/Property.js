@@ -15,9 +15,10 @@ import {takeComments} from '../store/apiCreate';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments'
 
-const Property = ({massChooseCards, authorization, submitComment}) => {
+const Property = ({massChooseCards, authorization, submitComment, data}) => {
   const params = useParams();
   const id = Number(params.id);
+  console.log(data)
 
   useEffect(()=>{
     submitComment(id)
@@ -27,7 +28,7 @@ const Property = ({massChooseCards, authorization, submitComment}) => {
     <LoadData />
   },[])
 
-  const item = massChooseCards.find((it) => it.id === id);
+  const item = data.find((it) => it.id === id);
   const chiefHost = !item.host.isPro ? `visually-hidden` : ``;
   const chiefHostMain = item.host.isPro ? `property__avatar-wrapper--pro` : ``;
 
@@ -143,6 +144,7 @@ Property.propTypes = {
 const mapStateToProps = (state) => ({
   isLoaded: state.isLoaded,
   authorization: state.authorizationStatus,
+  data: state.data,
 })
 
 const mapDispatchToProps = (dispatch) => ({

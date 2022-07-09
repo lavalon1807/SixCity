@@ -5,10 +5,20 @@ import PropTypes from 'prop-types'
 import Card from './Card'
 import {logout} from './store/apiCreate'
 
-const style = {
+const styleLogout = {
   color: 'black',
   marginTop: '17px',
   marginLeft: '25%',
+  borderRadius: '5%',
+}
+
+const styleAvatar = {
+  backgroundImage: 'url(https://assets.htmlacademy.ru/intensives/javascript-3/avatar/8.jpg)',
+  backgroundSize: '100%',
+  backgroundRepeat: 'no-repeat',
+  width: '40px',
+  height: '40px',
+  borderRadius: '20px',
 }
 
 const Header = (props) => {
@@ -31,6 +41,9 @@ const Header = (props) => {
     address = '/login'
   }
 
+  const avatar = register ? '' : 'user__avatar-wrapper';
+  const stylevatar = register ? styleAvatar : {}
+
   return(
     <>
       <header className="header">
@@ -46,7 +59,7 @@ const Header = (props) => {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={address}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    <div className={`header__avatar-wrapper ${avatar}`} style={stylevatar} >
                     </div>
                     <span className="header__user-name user__name">
                       {register ?
@@ -55,7 +68,7 @@ const Header = (props) => {
                     </span>
                   </Link>
                   {register && (
-                    <button type="button" onClick={handleClear} style={style}>LOGOUT</button>
+                    <button type="button" onClick={handleClear} style={styleLogout}>LOGOUT</button>
                   )}
                 </li>
               </ul>
