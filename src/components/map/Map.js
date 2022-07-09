@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState} from 'react'
 import L from 'leaflet'
 import PropTypes from 'prop-types'
-import {mapCoords, Coords} from '../../mocks/Coords'
-import {city} from '../../mocks/offer'
 import {useParams} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const Map = (props) => {
-  const {items, active, massChooseCoords, activeCity, massChooseCards} = props
+  const {active, activeCity, massChooseCards, currentcity, city} = props
+  const {location} = massChooseCards[0].city // берем координаты выбранного города
+
   let marker
   let pork = []
   let pork2=[]
@@ -18,17 +18,10 @@ const Map = (props) => {
 // прописываем слой -карту
 
   useEffect(()=>{
-
-   if(!id) {
-     mapRef.current =  L.map('map').setView([48.856663, 2.351556], 11)
-   } else {
-     for(let i = 0; i < city.length; i++) {
-       if(city[i] === massChooseCards[0].city) {
-          mapRef.current =  L.map('map').setView(mapCoords[i], 11)
-        }
-     }
-   }
-
+     mapRef.current =  L.map('map').setView([
+       location.latitude,
+       location.longitude
+     ], location.zoom)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     })
@@ -37,12 +30,6 @@ const Map = (props) => {
 
 // добавляем метки
 const filteredMassCards = massChooseCards.filter((item) => item.id !== id)
-const filteredMassCoords = massChooseCoords.filter((item) => item.id !== id)
-
-const containerNeiborhoodCoords = []
- for(let i = 0; i < filteredMassCards.length; i++) {
-    containerNeiborhoodCoords.push(filteredMassCoords[i])
- }
 
 const generMarker = (coord) => {
   const customIcon = L.icon({
@@ -51,8 +38,8 @@ const generMarker = (coord) => {
   })
 
   pork = L.marker({
-    lat: coord.lat,
-    lng: coord.lng
+    lat: coord.location.latitude,
+    lng: coord.location.longitude
   },
   {
     icon: customIcon
@@ -64,9 +51,9 @@ const generMarker = (coord) => {
 
   useEffect(() => {
     if(!id) {
-      massChooseCoords.forEach(generMarker) //используем внутри forEch callback функцию
+      massChooseCards.forEach(generMarker) //используем внутри forEch callback функцию
     } else {
-      containerNeiborhoodCoords.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
+      filteredMassCards.slice(0, 3).forEach(generMarker)  //используем внутри forEch callback функцию
     }
 
     return () => {
@@ -74,20 +61,20 @@ const generMarker = (coord) => {
         mapRef.current.removeLayer(pork2[i])
       }
     }
-  }, [massChooseCoords])
+  }, [massChooseCards])
 
-
-  for(let i = 0; i < city.length; i++) {
-    if(activeCity === city[i]) {
-      mapRef.current.panTo(mapCoords[i])
-    }
-  }
+  useEffect(()=>{
+    mapRef.current.panTo([
+     location.latitude,
+     location.longitude
+   ], location.zoom)
+  },[activeCity])
 
 // добавляем динамику меткам при наведении
 
   useEffect(()=>{
       if(active) {
-        Coords.forEach((coord) => {
+        massChooseCards.forEach((coord) => {
           if(active.id === coord.id) {
             const customIcon = L.icon({
               iconUrl: `img/pin-active.svg`,
@@ -95,8 +82,8 @@ const generMarker = (coord) => {
             })
 
             marker = L.marker({
-              lat: coord.lat,
-              lng: coord.lng
+              lat: coord.location.latitude,
+              lng: coord.location.longitude
             },
             {
               icon: customIcon
@@ -109,8 +96,6 @@ const generMarker = (coord) => {
             }
     }
   }, [mapRef.current, active])
-
-
 
   return(
     <div id="map" style={{height: "100%"}} ref={mapRef}></div>
@@ -125,4 +110,8 @@ Map.propTypes = {
   })
 }
 
-export default Map
+const mapStateToProps = (state) => ({
+  city: state.city
+})
+
+export default connect(mapStateToProps)(Map)

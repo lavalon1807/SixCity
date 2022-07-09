@@ -1,15 +1,25 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState, useEffect } from 'react';
 import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
 import {LoadCards} from './LoadCards';
 import Map from './Map/Map';
-import {offer, city} from '../mocks/offer'
 import LoadCity from './LoadCity'
 import SortingCards from './SortingCards'
+import {connect} from 'react-redux'
+import {fetchOfferList} from './store/apiCreate'
+import { LoadData } from './LoadData'
 
 const Main = (props) => {
-  const {massChooseCards, massChooseCoords, toggle, activeCity, currentcity} = props // все берем из App
+  const {
+    massChooseCards,
+    toggle,
+    activeCity,
+    currentcity,
+    data,
+    isDataLoaded,
+  } = props // все берем из App
+
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
   const initialState = 'Popular'
@@ -77,7 +87,7 @@ const Main = (props) => {
 
 
 
-                <LoadCity items={city} onClick={toggle} currentcity={currentcity}/>
+                <LoadCity onClick={toggle} currentcity={currentcity}/>
 
 
 
@@ -127,8 +137,8 @@ const Main = (props) => {
                   <Map
                     active={active}
                     massChooseCards={massChooseCards}
-                    massChooseCoords={massChooseCoords}
                     activeCity={activeCity}
+                    currentcity={currentcity}
                   />
 
 
@@ -142,5 +152,11 @@ const Main = (props) => {
   )
 }
 
-export {Main};
+const mapStateToProps = (state) => ({
+  currentCity: state.currentCity,
+  isDataLoaded: state.isDataLoaded,
+  data: state.data,
+})
+
+export default Main
 

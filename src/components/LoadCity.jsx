@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import ChooseCity from './ChooseCity'
-import {offer, city} from '../mocks/offer'
 import {connect} from 'react-redux'
 
+
 const LoadCity = (props) => {
-  const {items, onClick} = props
+  const {onClick, city, isDataLoaded} = props
 
   return(
-    items.map((item) => <ChooseCity
+    city.map((item) => <ChooseCity
       key={item}
       items={item}
       onClick={onClick}
@@ -16,4 +16,10 @@ const LoadCity = (props) => {
   )
 }
 
-export default LoadCity
+const mapStateToProps = (state) => ({
+  city: state.city,
+  data: state.data,
+  isDataLoaded: state.isDataLoaded,
+})
+
+export default connect(mapStateToProps)(LoadCity)
