@@ -17,3 +17,9 @@ export const loadComments = (comments, id) => ({
   payload: comments,
   meta: id,
 })
+
+export const addFavorites = (favor, data) => ({
+  type: ActionType.ADD_FAVORITES,
+  payload: favor,
+  favorData: data,
+})

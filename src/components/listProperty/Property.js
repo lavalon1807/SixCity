@@ -18,7 +18,6 @@ import {NoAuth} from './picturePlaces/noAuthComments'
 const Property = ({massChooseCards, authorization, submitComment, data}) => {
   const params = useParams();
   const id = Number(params.id);
-  console.log(data)
 
   useEffect(()=>{
     submitComment(id)
@@ -138,7 +137,7 @@ const Property = ({massChooseCards, authorization, submitComment, data}) => {
 };
 
 Property.propTypes = {
-  massChooseCards: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

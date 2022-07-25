@@ -2,7 +2,7 @@ import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Main from './components/Main';
 import Login from './components/Sign-in';
-import Favorites from './components/Favorites';
+import Favorites from './components/favorites/Favorites';
 import Property from './components/listProperty/Property';
 import Error from './components/Error'
 import {city} from './mocks/offer'
@@ -22,11 +22,13 @@ const App = (props) => {
   const {currentCity, data, isDataLoaded, loadData, authorizationStatus} = props
   const [activeCity, setActiveCity] = useState()
 
-  useEffect(() => {
+  useEffect(()=>{
     if(!isDataLoaded) {
       loadData()
     }
   },[])
+
+
 
   if(!isDataLoaded) {
     return (

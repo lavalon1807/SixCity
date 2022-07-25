@@ -1,5 +1,5 @@
 import React from 'react';
-import {loadOffer} from './actionCreate'
+import {loadOffer, addFavorites} from './actionCreate'
 //с помощью этой функции мы тащим с сервера определенные данные
 
 function camelize(text) {
@@ -7,7 +7,7 @@ function camelize(text) {
   return text.substr(0, 1).toLowerCase() + text.substr(1);
 }
 
-const LoadData = (data) => {
+const LoadData = (data, favor) => {
 
   const camelizeNestedKeys = function(dataObj) {
       return JSON.parse(JSON.stringify(dataObj).replace(/("\w+":)/g, function(keys) {
@@ -21,7 +21,23 @@ const LoadData = (data) => {
   }, [initial])
 
   const unicumCities = [...new Set(cities)]
-  return loadOffer(unicumCities, camelizeNestedKeys(data))
+
+  const dataFavorite = data.map(item=>
+    item.id === favor.id ? favor : item
+  )
+
+  return loadOffer(unicumCities, camelizeNestedKeys(dataFavorite))
 }
 
-export {LoadData};
+const LoadDataFavorite = (data) => {
+
+  const camelizeNestedKeys = function(dataObj) {
+      return JSON.parse(JSON.stringify(dataObj).replace(/("\w+":)/g, function(keys) {
+        return camelize(keys);
+      }));
+  }
+
+  return addFavorites(camelizeNestedKeys(data))
+}
+
+export {LoadData, LoadDataFavorite};

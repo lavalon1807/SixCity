@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useState, useEffect } from 'react';
 import Header from './Header';
 import Card from './Card';
 import PropTypes from 'prop-types';
-import {LoadCards} from './LoadCards';
+import LoadCards from './LoadCards';
 import Map from './Map/Map';
 import LoadCity from './LoadCity'
 import SortingCards from './SortingCards'
@@ -98,7 +98,7 @@ const Main = (props) => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placeCount} places to stay in Amsterdam</b>
+                <b className="places__found">{placeCount} places to stay in {currentcity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0" onClick={handleClick}>

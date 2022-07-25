@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Review from './Review'
 
 const ReviewsLoader = (props) => {
-  const {id, commentsMap, massage} = props
+  const {id, commentsMap} = props
   const comments = commentsMap[id] || [];
 
   return(
@@ -12,7 +12,6 @@ const ReviewsLoader = (props) => {
 }
 const mapStateToProps = (state) => ({
   commentsMap: state.loadComments,
-  massage: state.massage,
 })
 
 

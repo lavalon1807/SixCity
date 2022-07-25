@@ -1,10 +1,25 @@
+import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../const'
-import {requireAuthorization, sendMassage, loadComments} from './actionCreate'
-import {LoadData} from './LoadData'
+import {requireAuthorization, sendMassage, loadComments, addFavorites} from './actionCreate'
+import {LoadData, LoadDataFavorite} from './LoadData'
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
   api.get(`/hotels`).then(({data}) => {
-    dispatch(LoadData(data))
+    dispatch(LoadData(data, data))
+  })
+}
+
+export const sendFavorites = ({id, status, datas}) => (dispatch, _getState, api) => {
+  api.post(`/favorite/${id}/${status}`, {id, status})
+    .then((data)=>{
+      // dispatch(LoadDataFavorite(data.data))
+      dispatch(LoadData(datas, data.data))
+    })
+}
+
+export const fetchFavorites = () => (dispatch, _getState, api) => {
+  api.get(`/favorite`).then((data)=>{
+    dispatch(addFavorites(data.data.is_favorite, data.data))
   })
 }
 

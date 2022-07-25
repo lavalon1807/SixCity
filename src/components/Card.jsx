@@ -1,9 +1,11 @@
-import React from "react"
-import { Link } from 'react-router-dom'
-import { WIDTH } from './const'
+import React, {useState, useEffect} from "react";
+import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { WIDTH } from './const';
+import {sendFavorites, fetchFavorites} from './store/apiCreate'
 
 const Card = (props) => {
-  const {items, onMouseEnter, onMouseLeave} = props
+  const {items, onMouseEnter, onMouseLeave, chooseFavorites, takeFavorites, addFavor, data} = props
   const {
     isPremium,
     isFavorite,
@@ -15,7 +17,12 @@ const Card = (props) => {
     type,
   } = items
 
+  const [addFavorite, setAddFavorite] = useState();
+
   const favorite = isFavorite ? 'place-card__bookmark-button--active' : ''
+  const statusFavor = isFavorite ? 0 : 1;
+
+
 
   const handleMouseEnter = () => {
     onMouseEnter(items)
@@ -23,6 +30,16 @@ const Card = (props) => {
 
   const handleMouseLeave = () => {
     onMouseLeave()
+  }
+
+  const addCardInFavorite = () => {
+    setAddFavorite(addFavor.isFavorite ? false : true)
+    // takeFavorites()
+    chooseFavorites({
+      id: id,
+      status: statusFavor,
+      datas: data,
+    })
   }
 
   return (
@@ -45,7 +62,11 @@ const Card = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${favorite}`} type="button">
+          <button
+            className={`place-card__bookmark-button button ${favorite}`}
+            type="button"
+            onClick={addCardInFavorite}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -67,4 +88,19 @@ const Card = (props) => {
   )
 }
 
-export default Card
+const mapStateToProps = (state) => ({
+  addFavor: state.objFavorite,
+  data: state.data,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  chooseFavorites(it) {
+    dispatch(sendFavorites(it))
+  },
+  // takeFavorites(it) {
+  //   dispatch(fetchFavorites(it))
+  // }
+})
+
+export {Card}
+export default connect(mapStateToProps, mapDispatchToProps)(Card)

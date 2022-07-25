@@ -1,15 +1,19 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import Card from './Card'
-import {logout} from './store/apiCreate'
+import {logout} from './store/apiCreate';
+import {AuthorizationStatus} from './const';
 
 const styleLogout = {
   color: 'black',
-  marginTop: '17px',
-  marginLeft: '25%',
-  borderRadius: '5%',
+  height: '30px',
+  borderRadius: '25%',
+  position: 'absolute',
+  top: '7px',
+  right: '-55px',
+  cursor: 'pointer',
 }
 
 const styleAvatar = {
@@ -23,8 +27,7 @@ const styleAvatar = {
 
 const Header = (props) => {
   const {authorizationStatus, loginRef, login, clearSubmit} = props
-  const history = useHistory()
-  const register = authorizationStatus === 'AUTH'
+  const register = authorizationStatus === AuthorizationStatus.AUTH;
 
   const handleClear = () => {
     clearSubmit({
@@ -56,7 +59,7 @@ const Header = (props) => {
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
+              <ul className="header__nav-list" style={{position: 'relative'}}>
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={address}>
                     <div className={`header__avatar-wrapper ${avatar}`} style={stylevatar} >
@@ -68,7 +71,7 @@ const Header = (props) => {
                     </span>
                   </Link>
                   {register && (
-                    <button type="button" onClick={handleClear} style={styleLogout}>LOGOUT</button>
+                    <button type="button" onClick={handleClear} style={styleLogout}>OUT</button>
                   )}
                 </li>
               </ul>

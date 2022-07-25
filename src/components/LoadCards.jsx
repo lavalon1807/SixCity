@@ -16,17 +16,7 @@ const LoadCards = (props) => {
   )
 }
 
-LoadCards.propTypes = {
-  offer: PropTypes.arrayOf(
-      PropTypes.shape({
-        price: PropTypes.number.isRequired,
-        attribute: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired,
-      })
-  )
-}
 
 
-export {LoadCards}
+
+export default LoadCards

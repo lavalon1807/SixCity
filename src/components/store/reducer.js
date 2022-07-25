@@ -12,6 +12,8 @@ const initialState = {
   massage: {},
   loadComments: {},
   isLoaded: false,
+  objFavorite: {},
+  favorData: [],
 }
 
 const Reducer = (state = initialState, action) => {
@@ -42,6 +44,13 @@ const Reducer = (state = initialState, action) => {
           [action.meta]: action.payload,
         },
       }
+
+      case ActionType.ADD_FAVORITES:
+        return {
+          ...state,
+          objFavorite: action.payload,
+          favorData: action.favorData,
+        }
 
     default: return state
   }
