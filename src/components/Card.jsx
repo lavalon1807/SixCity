@@ -5,7 +5,7 @@ import { WIDTH } from './const';
 import {sendFavorites, fetchFavorites} from './store/apiCreate'
 
 const Card = (props) => {
-  const {items, onMouseEnter, onMouseLeave, chooseFavorites, takeFavorites, addFavor, data} = props
+  const {items, onMouseEnter, onMouseLeave, chooseFavorites, takeFavorites, data} = props
   const {
     isPremium,
     isFavorite,
@@ -17,12 +17,8 @@ const Card = (props) => {
     type,
   } = items
 
-  const [addFavorite, setAddFavorite] = useState();
-
   const favorite = isFavorite ? 'place-card__bookmark-button--active' : ''
   const statusFavor = isFavorite ? 0 : 1;
-
-
 
   const handleMouseEnter = () => {
     onMouseEnter(items)
@@ -33,7 +29,6 @@ const Card = (props) => {
   }
 
   const addCardInFavorite = () => {
-    setAddFavorite(addFavor.isFavorite ? false : true)
     // takeFavorites()
     chooseFavorites({
       id: id,
@@ -89,7 +84,6 @@ const Card = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  addFavor: state.objFavorite,
   data: state.data,
 })
 
@@ -97,9 +91,6 @@ const mapDispatchToProps = (dispatch) => ({
   chooseFavorites(it) {
     dispatch(sendFavorites(it))
   },
-  // takeFavorites(it) {
-  //   dispatch(fetchFavorites(it))
-  // }
 })
 
 export {Card}

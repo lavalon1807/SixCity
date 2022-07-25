@@ -12,14 +12,13 @@ export const fetchOfferList = () => (dispatch, _getState, api) => {
 export const sendFavorites = ({id, status, datas}) => (dispatch, _getState, api) => {
   api.post(`/favorite/${id}/${status}`, {id, status})
     .then((data)=>{
-      // dispatch(LoadDataFavorite(data.data))
       dispatch(LoadData(datas, data.data))
     })
 }
 
 export const fetchFavorites = () => (dispatch, _getState, api) => {
   api.get(`/favorite`).then((data)=>{
-    dispatch(addFavorites(data.data.is_favorite, data.data))
+    dispatch(LoadDataFavorite(data.data))
   })
 }
 

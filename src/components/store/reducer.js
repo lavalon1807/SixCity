@@ -12,8 +12,7 @@ const initialState = {
   massage: {},
   loadComments: {},
   isLoaded: false,
-  objFavorite: {},
-  favorData: [],
+  objFavorite: [],
 }
 
 const Reducer = (state = initialState, action) => {
@@ -49,7 +48,6 @@ const Reducer = (state = initialState, action) => {
         return {
           ...state,
           objFavorite: action.payload,
-          favorData: action.favorData,
         }
 
     default: return state

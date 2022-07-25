@@ -9,7 +9,7 @@ import {city} from './mocks/offer'
 import {connect, Provider} from 'react-redux'
 import {store} from './index'
 import {ActionType} from './components/store/action'
-import {fetchOfferList} from './components/store/apiCreate'
+import {fetchOfferList, fetchFavorites} from './components/store/apiCreate'
 import PropTypes from 'prop-types'
 import {LoadData} from './components/LoadData'
 import PrivateRoute from './components/private-route'
@@ -19,22 +19,21 @@ const AppRoute = {
 };
 
 const App = (props) => {
-  const {currentCity, data, isDataLoaded, loadData, authorizationStatus} = props
+  const {currentCity, data, isDataLoaded, loadData, authorizationStatus, takeFavorites} = props
   const [activeCity, setActiveCity] = useState()
 
-  useEffect(()=>{
-    if(!isDataLoaded) {
-      loadData()
-    }
-  },[])
-
-
+  if(!isDataLoaded) {
+    loadData()
+  }
 
   if(!isDataLoaded) {
     return (
       <LoadData />
     )
   }
+
+  takeFavorites();
+
 
   let massChooseCards = []
   data.forEach((item) => {
@@ -87,7 +86,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadData() {
     dispatch(fetchOfferList())
-  }
+  },
+  takeFavorites() {
+    dispatch(fetchFavorites())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
