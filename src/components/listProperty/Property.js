@@ -23,21 +23,18 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
     submitComment(id)
   }, [id])
 
-  let gggg = []
+  useEffect(()=>{
+    if(!isLoaded) {
+      addOffer(id)
+    }
+  },[isLoaded])
+
 
   if(!isLoaded) {
-    addOffer(id)
-  } else {
-    gggg = Object.assign(offer)
+    return(
+      <LoadData />
+    )
   }
-
-  console.log(gggg.city.name)
-
-
-
-  useEffect(()=>{
-    <LoadData />
-  },[])
 
   const item = data.find((it) => it.id === id);
   const chiefHost = !item.host.isPro ? `visually-hidden` : ``;
