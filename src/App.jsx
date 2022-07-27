@@ -34,7 +34,6 @@ const App = (props) => {
 
   takeFavorites();
 
-
   let massChooseCards = []
   data.forEach((item) => {
     currentCity === item.city.name ? massChooseCards.push(item) : null

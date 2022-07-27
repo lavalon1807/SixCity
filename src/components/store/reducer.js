@@ -13,6 +13,7 @@ const initialState = {
   loadComments: {},
   isLoaded: false,
   objFavorite: [],
+  oneOffer: {},
 }
 
 const Reducer = (state = initialState, action) => {
@@ -48,6 +49,13 @@ const Reducer = (state = initialState, action) => {
         return {
           ...state,
           objFavorite: action.payload,
+        }
+
+      case ActionType.LOAD_OFFER:
+        return {
+          ...state,
+          oneOffer: action.payload,
+          isLoaded: true,
         }
 
     default: return state

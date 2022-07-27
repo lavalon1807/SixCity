@@ -22,3 +22,8 @@ export const addFavorites = (favor) => ({
   type: ActionType.ADD_FAVORITES,
   payload: favor,
 })
+
+export const loadOneOffer = (offer) => ({
+  type: ActionType.LOAD_OFFER,
+  payload: offer,
+})

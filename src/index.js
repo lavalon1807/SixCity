@@ -17,7 +17,7 @@ export const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk.withExtraArgument(api))
 ))
 
-store.subscribe(()=>console.log(store.getState()))
+// store.subscribe(()=>console.log(store.getState()))
 
 store.dispatch(checkAuth())
 

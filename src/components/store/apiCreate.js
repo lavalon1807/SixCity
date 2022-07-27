@@ -1,12 +1,19 @@
 import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../const'
-import {requireAuthorization, sendMassage, loadComments, addFavorites} from './actionCreate'
-import {LoadData, LoadDataFavorite} from './LoadData'
+import {requireAuthorization, sendMassage, loadComments, addFavorites, loadOneOffer} from './actionCreate'
+import {LoadData, LoadDataFavorite, LoadOfferOne} from './LoadData'
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
   api.get(`/hotels`).then(({data}) => {
     dispatch(LoadData(data, data))
   })
+}
+
+export const fetchOffer = (id) => (dispatch, _getState, api) => {
+  api.get(`hotels/${id}`)
+    .then((data) => {
+       dispatch(LoadOfferOne(data.data))
+    })
 }
 
 export const sendFavorites = ({id, status, datas}) => (dispatch, _getState, api) => {
@@ -40,9 +47,6 @@ export const logout = () => (dispatch, _getState, api) => (
 
 
 export const takeComments = (id) => (dispatch, getState, api) => {
-  const state = getState();
-  const comment = state.loadComments[id];
-
   return api.get(`/comments/${id}`)
     .then((data)=>{
       dispatch(loadComments(data.data, id))

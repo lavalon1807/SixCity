@@ -5,6 +5,7 @@ const ActionType = {
   SEND_COMMENTS: 'SEND_COMMENTS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
   ADD_FAVORITES: 'ADD_FAVORITES',
+  LOAD_OFFER: 'LOAD_OFFER',
 }
 
 export {ActionType}

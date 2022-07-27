@@ -4,8 +4,6 @@ const sort = (props) => {
   const {items, rating, onclick} = props
 
   const active = rating === items ? 'places__option--active' : ''
-  const modActive = 'aaa'
-
 
   return(
   <>

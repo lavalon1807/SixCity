@@ -8,20 +8,32 @@ import ReviewLoader from './ReviewsLoader';
 import NeiborhoodLoad from './neiborhood/NeiborhoodLoad';
 import comment from '../../mocks/Comment';
 import Map from '../Map/Map';
-import {PicturePlace} from './picturePlaces/PicturePlace';
+import PicturePlace from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
 import Comments from './Comments';
-import {takeComments} from '../store/apiCreate';
+import {takeComments, fetchOffer} from '../store/apiCreate';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments'
 
-const Property = ({massChooseCards, authorization, submitComment, data}) => {
+const Property = ({massChooseCards, authorization, submitComment, data, addOffer, offer, isLoaded}) => {
   const params = useParams();
   const id = Number(params.id);
 
   useEffect(()=>{
     submitComment(id)
   }, [id])
+
+  let gggg = []
+
+  if(!isLoaded) {
+    addOffer(id)
+  } else {
+    gggg = Object.assign(offer)
+  }
+
+  console.log(gggg.city.name)
+
+
 
   useEffect(()=>{
     <LoadData />
@@ -46,8 +58,8 @@ const Property = ({massChooseCards, authorization, submitComment, data}) => {
             <div className="property__gallery-container container">
               <div className="property__gallery">
 
-
-                <PicturePlace key={item.id} item={item}/>
+              {/*загружаем изображения*/}
+                <PicturePlace items={offer} />
 
 
               </div>
@@ -144,11 +156,15 @@ const mapStateToProps = (state) => ({
   isLoaded: state.isLoaded,
   authorization: state.authorizationStatus,
   data: state.data,
+  offer: state.oneOffer,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   submitComment(id) {
     dispatch(takeComments(id))
+  },
+  addOffer(id) {
+    dispatch(fetchOffer(id))
   }
 })
 
