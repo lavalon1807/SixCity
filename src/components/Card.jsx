@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { WIDTH } from './const';
 import {sendFavorites, fetchFavorites} from './store/apiCreate'
+import {AuthorizationStatus} from './const'
 
 const Card = (props) => {
-  const {items, onMouseEnter, onMouseLeave, chooseFavorites, takeFavorites, data} = props
+  const {items, onMouseEnter, onMouseLeave, chooseFavorites, data, auth, addCardInFavorite} = props
   const {
     isPremium,
     isFavorite,
@@ -27,15 +28,11 @@ const Card = (props) => {
   const handleMouseLeave = () => {
     onMouseLeave()
   }
-
-  const addCardInFavorite = () => {
-    // takeFavorites()
-    chooseFavorites({
-      id: id,
-      status: statusFavor,
-      datas: data,
-    })
+  const addFavoriteCardFromMainPage = () => {
+    addCardInFavorite(id, statusFavor, data)
   }
+
+  const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : '';
 
   return (
     <article className="cities__place-card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -57,16 +54,18 @@ const Card = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button button ${favorite}`}
-            type="button"
-            onClick={addCardInFavorite}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <Link to={noAuth}>
+            <button
+              className={`place-card__bookmark-button button ${favorite}`}
+              type="button"
+              onClick={addFavoriteCardFromMainPage}
+            >
+              <svg className="place-card__bookmark-icon" width="18" height="19">
+                <use xlinkHref="#icon-bookmark"></use>
+              </svg>
+              <span className="visually-hidden">In bookmarks</span>
+            </button>
+          </Link>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -85,6 +84,7 @@ const Card = (props) => {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  auth: state.authorizationStatus,
 })
 
 const mapDispatchToProps = (dispatch) => ({

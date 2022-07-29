@@ -6,29 +6,23 @@ import Header from '../Header';
 import DataProp from './DataProp';
 import ReviewLoader from './ReviewsLoader';
 import NeiborhoodLoad from './neiborhood/NeiborhoodLoad';
-import comment from '../../mocks/Comment';
+import Comments from './Comments';
 import Map from '../Map/Map';
 import PicturePlace from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
-import Comments from './Comments';
 import {takeComments, fetchOffer} from '../store/apiCreate';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments'
 
-const Property = ({massChooseCards, authorization, submitComment, data, addOffer, offer, isLoaded}) => {
+const Property =
+  ({massChooseCards, authorization, submitComment, addOffer, offer, isLoaded, commentsMap, addCardInFavorite}) => {
   const params = useParams();
   const id = Number(params.id);
 
   useEffect(()=>{
     submitComment(id)
+    addOffer(id)
   }, [id])
-
-  useEffect(()=>{
-    if(!isLoaded) {
-      addOffer(id)
-    }
-  },[isLoaded])
-
 
   if(!isLoaded) {
     return(
@@ -36,9 +30,9 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
     )
   }
 
-  const item = data.find((it) => it.id === id);
-  const chiefHost = !item.host.isPro ? `visually-hidden` : ``;
-  const chiefHostMain = item.host.isPro ? `property__avatar-wrapper--pro` : ``;
+  const chiefHost = !offer.host.isPro ? `visually-hidden` : ``;
+  const chiefHostMain = offer.host.isPro ? `property__avatar-wrapper--pro` : ``;
+  const commentUser = commentsMap[id] || [];
 
   return (
     <>
@@ -65,7 +59,7 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
               <div className="property__wrapper">
 
 
-                <DataProp items={item} />
+                <DataProp items={offer} addCardInFavorite={addCardInFavorite} />
 
 
                 <div className="property__inside">
@@ -73,7 +67,7 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
                   <ul className="property__inside-list">
 
 
-                    <ComfortGoods item={item}/>
+                    <ComfortGoods item={offer}/>
 
 
                   </ul>
@@ -82,10 +76,10 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className={`property__avatar-wrapper user__avatar-wrapper ${chiefHostMain}`}>
-                      <img className="property__avatar user__avatar" src={item.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                      <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
-                      {item.host.name}
+                      {offer.host.name}
                     </span>
                     <span className={`property__user-status ${chiefHost}`}>
                       Pro
@@ -93,16 +87,16 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
                   </div>
                   <div className="property__description">
                     <p className="property__text">
-                      {item.description}
+                      {offer.description}
                     </p>
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comment.length}</span></h2>
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentUser.length}</span></h2>
                   <ul className="reviews__list">
 
                     {/* Загружаем отзывы */}
-                    <ReviewLoader items={comment} id={id}/>
+                    <ReviewLoader commentsMap={commentUser} />
 
                   </ul>
 
@@ -145,15 +139,12 @@ const Property = ({massChooseCards, authorization, submitComment, data, addOffer
   );
 };
 
-Property.propTypes = {
-  data: PropTypes.array.isRequired,
-};
-
 const mapStateToProps = (state) => ({
   isLoaded: state.isLoaded,
   authorization: state.authorizationStatus,
   data: state.data,
   offer: state.oneOffer,
+  commentsMap: state.loadComments,
 })
 
 const mapDispatchToProps = (dispatch) => ({

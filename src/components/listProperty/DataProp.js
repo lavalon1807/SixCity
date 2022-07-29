@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {WIDTH} from '../const';
+import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {WIDTH, AuthorizationStatus} from '../const';
 
 const DataProp = (props) => {
-  const {items} = props;
+  const {items, addCardInFavorite, data, auth} = props;
   const {
     isPremium,
     title,
@@ -12,10 +14,17 @@ const DataProp = (props) => {
     bedrooms,
     maxAdults,
     price,
+    id,
   } = items;
 
-  const bookMark = isFavorite ? `property__bookmark-button--active` : ``;
+  const bookMark = data[id - 1].isFavorite ? `property__bookmark-button--active` : ``;
   const widthRating = rating * WIDTH;
+  const statusFavor = data[id - 1].isFavorite ? 0 : 1;
+  const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : `/property/${id}`;
+
+  const addFavoriteFromPreview = () => {
+    addCardInFavorite(id, statusFavor, data)
+  }
 
   return (
     <>
@@ -30,12 +39,14 @@ const DataProp = (props) => {
         <h1 className="property__name">
           {title}
         </h1>
-        <button className={`property__bookmark-button button ${bookMark}`} type="button">
-          <svg className="property__bookmark-icon" width="31" height="33">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+        <Link to={noAuth}>
+          <button className={`property__bookmark-button button ${bookMark}`} type="button" onClick={addFavoriteFromPreview}>
+            <svg className="property__bookmark-icon" width="31" height="33">
+              <use xlinkHref="#icon-bookmark"></use>
+            </svg>
+            <span className="visually-hidden">To bookmarks</span>
+          </button>
+        </Link>
       </div>
       <div className="property__rating rating">
         <div className="property__stars rating__stars">
@@ -77,4 +88,10 @@ DataProp.propTypes = {
   })
 };
 
-export default DataProp;
+const mapStateToProps = (state) => ({
+  auth: state.authorizationStatus,
+  data: state.data,
+})
+
+export {DataProp}
+export default connect(mapStateToProps)(DataProp);

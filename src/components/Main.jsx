@@ -12,6 +12,7 @@ import { LoadData } from './LoadData'
 
 const Main = (props) => {
   const {
+    addCardInFavorite,
     massChooseCards,
     toggle,
     activeCity,
@@ -124,6 +125,7 @@ const Main = (props) => {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   currentcity={currentcity}
+                  addCardInFavorite={addCardInFavorite}
                 />
 
 

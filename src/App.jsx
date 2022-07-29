@@ -9,7 +9,7 @@ import {city} from './mocks/offer'
 import {connect, Provider} from 'react-redux'
 import {store} from './index'
 import {ActionType} from './components/store/action'
-import {fetchOfferList, fetchFavorites} from './components/store/apiCreate'
+import {fetchOfferList, fetchFavorites, sendFavorites} from './components/store/apiCreate'
 import PropTypes from 'prop-types'
 import {LoadData} from './components/LoadData'
 import PrivateRoute from './components/private-route'
@@ -19,7 +19,7 @@ const AppRoute = {
 };
 
 const App = (props) => {
-  const {currentCity, data, isDataLoaded, loadData, authorizationStatus, takeFavorites} = props
+  const {currentCity, data, isDataLoaded, loadData, authorizationStatus, takeFavorites, chooseFavorites} = props
   const [activeCity, setActiveCity] = useState()
 
   if(!isDataLoaded) {
@@ -30,6 +30,15 @@ const App = (props) => {
     return (
       <LoadData />
     )
+  }
+
+  //обработчик на флаг избранная карточка
+  const addCardInFavorite = (id, statusFavor, data) => {
+    chooseFavorites({
+      id: id,
+      status: statusFavor,
+      datas: data,
+    })
   }
 
   takeFavorites();
@@ -54,12 +63,14 @@ return(
             currentcity={currentCity}
             massChooseCards={massChooseCards}
             activeCity={activeCity}
+            addCardInFavorite={addCardInFavorite}
           />
         </Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/property/:id' exact>
           <Property
             massChooseCards={massChooseCards}
+            addCardInFavorite={addCardInFavorite}
           />
         </Route>
         <PrivateRoute path='/favorites' exact component={Favorites}></PrivateRoute>
@@ -88,6 +99,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   takeFavorites() {
     dispatch(fetchFavorites())
+  },
+  chooseFavorites(it) {
+    dispatch(sendFavorites(it))
   },
 })
 
