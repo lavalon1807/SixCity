@@ -25,6 +25,11 @@ const Neiborhood = (props) => {
   const widthRating = rating * WIDTH;
   const statusFavor = data[id - 1].isFavorite ? 0 : 1;
   const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : `/property/${currentId}`;
+  const URLCurrentCard = `/property/${id}`;
+
+  const startPage = () => {
+    window.scrollTo(0, 0)
+  }
 
   const addFavoriteFromNeiborhood = () => {
     chooseFavorites({
@@ -67,7 +72,7 @@ const Neiborhood = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={URLCurrentCard} onClick={startPage}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
