@@ -45,7 +45,11 @@ const DataProp = (props) => {
           {title}
         </h1>
         <Link to={noAuth}>
-          <button className={`property__bookmark-button button ${bookMark}`} type="button" onClick={addFavoriteFromPreview}>
+          <button
+            className={`property__bookmark-button button ${bookMark}`}
+            type="button"
+            onClick={addFavoriteFromPreview}
+          >
             <svg className="property__bookmark-icon" width="31" height="33">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
