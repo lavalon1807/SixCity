@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {WIDTH, AuthorizationStatus} from '../const';
+import {sendFavorites} from '../store/apiCreate'
 
 const DataProp = (props) => {
-  const {items, addCardInFavorite, data, auth} = props;
+  const {items, data, auth, chooseFavorites} = props;
   const {
     isPremium,
     title,
@@ -23,7 +24,11 @@ const DataProp = (props) => {
   const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : `/property/${id}`;
 
   const addFavoriteFromPreview = () => {
-    addCardInFavorite(id, statusFavor, data)
+    chooseFavorites({
+      id: id,
+      status: statusFavor,
+      datas: data,
+    })
   }
 
   return (
@@ -93,5 +98,11 @@ const mapStateToProps = (state) => ({
   data: state.data,
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  chooseFavorites(it) {
+    dispatch(sendFavorites(it))
+  },
+})
+
 export {DataProp}
-export default connect(mapStateToProps)(DataProp);
+export default connect(mapStateToProps, mapDispatchToProps)(DataProp);

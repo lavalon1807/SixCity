@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import {offer} from '../../../mocks/offer'
 
 const NeiborhoodLoad = (props) => {
-  const {massChooseCards} = props
+  const {massChooseCards, sentence} = props
   const [cards, setCards] = useState(massChooseCards)
   const params = useParams()
   const id = Number(params.id);
@@ -14,7 +14,7 @@ const NeiborhoodLoad = (props) => {
   }, [])
 
   return(
-    cards.slice(0, 3).map(it =>
+    sentence.map(it =>
       <Neiborhood
         key={it.id}
         items={it}

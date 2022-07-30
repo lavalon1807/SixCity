@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../const'
 import {requireAuthorization, sendMassage, loadComments, addFavorites, loadOneOffer} from './actionCreate'
-import {LoadData, LoadDataFavorite, LoadOfferOne} from './LoadData'
+import {LoadData, LoadDataFavorite, LoadOfferOne, LoadOfferNearby} from './LoadData'
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
   api.get(`/hotels`).then(({data}) => {
@@ -27,6 +27,13 @@ export const fetchFavorites = () => (dispatch, _getState, api) => {
   api.get(`/favorite`).then((data)=>{
     dispatch(LoadDataFavorite(data.data))
   })
+}
+
+export const fetchNearby = (id) => (dispatch, _getState, api) => {
+  api.get(`/hotels/${id}/nearby`)
+    .then(data => {
+      dispatch(LoadOfferNearby(data.data))
+    })
 }
 
 export const checkAuth = () => (dispatch, _getState, api) => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {loadOffer, addFavorites, loadOneOffer} from './actionCreate'
+import {loadOffer, addFavorites, loadOneOffer, loadNearby} from './actionCreate'
 //с помощью этой функции мы тащим с сервера определенные данные
 
 function camelize(text) {
@@ -51,4 +51,14 @@ const LoadOfferOne = (data) => {
   return loadOneOffer(camelizeNestedKeys(data))
 }
 
-export {LoadData, LoadDataFavorite, LoadOfferOne};
+const LoadOfferNearby = (data) => {
+  const camelizeNestedKeys = function(dataObj) {
+      return JSON.parse(JSON.stringify(dataObj).replace(/("\w+":)/g, function(keys) {
+        return camelize(keys);
+      }));
+  }
+
+  return loadNearby(camelizeNestedKeys(data))
+}
+
+export {LoadData, LoadDataFavorite, LoadOfferOne, LoadOfferNearby};

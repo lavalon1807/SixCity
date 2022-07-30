@@ -10,18 +10,28 @@ import Comments from './Comments';
 import Map from '../Map/Map';
 import PicturePlace from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
-import {takeComments, fetchOffer} from '../store/apiCreate';
+import {takeComments, fetchOffer, fetchNearby} from '../store/apiCreate';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments'
 
-const Property =
-  ({massChooseCards, authorization, submitComment, addOffer, offer, isLoaded, commentsMap, addCardInFavorite}) => {
+const Property = (props) => {
+  const {massChooseCards,
+    authorization,
+    submitComment,
+    addOffer,
+    offer,
+    isLoaded,
+    commentsMap,
+    addSentence,
+    sentence} = props;
+
   const params = useParams();
   const id = Number(params.id);
 
   useEffect(()=>{
     submitComment(id)
     addOffer(id)
+    addSentence(id)
   }, [id])
 
   if(!isLoaded) {
@@ -29,6 +39,7 @@ const Property =
       <LoadData />
     )
   }
+  // console.log(sentence.city.name)
 
   const chiefHost = !offer.host.isPro ? `visually-hidden` : ``;
   const chiefHostMain = offer.host.isPro ? `property__avatar-wrapper--pro` : ``;
@@ -59,7 +70,7 @@ const Property =
               <div className="property__wrapper">
 
 
-                <DataProp items={offer} addCardInFavorite={addCardInFavorite} />
+                <DataProp items={offer} />
 
 
                 <div className="property__inside">
@@ -127,7 +138,7 @@ const Property =
               <div className="near-places__list places__list">
 
                 {/* Тут выводим карточки соседи */}
-                <NeiborhoodLoad massChooseCards={massChooseCards} />
+                <NeiborhoodLoad massChooseCards={massChooseCards} sentence={sentence}/>
 
 
               </div>
@@ -141,10 +152,12 @@ const Property =
 
 const mapStateToProps = (state) => ({
   isLoaded: state.isLoaded,
+  isLoadedNearby: state.isLoadedNearby,
   authorization: state.authorizationStatus,
   data: state.data,
   offer: state.oneOffer,
   commentsMap: state.loadComments,
+  sentence: state.sentence,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -153,6 +166,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addOffer(id) {
     dispatch(fetchOffer(id))
+  },
+  addSentence(id) {
+    dispatch(fetchNearby(id))
   }
 })
 

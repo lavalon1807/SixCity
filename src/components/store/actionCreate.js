@@ -27,3 +27,8 @@ export const loadOneOffer = (offer) => ({
   type: ActionType.LOAD_OFFER,
   payload: offer,
 })
+
+export const loadNearby = (data) => ({
+  type: ActionType.LOAD_NEARBY,
+  payload: data,
+})

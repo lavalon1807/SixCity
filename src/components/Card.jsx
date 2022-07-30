@@ -6,7 +6,7 @@ import {sendFavorites, fetchFavorites} from './store/apiCreate'
 import {AuthorizationStatus} from './const'
 
 const Card = (props) => {
-  const {items, onMouseEnter, onMouseLeave, chooseFavorites, data, auth, addCardInFavorite} = props
+  const {items, onMouseEnter, onMouseLeave, chooseFavorites, data, auth} = props
   const {
     isPremium,
     isFavorite,
@@ -29,7 +29,11 @@ const Card = (props) => {
     onMouseLeave()
   }
   const addFavoriteCardFromMainPage = () => {
-    addCardInFavorite(id, statusFavor, data)
+    chooseFavorites({
+      id: id,
+      status: statusFavor,
+      datas: data,
+    })
   }
 
   const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : '';

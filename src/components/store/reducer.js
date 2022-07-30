@@ -14,6 +14,7 @@ const initialState = {
   isLoaded: false,
   objFavorite: [],
   oneOffer: {},
+  sentence: [],
 }
 
 const Reducer = (state = initialState, action) => {
@@ -56,6 +57,12 @@ const Reducer = (state = initialState, action) => {
           ...state,
           oneOffer: action.payload,
           isLoaded: true,
+        }
+
+      case ActionType.LOAD_NEARBY:
+        return {
+          ...state,
+          sentence: action.payload,
         }
 
     default: return state

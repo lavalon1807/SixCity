@@ -6,6 +6,7 @@ const ActionType = {
   LOAD_COMMENTS: 'LOAD_COMMENTS',
   ADD_FAVORITES: 'ADD_FAVORITES',
   LOAD_OFFER: 'LOAD_OFFER',
+  LOAD_NEARBY: 'LOAD_NEARBY',
 }
 
 export {ActionType}

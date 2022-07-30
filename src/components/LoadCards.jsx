@@ -3,7 +3,7 @@ import Card from './Card'
 import PropTypes from 'prop-types'
 
 const LoadCards = (props) => {
-  const {onMouseEnter, onMouseLeave, massChooseCards, addCardInFavorite} = props
+  const {onMouseEnter, onMouseLeave, massChooseCards} = props
 
   return(
     massChooseCards.map(item =>
@@ -11,8 +11,7 @@ const LoadCards = (props) => {
         key = {item.id}
         items={item}
         onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        addCardInFavorite={addCardInFavorite}/>
+        onMouseLeave={onMouseLeave}/>
       )
   )
 }

@@ -32,15 +32,6 @@ const App = (props) => {
     )
   }
 
-  //обработчик на флаг избранная карточка
-  const addCardInFavorite = (id, statusFavor, data) => {
-    chooseFavorites({
-      id: id,
-      status: statusFavor,
-      datas: data,
-    })
-  }
-
   takeFavorites();
 
   let massChooseCards = []
@@ -63,14 +54,12 @@ return(
             currentcity={currentCity}
             massChooseCards={massChooseCards}
             activeCity={activeCity}
-            addCardInFavorite={addCardInFavorite}
           />
         </Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/property/:id' exact>
           <Property
             massChooseCards={massChooseCards}
-            addCardInFavorite={addCardInFavorite}
           />
         </Route>
         <PrivateRoute path='/favorites' exact component={Favorites}></PrivateRoute>
