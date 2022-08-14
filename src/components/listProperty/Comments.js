@@ -1,32 +1,34 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {RatingComments} from './RatingComments'
-import {connect} from 'react-redux';
-import {sendComments} from '../store/apiCreate'
-import {sendMassage} from '../store/actionCreate'
+import {useSelector, useDispatch} from 'react-redux';
+import {RatingComments} from './RatingComments';
+import {sendComments} from '../redux/api-create';
 
 
-const Comments = ({comment, commentSubmit}) => {
-  const commentRef = useRef()
-  const [rating, setRating] = useState()
+const Comments = () => {
+  const {loadComments} = useSelector(state => state.COMMENT);
+  const commentRef = useRef();
+  const [rating, setRating] = useState();
   const params = useParams();
   const id = Number(params.id);
+  const dispatch = useDispatch();
 
-  const comments = comment[id] || [];
+  const comments = loadComments[id] || [];
 
   const onChangeRating = (it) => {
     setRating(it)
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if(commentRef.current.value !== '') {
-      commentSubmit({
+      dispatch(sendComments({
         id: id,
         comment: commentRef.current.value,
         rating: rating,
-      })
-      commentRef.current.value = ''
+      }));
+
+      commentRef.current.value = '';
     }
   };
 
@@ -65,15 +67,5 @@ const Comments = ({comment, commentSubmit}) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  comment: state.loadComments,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  commentSubmit(dataComment) {
-    dispatch(sendComments(dataComment))
-  }
-})
-
-export {Comments}
-export default connect(mapStateToProps, mapDispatchToProps)(Comments)
+export {Comments};
+export default Comments;

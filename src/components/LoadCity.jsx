@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react'
-import ChooseCity from './ChooseCity'
-import {connect} from 'react-redux'
+import React from 'react';
+import {useSelector} from 'react-redux';
+import ChooseCity from './ChooseCity';
 
-
-const LoadCity = (props) => {
-  const {onClick, city, isDataLoaded} = props
+const LoadCity = ({onClick}) => {
+  const {city} = useSelector(state => state.OFFER);
 
   return(
     city.map((item) => <ChooseCity
@@ -16,10 +15,4 @@ const LoadCity = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  data: state.data,
-  isDataLoaded: state.isDataLoaded,
-})
-
-export default connect(mapStateToProps)(LoadCity)
+export default LoadCity;

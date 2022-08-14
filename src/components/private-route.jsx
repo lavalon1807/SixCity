@@ -1,21 +1,17 @@
-import React from 'react'
-import {Route, Redirect} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {AuthorizationStatus} from './const'
+import React from 'react';
+import {Route, Redirect} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {userAuth} from '../mocks/constants';
 
-const PrivateRoute = ({component: Component, authorizationStatus}) => {
- return(
+const PrivateRoute = ({component: Component}) => {
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
+  return(
     <Route
       render={(props) =>
-        authorizationStatus === AuthorizationStatus.AUTH ? <Component {...props} /> : <Redirect to='/error' />
+        authorizationStatus === userAuth.AUTH ? <Component {...props} /> : <Redirect to='/error' />
       }
     />
- )
-
+  )
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus
-})
-
-export default connect(mapStateToProps)(PrivateRoute)
+export default PrivateRoute;

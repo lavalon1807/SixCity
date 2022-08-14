@@ -1,23 +1,25 @@
-import React, {useRef, useState} from 'react';
-import {useHistory} from 'react-router-dom'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import Header from './Header'
-import {login} from './store/apiCreate'
+import React, {useRef} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import Header from './header/Header';
+import {login} from './redux/api-create';
 
 const Signn = ({onSubmit}) => {
-  const loginRef = useRef()
-  const passwordRef = useRef()
-  const history = useHistory()
+  const loginRef = useRef();
+  const passwordRef = useRef();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-    onSubmit({
+
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    })
+    }))
+
     history.push('/')
-  }
+  };
 
   return(
     <>
@@ -79,16 +81,4 @@ const Signn = ({onSubmit}) => {
   )
 }
 
-Signn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-}
-
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData))
-  }
-})
-
-export {Signn}
-export default connect(null, mapDispatchToProps)(Signn);
+export default Signn;

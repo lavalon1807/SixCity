@@ -1,10 +1,10 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
+import React from 'react';
+import {useSelector} from 'react-redux';
+import PropTypes from 'prop-types';
 
 const ADD_POST = 'ADD_POST'
-const ChooseCity = (props) => {
-  const {items, onClick, chooseClass, className, currentCity} = props
+const ChooseCity = ({items, onClick}) => {
+  const {currentCity} = useSelector(state => state.CITY);
 
   const classChoose = currentCity === items ? `tabs__item--active` : ''
 
@@ -17,15 +17,10 @@ const ChooseCity = (props) => {
       </li>
     </>
   )
-}
-
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity
-})
+};
 
 ChooseCity.propTypes = {
   items: PropTypes.string.isRequired,
-  currentCity: PropTypes.string.isRequired,
-}
+};
 
-export default connect(mapStateToProps)(ChooseCity)
+export default ChooseCity;

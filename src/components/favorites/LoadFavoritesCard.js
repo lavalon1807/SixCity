@@ -1,9 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {FavoritCards} from './FavoritCards';
 
 const LoadFavoritesCard = ({massFav, city}) => {
-
   massFav = massFav.filter(item=>item.city.name === city)
 
   return(
@@ -11,9 +10,5 @@ const LoadFavoritesCard = ({massFav, city}) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  massFavor: state.objFavorite,
-})
-
-export {LoadFavoritesCard}
-export default connect(mapStateToProps)(LoadFavoritesCard)
+export {LoadFavoritesCard};
+export default LoadFavoritesCard;

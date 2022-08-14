@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 
 const PicturePlace = ({items}) => {
   const {images} = items
@@ -13,10 +12,4 @@ const PicturePlace = ({items}) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  offer: state.oneOffer,
-  isLoaded: state.isLoaded,
-})
-
-export {PicturePlace}
-export default connect(mapStateToProps)(PicturePlace)
+export default PicturePlace;

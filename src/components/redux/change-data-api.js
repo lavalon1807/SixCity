@@ -1,5 +1,5 @@
-import React from 'react';
-import {loadOffer, addFavorites, loadOneOffer, loadNearby} from './actionCreate'
+import {addFavorites} from './favorite-process/action-favorite';
+import {loadOffer, loadOneOffer, loadNearby} from './load-offer-process/action-create-offer';
 //с помощью этой функции мы тащим с сервера определенные данные
 
 function camelize(text) {

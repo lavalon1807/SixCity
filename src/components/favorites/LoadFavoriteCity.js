@@ -11,6 +11,6 @@ const LoadFavoriteCity = ({massFavor}) => {
   return(
     unicumCities.map((item, index)=><CityFavorite key={index} item={item} massFavor={massFavor}/>)
   )
-}
+};
 
-export {LoadFavoriteCity}
+export {LoadFavoriteCity};

@@ -1,10 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import Header from '../Header';
+import {useSelector} from 'react-redux';
+import Header from '../header/Header';
 import {LoadFavoriteCity} from './LoadFavoriteCity';
 
 const Favorites = ({massFavor}) => {
-  const loadCard = massFavor.length === 0;
+  const {objFavorite} = useSelector(state => state.FAVORITE);
+  const loadCard = objFavorite.length === 0;
 
   return(
     <>
@@ -24,7 +25,7 @@ const Favorites = ({massFavor}) => {
             <ul className="favorites__list">
 
 
-              <LoadFavoriteCity massFavor={massFavor}/>
+              <LoadFavoriteCity massFavor={objFavorite}/>
 
 
             </ul>
@@ -52,8 +53,4 @@ const Favorites = ({massFavor}) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  massFavor: state.objFavorite,
-})
-
-export default connect(mapStateToProps)(Favorites);
+export default Favorites;

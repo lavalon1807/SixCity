@@ -5,4 +5,27 @@ const ratingName = [
   'Top rated first',
 ]
 
-export {ratingName};
+const starsRating = [
+  {
+    id: 5,
+    state: 'terribly',
+  },
+  {
+    id: 4,
+    state: 'badly',
+  },
+  {
+    id: 3,
+    state: 'not bad',
+  },
+  {
+    id: 2,
+    state: 'good',
+  },
+  {
+    id: 1,
+    state: 'perfect',
+  },
+];
+
+export {ratingName, starsRating};

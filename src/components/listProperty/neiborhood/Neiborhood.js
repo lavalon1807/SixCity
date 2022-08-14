@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {WIDTH, AuthorizationStatus} from '../../const';
-import {sendFavorites} from '../../store/apiCreate';
+import {WIDTH, userAuth} from '../../../mocks/constants';
+import {sendFavorites} from '../../redux/api-create';
 
 const Neiborhood = (props) => {
-  const {items, chooseFavorites, data, auth} = props
+  const {items, chooseFavorites} = props
   const {
     isPremium,
     isFavorite,
@@ -16,15 +16,19 @@ const Neiborhood = (props) => {
     title,
     type,
     id,
-  } = items
+  } = items;
+
+  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
+  const {data} = useSelector(state => state.OFFER);
 
   const params = useParams();
   const currentId = Number(params.id);
+  const dispatch = useDispatch();
 
   const bookMark = data[id - 1].isFavorite ? `place-card__bookmark-button--active` : ``;
   const widthRating = rating * WIDTH;
   const statusFavor = data[id - 1].isFavorite ? 0 : 1;
-  const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : `/property/${currentId}`;
+  const noAuth = authorizationStatus !== userAuth.AUTH ? '/login' : `/property/${currentId}`;
   const URLCurrentCard = `/property/${id}`;
 
   const startPage = () => {
@@ -32,12 +36,12 @@ const Neiborhood = (props) => {
   }
 
   const addFavoriteFromNeiborhood = () => {
-    chooseFavorites({
+    dispatch(sendFavorites({
       id: id,
       status: statusFavor,
       datas: data,
-    })
-  }
+    }))
+  };
 
   return(
     <article className="near-places__card place-card">
@@ -92,16 +96,5 @@ Neiborhood.propTypes = {
   })
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.authorizationStatus,
-  data: state.data,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  chooseFavorites(it) {
-    dispatch(sendFavorites(it))
-  },
-})
-
-export {Neiborhood}
-export default connect(mapStateToProps, mapDispatchToProps)(Neiborhood)
+export {Neiborhood};
+export default Neiborhood;

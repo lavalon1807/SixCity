@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
-import {connect} from 'react-redux';
+import React from "react";
+import {useSelector, useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { WIDTH } from './const';
-import {sendFavorites, fetchFavorites} from './store/apiCreate'
-import {AuthorizationStatus} from './const'
+import { WIDTH, userAuth } from '../mocks/constants';
+import {sendFavorites, fetchFavorites} from './redux/api-create';
 
 const Card = (props) => {
-  const {items, onMouseEnter, onMouseLeave, chooseFavorites, data, auth} = props
+  const {items, onMouseEnter, onMouseLeave} = props;
   const {
     isPremium,
     isFavorite,
@@ -18,6 +17,11 @@ const Card = (props) => {
     type,
   } = items
 
+  const {data} = useSelector(state => state.OFFER);
+  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
+
+  const dispatch = useDispatch();
+
   const favorite = isFavorite ? 'place-card__bookmark-button--active' : ''
   const statusFavor = isFavorite ? 0 : 1;
 
@@ -28,15 +32,16 @@ const Card = (props) => {
   const handleMouseLeave = () => {
     onMouseLeave()
   }
+
   const addFavoriteCardFromMainPage = () => {
-    chooseFavorites({
+    dispatch(sendFavorites({
       id: id,
       status: statusFavor,
       datas: data,
-    })
+    }))
   }
 
-  const noAuth = auth !== AuthorizationStatus.AUTH ? '/login' : '';
+  const noAuth = authorizationStatus !== userAuth.AUTH ? '/login' : '';
 
   return (
     <article className="cities__place-card place-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -86,16 +91,5 @@ const Card = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  data: state.data,
-  auth: state.authorizationStatus,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  chooseFavorites(it) {
-    dispatch(sendFavorites(it))
-  },
-})
-
-export {Card}
-export default connect(mapStateToProps, mapDispatchToProps)(Card)
+export {Card};
+export default Card;

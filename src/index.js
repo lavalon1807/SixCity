@@ -4,17 +4,21 @@ import App from './App';
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import reducer from './components/store/reducer'
+import rootReducer from './components/redux/root-reducer'
 import thunk from 'redux-thunk';
-import {AuthorizationStatus} from './components/const'
-import {fetchOfferList, checkAuth} from './components/store/apiCreate'
-import {requireAuthorization} from './components/store/actionCreate'
+import {userAuth} from './mocks/constants'
+import {fetchOfferList, checkAuth} from './components/redux/api-create'
+import {requireAuthorization} from './components/redux/user-process/action-user';
 import {createAPI} from './components/api'
 
-const api = createAPI(()=>dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+const api = createAPI(()=>dispatch(
+  requireAuthorization(AuthorizationStatus.NO_AUTH)
+))
 
-export const store = createStore(reducer, composeWithDevTools(
-  applyMiddleware(thunk.withExtraArgument(api))
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument(api))
 ))
 
 store.subscribe(()=>console.log(store.getState()))

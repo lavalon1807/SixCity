@@ -1,14 +1,12 @@
-import React, { Fragment, useCallback, useState, useEffect } from 'react';
-import Header from './Header';
+import React, { useCallback, useState } from 'react';
+import Header from './header/Header';
 import Card from './Card';
-import PropTypes from 'prop-types';
 import LoadCards from './LoadCards';
 import Map from './Map/Map';
-import LoadCity from './LoadCity'
-import SortingCards from './SortingCards'
-import {connect} from 'react-redux'
-import {fetchOfferList} from './store/apiCreate'
-import { LoadData } from './LoadData'
+import LoadCity from './LoadCity';
+import SortingCards from './SortingCards';
+import {fetchOfferList} from './redux/api-create';
+import { LoadData } from './LoadData';
 
 const Main = (props) => {
   const {
@@ -16,8 +14,6 @@ const Main = (props) => {
     toggle,
     activeCity,
     currentcity,
-    data,
-    isDataLoaded,
   } = props // все берем из App
 
   const [active, setActive] = useState(null)
@@ -87,7 +83,7 @@ const Main = (props) => {
 
 
 
-                <LoadCity onClick={toggle} currentcity={currentcity}/>
+                <LoadCity onClick={toggle} />
 
 
 
@@ -123,7 +119,6 @@ const Main = (props) => {
                   massChooseCards={massChooseCards}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  currentcity={currentcity}
                 />
 
 
@@ -152,11 +147,5 @@ const Main = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
-  isDataLoaded: state.isDataLoaded,
-  data: state.data,
-})
-
-export default Main
+export default Main;
 

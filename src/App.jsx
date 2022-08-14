@@ -1,16 +1,13 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {Provider, useSelector, useDispatch} from 'react-redux';
 import Main from './components/Main';
 import Login from './components/Sign-in';
 import Favorites from './components/favorites/Favorites';
 import Property from './components/listProperty/Property';
 import Error from './components/Error'
-import {city} from './mocks/offer'
-import {connect, Provider} from 'react-redux'
-import {store} from './index'
-import {ActionType} from './components/store/action'
-import {fetchOfferList, fetchFavorites, sendFavorites} from './components/store/apiCreate'
-import PropTypes from 'prop-types'
+import {ActionType} from './components/redux/action'
+import {fetchOfferList, fetchFavorites, sendFavorites} from './components/redux/api-create'
 import {LoadData} from './components/LoadData'
 import PrivateRoute from './components/private-route'
 
@@ -19,11 +16,16 @@ const AppRoute = {
 };
 
 const App = (props) => {
-  const {currentCity, data, isDataLoaded, loadData, authorizationStatus, takeFavorites, chooseFavorites} = props
-  const [activeCity, setActiveCity] = useState()
+
+  const {currentCity} = useSelector((state) => state.CITY);
+  const {data, isDataLoaded} = useSelector((state) => state.OFFER);
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
+
+  const [activeCity, setActiveCity] = useState();
+  const dispatch = useDispatch();
 
   if(!isDataLoaded) {
-    loadData()
+    dispatch(fetchOfferList())
   }
 
   if(!isDataLoaded) {
@@ -32,7 +34,7 @@ const App = (props) => {
     )
   }
 
-  takeFavorites();
+  dispatch(fetchFavorites())
 
   let massChooseCards = []
   data.forEach((item) => {
@@ -41,12 +43,12 @@ const App = (props) => {
 
   const click = (e) => {
     const cityRich = e.currentTarget.innerText
-    store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
+    dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
     setActiveCity(e.currentTarget.innerText)
   }
 
-return(
- <BrowserRouter>
+  return(
+    <BrowserRouter>
       <Switch>
         <Route path={AppRoute.ROOT} exact>
           <Main
@@ -67,31 +69,7 @@ return(
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>
-)
+  )
 }
 
-App.propTypes = {
-  currentCity: PropTypes.string.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
-  data: state.data,
-  isDataLoaded: state.isDataLoaded,
-  loadData: state.loadData,
-  authorizationStatus: state.authorizationStatus
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  loadData() {
-    dispatch(fetchOfferList())
-  },
-  takeFavorites() {
-    dispatch(fetchFavorites())
-  },
-  chooseFavorites(it) {
-    dispatch(sendFavorites(it))
-  },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App;

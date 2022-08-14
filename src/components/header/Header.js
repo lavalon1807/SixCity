@@ -1,42 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import Card from './Card'
-import {logout} from './store/apiCreate';
-import {AuthorizationStatus} from './const';
-
-const styleLogout = {
-  color: 'black',
-  height: '30px',
-  borderRadius: '25%',
-  position: 'absolute',
-  top: '7px',
-  right: '-55px',
-  cursor: 'pointer',
-}
-
-const styleAvatar = {
-  backgroundImage: 'url(https://assets.htmlacademy.ru/intensives/javascript-3/avatar/8.jpg)',
-  backgroundSize: '100%',
-  backgroundRepeat: 'no-repeat',
-  width: '40px',
-  height: '40px',
-  borderRadius: '20px',
-}
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import {logout} from '../redux/api-create';
+import {userAuth} from '../../mocks/constants';
+import {styleLogout, styleAvatar} from './header-style';
 
 const Header = (props) => {
-  const {authorizationStatus, loginRef, login, clearSubmit} = props
-  const register = authorizationStatus === AuthorizationStatus.AUTH;
+  const {loginRef, clearSubmit} = props
+  const {authorizationStatus, login} = useSelector(state => state.LOAD_AUTH)
+
+  const dispatch = useDispatch();
+
+  const register = authorizationStatus === userAuth.AUTH;
 
   const handleClear = () => {
-    clearSubmit({
+    dispatch(logout({
       login: null,
-      password: null
-    })
-  }
+      password: null,
+    }))
+  };
 
-  let address
+  let address;
 
   if (register) {
     address = '/favorites'
@@ -83,19 +67,4 @@ const Header = (props) => {
   )
 }
 
-Header.propTypes = {
-  clearSubmit: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  login: state.login,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  clearSubmit() {
-    dispatch(logout())
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header;

@@ -1,7 +1,7 @@
-import {connect} from 'react-redux';
-import {AuthorizationStatus} from '../const'
-import {requireAuthorization, sendMassage, loadComments, addFavorites, loadOneOffer} from './actionCreate'
-import {LoadData, LoadDataFavorite, LoadOfferOne, LoadOfferNearby} from './LoadData'
+import {userAuth} from '../../mocks/constants';
+import {LoadData, LoadDataFavorite, LoadOfferOne, LoadOfferNearby} from './change-data-api';
+import {requireAuthorization} from './user-process/action-user';
+import {loadComments} from './comments-process/action-comments';
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
   api.get(`/hotels`).then(({data}) => {
@@ -38,18 +38,18 @@ export const fetchNearby = (id) => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(()=>dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(()=>dispatch(requireAuthorization(userAuth.NO_AUTH)))
     .catch(()=>{})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-    .then(()=> dispatch(requireAuthorization(AuthorizationStatus.AUTH, email)))
+    .then(()=> dispatch(requireAuthorization(userAuth.AUTH, email)))
 )
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(()=> dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(()=> dispatch(requireAuthorization(userAuth.NO_AUTH)))
 )
 
 

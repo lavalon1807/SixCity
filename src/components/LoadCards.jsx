@@ -1,9 +1,7 @@
 import React from 'react';
-import Card from './Card'
-import PropTypes from 'prop-types'
+import Card from './Card';
 
-const LoadCards = (props) => {
-  const {onMouseEnter, onMouseLeave, massChooseCards} = props
+const LoadCards = ({onMouseEnter, onMouseLeave, massChooseCards}) => {
 
   return(
     massChooseCards.map(item =>
@@ -14,9 +12,6 @@ const LoadCards = (props) => {
         onMouseLeave={onMouseLeave}/>
       )
   )
-}
+};
 
-
-
-
-export default LoadCards
+export default LoadCards;

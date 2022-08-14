@@ -8,6 +8,6 @@ const Error = () => {
       <Link to="/">Назад тебе</Link>
     </>
   )
-}
+};
 
 export default Error;

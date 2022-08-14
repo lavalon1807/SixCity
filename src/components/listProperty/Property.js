@@ -1,8 +1,8 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-import Header from '../Header';
+import Header from '../header/Header';
 import DataProp from './DataProp';
 import ReviewLoader from './ReviewsLoader';
 import NeiborhoodLoad from './neiborhood/NeiborhoodLoad';
@@ -10,28 +10,23 @@ import Comments from './Comments';
 import Map from '../Map/Map';
 import PicturePlace from './picturePlaces/PicturePlace';
 import {ComfortGoods} from './ComfortGoods';
-import {takeComments, fetchOffer, fetchNearby} from '../store/apiCreate';
+import {takeComments, fetchOffer, fetchNearby} from '../redux/api-create';
 import {LoadData} from '../LoadData';
-import {NoAuth} from './picturePlaces/noAuthComments'
+import {NoAuth} from './picturePlaces/noAuthComments';
 
-const Property = (props) => {
-  const {massChooseCards,
-    authorization,
-    submitComment,
-    addOffer,
-    offer,
-    isLoaded,
-    commentsMap,
-    addSentence,
-    sentence} = props;
+const Property = ({massChooseCards}) => {
+  const {loadComments} = useSelector(state => state.COMMENT);
+  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
+  const {isLoaded, oneOffer, sentence} = useSelector(state => state.OFFER);
 
   const params = useParams();
   const id = Number(params.id);
+  const dispatch = useDispatch();
 
   useEffect(()=>{
-    submitComment(id)
-    addOffer(id)
-    addSentence(id)
+    dispatch(takeComments(id))
+    dispatch(fetchOffer(id))
+    dispatch(fetchNearby(id))
   }, [id])
 
   if(!isLoaded) {
@@ -39,11 +34,10 @@ const Property = (props) => {
       <LoadData />
     )
   }
-  // console.log(sentence.city.name)
 
-  const chiefHost = !offer.host.isPro ? `visually-hidden` : ``;
-  const chiefHostMain = offer.host.isPro ? `property__avatar-wrapper--pro` : ``;
-  const commentUser = commentsMap[id] || [];
+  const chiefHost = !oneOffer.host.isPro ? `visually-hidden` : ``;
+  const chiefHostMain = oneOffer.host.isPro ? `property__avatar-wrapper--pro` : ``;
+  const commentUser = loadComments[id] || [];
 
   return (
     <>
@@ -61,7 +55,7 @@ const Property = (props) => {
               <div className="property__gallery">
 
               {/*загружаем изображения*/}
-                <PicturePlace items={offer} />
+                <PicturePlace items={oneOffer} />
 
 
               </div>
@@ -70,7 +64,7 @@ const Property = (props) => {
               <div className="property__wrapper">
 
 
-                <DataProp items={offer} />
+                <DataProp items={oneOffer} />
 
 
                 <div className="property__inside">
@@ -78,7 +72,7 @@ const Property = (props) => {
                   <ul className="property__inside-list">
 
 
-                    <ComfortGoods item={offer}/>
+                    <ComfortGoods item={oneOffer}/>
 
 
                   </ul>
@@ -87,10 +81,10 @@ const Property = (props) => {
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className={`property__avatar-wrapper user__avatar-wrapper ${chiefHostMain}`}>
-                      <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                      <img className="property__avatar user__avatar" src={oneOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
-                      {offer.host.name}
+                      {oneOffer.host.name}
                     </span>
                     <span className={`property__user-status ${chiefHost}`}>
                       Pro
@@ -98,7 +92,7 @@ const Property = (props) => {
                   </div>
                   <div className="property__description">
                     <p className="property__text">
-                      {offer.description}
+                      {oneOffer.description}
                     </p>
                   </div>
                 </div>
@@ -111,7 +105,7 @@ const Property = (props) => {
 
                   </ul>
 
-                  {authorization === 'AUTH' ? (
+                  {authorizationStatus === 'AUTH' ? (
                       <Comments />
                     ) : (
                       <NoAuth />
@@ -150,27 +144,5 @@ const Property = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isLoaded: state.isLoaded,
-  isLoadedNearby: state.isLoadedNearby,
-  authorization: state.authorizationStatus,
-  data: state.data,
-  offer: state.oneOffer,
-  commentsMap: state.loadComments,
-  sentence: state.sentence,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  submitComment(id) {
-    dispatch(takeComments(id))
-  },
-  addOffer(id) {
-    dispatch(fetchOffer(id))
-  },
-  addSentence(id) {
-    dispatch(fetchNearby(id))
-  }
-})
-
-export {Property}
-export default connect(mapStateToProps, mapDispatchToProps)(Property)
+export {Property};
+export default Property;

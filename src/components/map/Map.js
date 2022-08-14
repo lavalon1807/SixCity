@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState} from 'react'
-import L from 'leaflet'
-import PropTypes from 'prop-types'
-import {useParams} from 'react-router-dom'
-import {connect} from 'react-redux'
+import React, { useEffect, useRef, useState} from 'react';
+import L from 'leaflet';
+import PropTypes from 'prop-types';
+import {useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Map = (props) => {
-  const {active, activeCity, massChooseCards, currentcity, city} = props
-  const {location} = massChooseCards[0].city // берем координаты выбранного города
+  const {active, activeCity, massChooseCards, currentcity} = props;
+  const {location} = massChooseCards[0].city; // берем координаты выбранного города
+  const {city} = useSelector(state => state.OFFER);
 
   let marker
   let pork = []
@@ -110,8 +111,5 @@ Map.propTypes = {
   })
 }
 
-const mapStateToProps = (state) => ({
-  city: state.city
-})
 
-export default connect(mapStateToProps)(Map)
+export default Map;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { WIDTH } from './../const';
+import { WIDTH } from './../../mocks/constants';
 
 const FavoritCards = ({items}) => {
   const {price, previewImage, rating, type, title, city} = items;
@@ -37,6 +37,6 @@ const FavoritCards = ({items}) => {
       </div>
     </article>
   )
-}
+};
 
-export {FavoritCards}
+export {FavoritCards};
