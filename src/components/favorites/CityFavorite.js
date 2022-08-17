@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {LoadFavoritesCard} from './LoadFavoritesCard';
 
 const CityFavorite = ({item, massFavor}) => {
-  return(
+  return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
@@ -17,7 +18,12 @@ const CityFavorite = ({item, massFavor}) => {
       </div>
 
     </li>
-  )
-}
+  );
+};
 
-export {CityFavorite}
+CityFavorite.propTypes = {
+  item: PropTypes.string.isRequired,
+  massFavor: PropTypes.array.isRequired,
+};
+
+export {CityFavorite};

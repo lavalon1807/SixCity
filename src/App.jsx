@@ -21,7 +21,7 @@ const App = (props) => {
   const {data, isDataLoaded} = useSelector((state) => state.OFFER);
   const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
 
-  const [activeCity, setActiveCity] = useState();
+  const [activeCity, setActiveCity] = useState('Paris');
   const dispatch = useDispatch();
 
   if(!isDataLoaded) {
@@ -62,6 +62,7 @@ const App = (props) => {
         <Route path='/property/:id' exact>
           <Property
             massChooseCards={massChooseCards}
+            activeCity={activeCity}
           />
         </Route>
         <PrivateRoute path='/favorites' exact component={Favorites}></PrivateRoute>

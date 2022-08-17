@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Review = (props) => {
-  const {items} = props;
+const Review = ({items}) => {
   const {comment, date, rating, user} = items;
-  const {avatar_url, name} = user;
+  const {avatarUrl, name} = user;
   const widthRating = rating * 20;
 
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={avatar_url} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
           {name}
@@ -36,10 +35,13 @@ const Review = (props) => {
 Review.propTypes = {
   items: PropTypes.shape({
     img: PropTypes.string.isRequire,
-    use: PropTypes.string.isRequire,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequire,
+      avatarUrl: PropTypes.string.isRequire,
+    }),
     comment: PropTypes.string.isRequire,
-    data: PropTypes.string.isRequire,
-    rate: PropTypes.number.isRequire,
+    date: PropTypes.array.isRequire,
+    rating: PropTypes.number.isRequire,
   })
 };
 

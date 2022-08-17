@@ -8,7 +8,7 @@ const RatingComments = ({onChangeRating}) => {
     starsRating.map((it) =>
       <LoadRatingComment it={it} key={it.id} onChangeRating={onChangeRating}/>
     )
-  )
-}
+  );
+};
 
-export {RatingComments}
+export {RatingComments};

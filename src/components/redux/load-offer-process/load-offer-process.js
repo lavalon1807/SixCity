@@ -7,7 +7,7 @@ const initialState = {
   oneOffer: {},
   isLoaded: false,
   sentence: [],
-}
+};
 
 export const loadOffer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,21 +17,21 @@ export const loadOffer = (state = initialState, action) => {
         city: action.payloadCity,
         data: action.payloadData,
         isDataLoaded: true,
-      }
+      };
 
     case ActionType.LOAD_OFFER:
       return {
         ...state,
         oneOffer: action.payload,
         isLoaded: true,
-      }
+      };
 
     case ActionType.LOAD_NEARBY:
-        return {
-          ...state,
-          sentence: action.payload,
-        }
+      return {
+        ...state,
+        sentence: action.payload,
+      };
 
-    default: return state
+    default: return state;
   }
-}
+};

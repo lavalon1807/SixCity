@@ -1,8 +1,9 @@
 import React from 'react';
-import { WIDTH } from './../../mocks/constants';
+import PropTypes from 'prop-types';
+import {WIDTH} from './../../mocks/constants';
 
 const FavoritCards = ({items}) => {
-  const {price, previewImage, rating, type, title, city} = items;
+  const {price, previewImage, rating, type, title} = items;
 
   return (
     <article className="favorites__card place-card">
@@ -26,7 +27,7 @@ const FavoritCards = ({items}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: WIDTH * rating + '%'}}></span>
+            <span style={{width: WIDTH * rating + `%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -36,7 +37,17 @@ const FavoritCards = ({items}) => {
         <p className="place-card__type">{type}</p>
       </div>
     </article>
-  )
+  );
+};
+
+FavoritCards.propTypes = {
+  items: PropTypes.shape({
+    price: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    previewImage: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  })
 };
 
 export {FavoritCards};

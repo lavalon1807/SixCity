@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {WIDTH, userAuth} from '../../mocks/constants';
-import {sendFavorites} from '../redux/api-create'
+import {sendFavorites} from '../redux/api-create';
 
 const DataProp = (props) => {
-  const {items, chooseFavorites} = props;
+  const {items} = props;
   const {
     isPremium,
     title,
-    isFavorite,
     rating, type,
     bedrooms,
     maxAdults,
@@ -18,22 +17,22 @@ const DataProp = (props) => {
     id,
   } = items;
 
-  const {data} = useSelector(state => state.OFFER);
-  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
+  const {data} = useSelector((state) => state.OFFER);
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
 
   const dispatch = useDispatch();
 
   const bookMark = data[id - 1].isFavorite ? `property__bookmark-button--active` : ``;
   const widthRating = rating * WIDTH;
   const statusFavor = data[id - 1].isFavorite ? 0 : 1;
-  const noAuth = authorizationStatus !== userAuth.AUTH ? '/login' : `/property/${id}`;
+  const noAuth = authorizationStatus !== userAuth.AUTH ? `/login` : `/property/${id}`;
 
   const addFavoriteFromPreview = () => {
     dispatch(sendFavorites({
-      id: id,
+      ids: id,
       status: statusFavor,
       datas: data,
-    }))
+    }));
   };
 
   return (
@@ -92,13 +91,13 @@ const DataProp = (props) => {
 DataProp.propTypes = {
   items: PropTypes.shape({
     isPremium: PropTypes.bool.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     bedrooms: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     maxAdults: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   })
 };
 

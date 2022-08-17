@@ -4,7 +4,7 @@ import {userAuth} from '../../../mocks/constants';
 const initialState = {
   authorizationStatus: userAuth.NO_AUTH,
   login: null,
-}
+};
 
 export const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -13,8 +13,8 @@ export const auth = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
         login: action.payloadLogin,
-      }
+      };
 
-    default: return state
+    default: return state;
   }
-}
+};

@@ -14,25 +14,25 @@ import {takeComments, fetchOffer, fetchNearby} from '../redux/api-create';
 import {LoadData} from '../LoadData';
 import {NoAuth} from './picturePlaces/noAuthComments';
 
-const Property = ({massChooseCards}) => {
-  const {loadComments} = useSelector(state => state.COMMENT);
-  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
-  const {isLoaded, oneOffer, sentence} = useSelector(state => state.OFFER);
+const Property = ({massChooseCards, activeCity}) => {
+  const {loadComments} = useSelector((state) => state.COMMENT);
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
+  const {isLoaded, oneOffer, sentence} = useSelector((state) => state.OFFER);
 
   const params = useParams();
   const id = Number(params.id);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(takeComments(id))
-    dispatch(fetchOffer(id))
-    dispatch(fetchNearby(id))
-  }, [id])
+    dispatch(takeComments(id));
+    dispatch(fetchOffer(id));
+    dispatch(fetchNearby(id));
+  }, [id]);
 
-  if(!isLoaded) {
-    return(
+  if (!isLoaded) {
+    return (
       <LoadData />
-    )
+    );
   }
 
   const chiefHost = !oneOffer.host.isPro ? `visually-hidden` : ``;
@@ -54,7 +54,7 @@ const Property = ({massChooseCards}) => {
             <div className="property__gallery-container container">
               <div className="property__gallery">
 
-              {/*загружаем изображения*/}
+                {/* загружаем изображения */}
                 <PicturePlace items={oneOffer} />
 
 
@@ -105,11 +105,11 @@ const Property = ({massChooseCards}) => {
 
                   </ul>
 
-                  {authorizationStatus === 'AUTH' ? (
-                      <Comments />
-                    ) : (
-                      <NoAuth />
-                    )
+                  {authorizationStatus === `AUTH` ? (
+                    <Comments />
+                  ) : (
+                    <NoAuth />
+                  )
                   }
 
 
@@ -120,7 +120,7 @@ const Property = ({massChooseCards}) => {
 
 
               <Map
-                massChooseCards={massChooseCards}
+                massChooseCards={massChooseCards} activeCity={activeCity}
               />
 
 
@@ -142,6 +142,11 @@ const Property = ({massChooseCards}) => {
       </div>
     </>
   );
+};
+
+Property.propTypes = {
+  massChooseCards: PropTypes.array.isRequired,
+  activeCity: PropTypes.string.isRequired,
 };
 
 export {Property};

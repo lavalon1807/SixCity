@@ -2,7 +2,7 @@ import {ActionType} from '../action';
 
 const initialState = {
   loadComments: {},
-}
+};
 
 export const loadComments = (state = initialState, action) => {
   switch (action.type) {
@@ -13,8 +13,8 @@ export const loadComments = (state = initialState, action) => {
           ...state.commentsMap,
           [action.meta]: action.payload,
         },
-      }
+      };
 
-    default: return state
+    default: return state;
   }
-}
+};

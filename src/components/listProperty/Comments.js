@@ -1,34 +1,31 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {RatingComments} from './RatingComments';
 import {sendComments} from '../redux/api-create';
 
 
 const Comments = () => {
-  const {loadComments} = useSelector(state => state.COMMENT);
   const commentRef = useRef();
-  const [rating, setRating] = useState();
+  const [ratings, setRating] = useState();
   const params = useParams();
   const id = Number(params.id);
   const dispatch = useDispatch();
 
-  const comments = loadComments[id] || [];
-
   const onChangeRating = (it) => {
-    setRating(it)
+    setRating(it);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if(commentRef.current.value !== '') {
+    if (commentRef.current.value !== ``) {
       dispatch(sendComments({
-        id: id,
+        ids: id,
         comment: commentRef.current.value,
-        rating: rating,
+        rating: ratings,
       }));
 
-      commentRef.current.value = '';
+      commentRef.current.value = ``;
     }
   };
 
@@ -64,8 +61,8 @@ const Comments = () => {
         >Submit</button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 export {Comments};
 export default Comments;

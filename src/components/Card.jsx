@@ -35,7 +35,7 @@ const Card = (props) => {
 
   const addFavoriteCardFromMainPage = () => {
     dispatch(sendFavorites({
-      id: id,
+      ids: id,
       status: statusFavor,
       datas: data,
     }))

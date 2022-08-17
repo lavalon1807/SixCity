@@ -1,24 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import Neiborhood from './Neiborhood';
 
 const NeiborhoodLoad = (props) => {
-  const {massChooseCards, sentence} = props
-  const [cards, setCards] = useState(massChooseCards)
-  const params = useParams()
-  const id = Number(params.id);
+  const {sentence} = props;
 
-  useEffect(()=> {
-    setCards(massChooseCards.filter((item) => item.id !== id))
-  }, [])
-
-  return(
-    sentence.map(it =>
+  return (
+    sentence.map((it) =>
       <Neiborhood
         key={it.id}
         items={it}
       />)
-  )
+  );
 };
 
 export default NeiborhoodLoad;

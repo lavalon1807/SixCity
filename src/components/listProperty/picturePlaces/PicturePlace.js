@@ -1,15 +1,15 @@
 import React from 'react';
 
 const PicturePlace = ({items}) => {
-  const {images} = items
+  const {images} = items;
 
-  return(
+  return (
     images.slice(0, 6).map((image)=>
       <div key={image.toString()} className="property__image-wrapper">
-        <img className="property__image"   src={image} alt="Photo studio" />
+        <img className="property__image" src={image} alt="Photo studio" />
       </div>
     )
-  )
-}
+  );
+};
 
 export default PicturePlace;

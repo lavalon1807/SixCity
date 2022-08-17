@@ -18,13 +18,15 @@ const Main = (props) => {
 
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
+  const haveOpen = false;
   const initialState = 'Popular'
   const [addSort, setAddSort] = useState(initialState)
 
   const clickOnSort = isToggleOn ? 'places__options--opened' : ''
 
   const handleClick = (e) => {
-    setIsToggleOn(!isToggleOn)
+    // setIsToggleOn(!isToggleOn)
+    document.querySelector('.places__options').classList.toggle('places__options--opened');
   }
 
   const onclick = (e) => {
@@ -50,8 +52,9 @@ const Main = (props) => {
   }
 
   document.onclick = (e) => {
-    if (e.target.className !== 'places__sorting-type') {
-      setIsToggleOn(false)
+    if (e.target.className !== 'places__sorting-type'
+      && document.querySelector('.places__options') !== null) {
+      document.querySelector('.places__options').classList.remove('places__options--opened');
     }
   }
 

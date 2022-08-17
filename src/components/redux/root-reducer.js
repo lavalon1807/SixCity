@@ -6,11 +6,11 @@ import {loadOffer} from './load-offer-process/load-offer-process';
 import {chooseCity} from './choose-city-process/choose-city-process';
 
 export const NameSpace = {
-  COMMENT: 'COMMENT',
-  FAVORITE: 'FAVORITE',
-  LOAD_AUTH: 'LOAD_AUTH',
-  OFFER: 'OFFER',
-  CITY: 'CITY',
+  COMMENT: `COMMENT`,
+  FAVORITE: `FAVORITE`,
+  LOAD_AUTH: `LOAD_AUTH`,
+  OFFER: `OFFER`,
+  CITY: `CITY`,
 };
 
 export default combineReducers({

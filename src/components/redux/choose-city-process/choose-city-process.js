@@ -1,14 +1,14 @@
 import {ActionType} from '../action';
 
 const initialState = {
-  currentCity: 'Paris',
-}
+  currentCity: `Paris`,
+};
 
 export const chooseCity = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHOOSE_CITY:
-      return {...state, currentCity: action.payload}
+      return {...state, currentCity: action.payload};
 
-    default: return state
+    default: return state;
   }
-}
+};

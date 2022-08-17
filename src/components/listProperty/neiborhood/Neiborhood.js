@@ -5,11 +5,8 @@ import PropTypes from 'prop-types';
 import {WIDTH, userAuth} from '../../../mocks/constants';
 import {sendFavorites} from '../../redux/api-create';
 
-const Neiborhood = (props) => {
-  const {items, chooseFavorites} = props
+const Neiborhood = ({items}) => {
   const {
-    isPremium,
-    isFavorite,
     rating,
     previewImage,
     price,
@@ -18,8 +15,8 @@ const Neiborhood = (props) => {
     id,
   } = items;
 
-  const {authorizationStatus} = useSelector(state => state.LOAD_AUTH);
-  const {data} = useSelector(state => state.OFFER);
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
+  const {data} = useSelector((state) => state.OFFER);
 
   const params = useParams();
   const currentId = Number(params.id);
@@ -28,22 +25,22 @@ const Neiborhood = (props) => {
   const bookMark = data[id - 1].isFavorite ? `place-card__bookmark-button--active` : ``;
   const widthRating = rating * WIDTH;
   const statusFavor = data[id - 1].isFavorite ? 0 : 1;
-  const noAuth = authorizationStatus !== userAuth.AUTH ? '/login' : `/property/${currentId}`;
+  const noAuth = authorizationStatus !== userAuth.AUTH ? `/login` : `/property/${currentId}`;
   const URLCurrentCard = `/property/${id}`;
 
   const startPage = () => {
-    window.scrollTo(0, 0)
-  }
+    window.scrollTo(0, 0);
+  };
 
   const addFavoriteFromNeiborhood = () => {
     dispatch(sendFavorites({
-      id: id,
+      ids: id,
       status: statusFavor,
       datas: data,
-    }))
+    }));
   };
 
-  return(
+  return (
     <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -81,20 +78,19 @@ const Neiborhood = (props) => {
         <p className="place-card__type">{type}</p>
       </div>
     </article>
-  )
-}
+  );
+};
 
 Neiborhood.propTypes = {
   items: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
     rating: PropTypes.number.isRequired,
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
+    id: PropTypes.number.isFavorite,
   })
-}
+};
 
 export {Neiborhood};
 export default Neiborhood;

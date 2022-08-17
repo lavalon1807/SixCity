@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {logout} from '../redux/api-create';
 import {userAuth} from '../../mocks/constants';
 import {styleLogout, styleAvatar} from './header-style';
 
-const Header = (props) => {
-  const {loginRef, clearSubmit} = props
-  const {authorizationStatus, login} = useSelector(state => state.LOAD_AUTH)
+const Header = () => {
+  const {authorizationStatus, login} = useSelector((state) => state.LOAD_AUTH);
 
   const dispatch = useDispatch();
 
@@ -17,21 +16,21 @@ const Header = (props) => {
     dispatch(logout({
       login: null,
       password: null,
-    }))
+    }));
   };
 
   let address;
 
   if (register) {
-    address = '/favorites'
+    address = `/favorites`;
   } else {
-    address = '/login'
+    address = `/login`;
   }
 
-  const avatar = register ? '' : 'user__avatar-wrapper';
-  const stylevatar = register ? styleAvatar : {}
+  const avatar = register ? `` : `user__avatar-wrapper`;
+  const stylevatar = register ? styleAvatar : {};
 
-  return(
+  return (
     <>
       <header className="header">
         <div className="container">
@@ -43,14 +42,14 @@ const Header = (props) => {
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list" style={{position: 'relative'}}>
+              <ul className="header__nav-list" style={{position: `relative`}}>
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={address}>
                     <div className={`header__avatar-wrapper ${avatar}`} style={stylevatar} >
                     </div>
                     <span className="header__user-name user__name">
                       {register ?
-                        (login) : ('Sign in')
+                        (login) : (`Sign in`)
                       }
                     </span>
                   </Link>
@@ -64,7 +63,7 @@ const Header = (props) => {
         </div>
       </header>
     </>
-  )
-}
+  );
+};
 
 export default Header;
