@@ -22,6 +22,7 @@ export const store = createStore(
     ));
 
 store.dispatch(checkAuth());
+store.subscribe(()=>{console.log(store.getState())})
 
 ReactDOM.render(
     <Provider store={store}>
