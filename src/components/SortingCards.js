@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
-import Sort from './sort'
-import {ratingName} from '../mocks/offer'
+import React from 'react';
+import Sort from './sort';
+import {ratingName} from '../mocks/offer';
 
 const SortingCards = (props) => {
-  const {addSort, onclick} = props
+  const {addSort, onclick} = props;
 
-  return(
-    ratingName.map(it=>
+  return (
+    ratingName.map((it) =>
       <Sort
         key={it}
         items={it}
@@ -14,8 +14,7 @@ const SortingCards = (props) => {
         onclick={onclick}
       />
     )
+  );
+};
 
-  )
-}
-
-export default SortingCards
+export default SortingCards;

@@ -1,24 +1,32 @@
-import React, { Fragment, useCallback, useState } from 'react';
-import Header from './Header';
+import React, { useCallback, useState } from 'react';
+import Header from './header/Header';
 import Card from './Card';
-import PropTypes from 'prop-types';
-import {LoadCards} from './LoadCards';
+import LoadCards from './LoadCards';
 import Map from './Map/Map';
-import {offer, city} from '../mocks/offer'
-import LoadCity from './LoadCity'
-import SortingCards from './SortingCards'
+import LoadCity from './LoadCity';
+import SortingCards from './SortingCards';
+import {fetchOfferList} from './redux/api-create';
+import { LoadData } from './LoadData';
 
 const Main = (props) => {
-  const {massChooseCards, massChooseCoords, toggle, activeCity, currentcity} = props // все берем из App
+  const {
+    massChooseCards,
+    toggle,
+    activeCity,
+    currentcity,
+  } = props // все берем из App
+
   const [active, setActive] = useState(null)
   const [isToggleOn, setIsToggleOn] = useState(false)
+  const haveOpen = false;
   const initialState = 'Popular'
   const [addSort, setAddSort] = useState(initialState)
 
   const clickOnSort = isToggleOn ? 'places__options--opened' : ''
 
   const handleClick = (e) => {
-    setIsToggleOn(!isToggleOn)
+    // setIsToggleOn(!isToggleOn)
+    document.querySelector('.places__options').classList.toggle('places__options--opened');
   }
 
   const onclick = (e) => {
@@ -44,8 +52,9 @@ const Main = (props) => {
   }
 
   document.onclick = (e) => {
-    if (e.target.className !== 'places__sorting-type') {
-      setIsToggleOn(false)
+    if (e.target.className !== 'places__sorting-type'
+      && document.querySelector('.places__options') !== null) {
+      document.querySelector('.places__options').classList.remove('places__options--opened');
     }
   }
 
@@ -77,7 +86,7 @@ const Main = (props) => {
 
 
 
-                <LoadCity items={city} onClick={toggle} currentcity={currentcity}/>
+                <LoadCity onClick={toggle} />
 
 
 
@@ -88,7 +97,7 @@ const Main = (props) => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placeCount} places to stay in Amsterdam</b>
+                <b className="places__found">{placeCount} places to stay in {currentcity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0" onClick={handleClick}>
@@ -113,7 +122,6 @@ const Main = (props) => {
                   massChooseCards={massChooseCards}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  currentcity={currentcity}
                 />
 
 
@@ -127,8 +135,8 @@ const Main = (props) => {
                   <Map
                     active={active}
                     massChooseCards={massChooseCards}
-                    massChooseCoords={massChooseCoords}
                     activeCity={activeCity}
+                    currentcity={currentcity}
                   />
 
 
@@ -142,5 +150,5 @@ const Main = (props) => {
   )
 }
 
-export {Main};
+export default Main;
 

@@ -1,13 +1,12 @@
-import React, {useState} from 'react'
-import ChooseCity from './ChooseCity'
-import {offer, city} from '../mocks/offer'
-import {connect} from 'react-redux'
+import React from 'react';
+import {useSelector} from 'react-redux';
+import ChooseCity from './ChooseCity';
 
-const LoadCity = (props) => {
-  const {items, onClick} = props
+const LoadCity = ({onClick}) => {
+  const {city} = useSelector(state => state.OFFER);
 
   return(
-    items.map((item) => <ChooseCity
+    city.map((item) => <ChooseCity
       key={item}
       items={item}
       onClick={onClick}
@@ -16,4 +15,4 @@ const LoadCity = (props) => {
   )
 }
 
-export default LoadCity
+export default LoadCity;

@@ -1,79 +1,76 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import {Main} from './components/Main';
+import {Provider, useSelector, useDispatch} from 'react-redux';
+import Main from './components/Main';
 import Login from './components/Sign-in';
-import Favorites from './components/Favorites';
-import Property from './components/Property';
+import Favorites from './components/favorites/Favorites';
+import Property from './components/listProperty/Property';
 import Error from './components/Error'
-import {offer, city} from './mocks/offer'
-import {Coords, mapCoords} from './mocks/Coords'
-import {connect, Provider} from 'react-redux'
-import {store} from './index'
-import {ActionType} from './components/store/action'
-import {fetchOfferList} from './components/store/apiCreate'
+import {fetchOfferList, fetchFavorites, sendFavorites} from './components/redux/api-create'
+import {LoadData} from './components/LoadData'
+import PrivateRoute from './components/private-route'
+import {actionCity} from './components/redux/choose-city-process/action-city';
 
 const AppRoute = {
   ROOT: `/`
 };
 
 const App = (props) => {
-  const {currentCity} = props
 
-  const [activeCity, setActiveCity] = useState()
+  const {currentCity} = useSelector((state) => state.CITY);
+  const {data, isDataLoaded} = useSelector((state) => state.OFFER);
+  const {authorizationStatus} = useSelector((state) => state.LOAD_AUTH);
+
+  const [activeCity, setActiveCity] = useState('Paris');
+  const dispatch = useDispatch();
+
+  if(!isDataLoaded) {
+    dispatch(fetchOfferList())
+  }
+
+  if(!isDataLoaded) {
+    return (
+      <LoadData />
+    )
+  }
+
+  dispatch(fetchFavorites())
 
   let massChooseCards = []
-
-  offer.forEach((item) => {
-    currentCity === item.city ? massChooseCards.push(item) : null
-  })
-
-  let massChooseCoords = []
-  Coords.forEach(item => {
-      massChooseCards.forEach(card => {
-        item.id === card.id ? massChooseCoords.push(item) : null
-    })
+  data.forEach((item) => {
+    currentCity === item.city.name ? massChooseCards.push(item) : null
   })
 
   const click = (e) => {
     const cityRich = e.currentTarget.innerText
-    store.dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
+    dispatch(actionCity(cityRich))
     setActiveCity(e.currentTarget.innerText)
   }
 
- // сохраняем все данные в стор
-  // store.dispatch(fetchOfferList())
-
-return(
- <BrowserRouter>
+  return(
+    <BrowserRouter>
       <Switch>
         <Route path={AppRoute.ROOT} exact>
           <Main
             toggle={click}
             currentcity={currentCity}
             massChooseCards={massChooseCards}
-            massChooseCoords={massChooseCoords}
             activeCity={activeCity}
           />
         </Route>
         <Route path='/login' exact><Login /></Route>
-        <Route path='/favorites' exact><Favorites /></Route>
         <Route path='/property/:id' exact>
           <Property
-            toggle={click}
-            currentcity={currentCity}
             massChooseCards={massChooseCards}
-            massChooseCoords={massChooseCoords}
+            activeCity={activeCity}
           />
         </Route>
+        <PrivateRoute path='/favorites' exact component={Favorites}></PrivateRoute>
+        <Route path ='/error' exact><Error /></Route>
         <Route><Error /></Route>
       </Switch>
     </BrowserRouter>
-)
-}
+  )
+};
 
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity
-})
-
-
-export default connect(mapStateToProps)(App)
+export default App;
