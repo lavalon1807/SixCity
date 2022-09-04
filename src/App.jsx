@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import {Provider, useSelector, useDispatch} from 'react-redux';
 import Main from './components/Main';
 import Login from './components/Sign-in';
@@ -48,7 +48,7 @@ const App = (props) => {
   }
 
   return(
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route path={AppRoute.ROOT} exact>
           <Main
@@ -69,7 +69,7 @@ const App = (props) => {
         <Route path ='/error' exact><Error /></Route>
         <Route><Error /></Route>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   )
 };
 
