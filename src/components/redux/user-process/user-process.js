@@ -1,7 +1,7 @@
 import {ActionType} from '../action';
 import {userAuth} from '../../../mocks/constants';
 
-const initialState = {
+export const initialState = {
   authorizationStatus: userAuth.NO_AUTH,
   login: null,
 };

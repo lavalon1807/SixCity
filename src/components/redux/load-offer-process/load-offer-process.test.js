@@ -1,59 +1,78 @@
+// import MockAdapter from 'axios-mock-adapter';
+import {loadOffer, initialState} from './load-offer-process';
 import {ActionType} from '../action';
-import {loadOffer, loadOneOffer, loadNearby} from './action-create-offer';
+// import {fetchOfferList} from '../api-create';
+// import {createAPI} from '../../api';
 
-describe('Action creator offer-load work correctly', () => {
-    it('Loadoffer is work', () => {
-        const city = ['Paris']
-        const cards = {
-            1: {id: 1},
-            2: {id: 2}
-        };
+// const api = createAPI(() => {});
 
-        const data = {
-            city,
-            cards
-        };
-        
-        const expectLoadOffer = {
-            type: ActionType.LOAD_DATA,
-            payloadCity: city,
-            payloadData: data
-        };
+describe(`Load cards`, () => {
+  it(`Reducer return load cards of initialState`, () => {
+    expect(loadOffer(undefined, {})).toEqual(initialState);
+  });
 
-        expect(loadOffer(city, data)).toEqual(expectLoadOffer);
+  it(`Reduce return load cards all`, () => {
+    const data = 1;
+    const city = `Paris`;
+
+    const state = {data: {}, city: {}};
+
+    const firstloadOffer = () => ({
+      type: ActionType.LOAD_DATA,
+      payloadCity: city,
+      payloadData: data
     });
 
-    it('LoadOneoffer is work', () => {
-        const offer = {
-            city: 'Paris',
-            id: 1
-        }
+    expect(loadOffer(state, firstloadOffer(city, data))).toEqual({city, data, isDataLoaded: true});
+  });
 
-        const expectLoadOneoffer = {
-            type: ActionType.LOAD_OFFER,
-            payload: offer,
-        };
+  it(`Reduce return load cards one`, () => {
+    const oneOffer = 1;
 
-        expect(loadOneOffer(offer)).toEqual(expectLoadOneoffer);
+    const state = {oneOffer: {}};
+
+    const loadOneOffer = (offer) => ({
+      type: ActionType.LOAD_OFFER,
+      payload: offer,
     });
 
-    it('LoadNearby is work', () => {
-        const cards = {
-            1: {id: 1},
-            2: {id: 2}
-        };
+    expect(loadOffer(state, loadOneOffer(oneOffer))).toEqual({oneOffer, isLoaded: true});
+  });
 
-        const data = [
-            {
-                cards
-            }
-        ];
+  it(`Reduce return load cards nearby`, () => {
+    const sentence = {
+      id: 1
+    };
 
-        const expectLoadNearby = {
-            type: ActionType.LOAD_NEARBY,
-            payload: data,
-        };
+    const state = {sentence: {}};
 
-        expect(loadNearby(data)).toEqual(expectLoadNearby);
+    const loadNearby = (data) => ({
+      type: ActionType.LOAD_NEARBY,
+      payload: data,
     });
+
+    expect(loadOffer(state, loadNearby(sentence))).toEqual({sentence});
+  });
 });
+
+// describe(`Async load offer all and one and more data`, () => {
+//   it(`Should make a correct API call to ALL /hotels`, () => {
+//     const apiMock = new MockAdapter(api);
+//     const dispatch = jest.fn();
+//     const fetchOfferListLoader = fetchOfferList();
+
+//     apiMock
+//       .onGet(`/hotels`)
+//       .reply(200, [{fake: true}]);
+
+//     return fetchOfferListLoader(dispatch, () => {}, api)
+//       .then(() => {
+//         expect(dispatch).toHaveBeenCalledTimes(1);
+//         expect(dispatch).toHaveBeenNthCalledTimes(1, {
+//           type: ActionType.LOAD_DATA,
+//           payloadCity: [{fake: true}],
+//           payloadData: [{fake: true}],
+//         });
+//       });
+//   });
+// });

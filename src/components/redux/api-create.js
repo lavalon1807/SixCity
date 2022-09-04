@@ -3,8 +3,8 @@ import {loadData, loadDataFavorite, loadOfferOne, loadOfferNearby, loadCommentsF
 import {requireAuthorization} from './user-process/action-user';
 
 export const fetchOfferList = () => (dispatch, _getState, api) => {
-  api.get(`/hotels`).then(({data}) => {
-    dispatch(loadData(data, data));
+  api.get(`/hotels`).then((data) => {
+    dispatch(loadData(data.data, data.data));
   });
 };
 

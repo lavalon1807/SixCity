@@ -6,10 +6,10 @@ import Login from './components/Sign-in';
 import Favorites from './components/favorites/Favorites';
 import Property from './components/listProperty/Property';
 import Error from './components/Error'
-import {ActionType} from './components/redux/action'
 import {fetchOfferList, fetchFavorites, sendFavorites} from './components/redux/api-create'
 import {LoadData} from './components/LoadData'
 import PrivateRoute from './components/private-route'
+import {actionCity} from './components/redux/choose-city-process/action-city';
 
 const AppRoute = {
   ROOT: `/`
@@ -43,7 +43,7 @@ const App = (props) => {
 
   const click = (e) => {
     const cityRich = e.currentTarget.innerText
-    dispatch({type: ActionType.CHOOSE_CITY, payload: cityRich})
+    dispatch(actionCity(cityRich))
     setActiveCity(e.currentTarget.innerText)
   }
 

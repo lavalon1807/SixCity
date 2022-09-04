@@ -1,6 +1,6 @@
 import {ActionType} from '../action';
 
-const initialState = {
+export const initialState = {
   data: {},
   city: {},
   isDataLoaded: false,
